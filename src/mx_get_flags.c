@@ -13,6 +13,7 @@ cur_flags_t *mx_get_flags(int argc, char const *argv[]) {
         }
         for (int j = 1; j < mx_strlen(argv[i]); j++) {
             if (!is_valid_flag(argv[i][j])) {
+                mx_illegal_option(argv, argv[i][j]);
                 mx_print_usage();
                 exit(1);
             }
@@ -28,6 +29,7 @@ cur_flags_t *mx_get_flags(int argc, char const *argv[]) {
                     }
                     cur_flags->flags = cur_flags_tmp;
                 }
+                //else сдвинуть на 1 (если надо будет)
             }
         }    
     }

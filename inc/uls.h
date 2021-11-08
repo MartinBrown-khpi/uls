@@ -14,6 +14,8 @@ typedef struct cur_flags {
 
 //ERRORS
 void mx_printerr(const char *err);
+
+void mx_illegal_option(char const *argv[] ,char flag);
 void mx_usage(int argc);
 void mx_print_usage();
 // PARSE FLAGS 
