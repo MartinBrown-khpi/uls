@@ -29,7 +29,9 @@ cur_flags_t *mx_get_flags(int argc, char const *argv[]) {
                     }
                     cur_flags->flags = cur_flags_tmp;
                 }
-                //else сдвинуть на 1 (если надо будет)
+                else {
+                    move_char_back(cur_flags->flags, cur_flags->count, argv[i][j]);
+                }
             }
         }    
     }
@@ -58,3 +60,10 @@ bool is_valid_flag(char flag)  {
     return false;
 }
 
+void move_char_back(char *arr, int size, char ch) {
+    int index = mx_get_char_index(arr, ch);
+    for (int i = index; i < size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    arr[size - 1] = ch;
+}

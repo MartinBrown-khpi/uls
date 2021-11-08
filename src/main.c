@@ -24,5 +24,12 @@ int main(int argc, char const *argv[]) {
     for (int i = 0; i < cur_flags->count; i++) {
         printf("%c\t", cur_flags->flags[i]);
     }
+    // get winsize
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    printf("%d\n%d\n", w.ws_col, w.ws_row);
+
+    mx_strdel(&cur_flags->flags);
+    free(cur_flags);
     return 0;
 }
