@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
     usable_flags->is_A = false;
     usable_flags->is_a = false;
 
-    for (int i = 0; i < COUNT_FLAGS; i++) {
+    for (int i = 0; i < cur_flags->count; i++) {
         switch (cur_flags->flags[i]) {
         case 'l':
             usable_flags->is_long = true;
@@ -57,21 +57,18 @@ int main(int argc, char const *argv[]) {
     }
     //set color (придумаем)
 
-    if(usable_flags->is_long) {
-        "struktura 2" *t_dirs_long = mx_get_dirs_long();
-        //sort 
-        //print
+    // if(usable_flags->is_long) {
+    //     "struktura 2" *t_dirs_long = mx_get_dirs_long();
+    //     //sort 
+    //     //print
 
-    }
-    else if (usable_flags->is_list) {
-        "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
-        //sort
-        //print 
-    }
+    // }
+    // else if (usable_flags->is_list) {
+    //     "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
+    //     //sort
+    //     //print 
+    // }
 
 
-
-    mx_strdel(&cur_flags->flags);
-    free(cur_flags);
     return 0;
 }
