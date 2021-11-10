@@ -78,9 +78,7 @@ int main(int argc, char const *argv[]) {
     
         //sort 
         //print
-        if (false) {
-            printf("lonng name = %s\n", all_long_data[1]->f_namefile);
-        }
+        printf("lonng name = %s\n", all_long_data[1]->f_namefile);
 
     }
     // else if (usable_flags->is_list) {
