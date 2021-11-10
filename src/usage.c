@@ -9,7 +9,7 @@ void mx_usage(int argc) {
 
 
 void mx_print_usage() {
-    mx_printerr("usage : uls ");
+    mx_printerr("usage: uls ");
     mx_printerr("[-");
     mx_printerr(FLAGS);
     mx_printerr("] ");

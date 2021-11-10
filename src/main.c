@@ -57,18 +57,29 @@ int main(int argc, char const *argv[]) {
     }
     //set color (придумаем)
 
-    // if(usable_flags->is_long) {
-    //     "struktura 2" *t_dirs_long = mx_get_dirs_long();
-    //     //sort 
-    //     //print
+    //if(usable_flags->is_long) {
+        long_data_t *long_data = mx_get_long_info(argv[1]);
+        printf("argv[1] = %s\n",  argv[1]);
+        printf("namefile = %s\n",long_data->f_namefile);
+        printf("\n\n\n\n");
+        printf("f_zie = %lld\n", long_data->f_size);
+        //sort 
+        //print
 
-    // }
+    //}
     // else if (usable_flags->is_list) {
     //     "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
     //     //sort
     //     //print 
     // }
 
+    // struct stat stat_g;
+    // stat(argv[1], &stat_g);
+    // printf("%hu\n", stat_g.st_mode);
+    if (cur_flags->count != 0) {
+        mx_strdel(&cur_flags->flags);
+        free(cur_flags);
+    }
 
     return 0;
 }

@@ -20,6 +20,16 @@ typedef struct all_flags {
     bool is_a;
 }all_flags_t;
 
+typedef struct long_data {
+    mode_t f_mode;
+    nlink_t f_links;
+    uid_t f_uid;
+    gid_t f_gid;
+    off_t f_size;
+    struct timespec *f_time_change;
+    char *f_namefile;
+}long_data_t;
+
 
 
 //ERRORS
@@ -34,4 +44,7 @@ cur_flags_t *mx_get_flags(int argc, char const *argv[]);
 bool is_valid_flag(char flag);
 bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
 void move_char_back(char *arr, int size, char ch);
+
+//LS -l
+long_data_t *mx_get_long_info(const char *filename);
 #endif /* ULS_H */
