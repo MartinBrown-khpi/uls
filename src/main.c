@@ -23,15 +23,22 @@ int main(int argc, char const *argv[]) {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
-    struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * 1);
     DIR *dp;
     int size_dirp = 0;
+    struct dirent *tmp;
+    dp = opendir(".");
+    while ((tmp= readdir(dp)) != NULL) {
+            size_dirp++;
+        }
+        closedir(dp);
+    struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * size_dirp);
+    size_dirp = 0;
     if (cur_flags->count == 0) {
         dp = opendir(".");
         while ((dirp[size_dirp] = readdir(dp)) != NULL) {
             printf("%s\n", dirp[size_dirp]->d_name);
+            dirp = mx_realloc(dirp, size_dirp);
             size_dirp++;
-            mx_realloc(dirp, size_dirp);
         }
         closedir(dp);
     }
