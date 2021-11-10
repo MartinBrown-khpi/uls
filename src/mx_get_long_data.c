@@ -1,4 +1,20 @@
 #include "uls.h"
+#include <stdio.h>
+
+long_data_t **mx_get_all_long_data(int first_file, int argc, char const *argv[]){
+
+    long_data_t ** all_data = malloc(sizeof(long_data_t*) * 15);
+    printf("%c\r", argv[0][0]);
+    argc++;
+    int index = 0;
+    for (int i = first_file; i < 15; i++) {
+        all_data[index] = mx_get_long_info("src");
+        index++;
+    }
+    return all_data;
+}
+
+
 
 long_data_t *mx_get_long_info(const char *filename) {
     struct stat buff;

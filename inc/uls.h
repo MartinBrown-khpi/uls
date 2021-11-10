@@ -30,7 +30,8 @@ typedef struct long_data {
     char *f_namefile;
 }long_data_t;
 
-
+// help func
+int mx_get_first_file(int argc, char const *argv[]);
 
 //ERRORS
 void mx_printerr(const char *err);
@@ -46,5 +47,6 @@ bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
 void move_char_back(char *arr, int size, char ch);
 
 //LS -l
+long_data_t **mx_get_all_long_data(int first_file, int argc, char const *argv[]);
 long_data_t *mx_get_long_info(const char *filename);
 #endif /* ULS_H */

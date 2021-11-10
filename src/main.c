@@ -26,18 +26,18 @@ int main(int argc, char const *argv[]) {
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
     //printf("%d\n%d\n", w.ws_col, w.ws_row);
-    DIR *dp;
-    struct dirent *dirp;
-    if (cur_flags->count == 0) {
-        dp = opendir(".");
-        while ((dirp = readdir(dp)) != NULL)
-        if (mx_strcmp(dirp->d_name, "uls"))
-            printf("%s\n", dirp->d_name);
-        printf("%d", w.ws_row);
-        free(cur_flags->flags);
-        closedir(dp);
-        return 0;
-    }
+    // DIR *dp;
+    // struct dirent *dirp;
+    // if (cur_flags->count == 0) {
+    //     dp = opendir(".");
+    //     while ((dirp = readdir(dp)) != NULL)
+    //     if (mx_strcmp(dirp->d_name, "uls"))
+    //         printf("%s\n", dirp->d_name);
+    //     printf("%d", w.ws_row);
+    //     free(cur_flags->flags);
+    //     closedir(dp);
+    //     return 0;
+    // }
     
     printf("count flags = %d\n", cur_flags->count);
     for (int i = 0; i < cur_flags->count; i++) {
@@ -72,13 +72,18 @@ int main(int argc, char const *argv[]) {
         }
     }
     //set color (придумаем)
-
+    // get first !flag 
+    int first_file = mx_get_first_file(argc, argv);
     //if(usable_flags->is_long) {
-        long_data_t *long_data = mx_get_long_info(argv[1]);
-        printf("argv[1] = %s\n",  argv[1]);
-        printf("namefile = %s\n",long_data->f_namefile);
-        printf("\n\n\n\n");
-        printf("f_zie = %lld\n", long_data->f_size);
+        long_data_t **all_long_data = mx_get_all_long_data(first_file, argc, argv);
+        for (int i = 0; i < 15; i++) {
+            if (all_long_data[i] == NULL) {
+                exit(1);
+            }
+            printf("namefile = %s\n", all_long_data[i]->f_namefile);
+            printf("f_zie = %lld\n", all_long_data[i]->f_size);
+        }
+
         //sort 
         //print
 
