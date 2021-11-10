@@ -18,26 +18,23 @@
 
 */
 
-
 #include <stdio.h>
 int main(int argc, char const *argv[]) {
     //mx_usage(argc);
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
-    //printf("%d\n%d\n", w.ws_col, w.ws_row);
-    // DIR *dp;
-    // struct dirent *dirp;
-    // if (cur_flags->count == 0) {
-    //     dp = opendir(".");
-    //     while ((dirp = readdir(dp)) != NULL)
-    //     if (mx_strcmp(dirp->d_name, "uls"))
-    //         printf("%s\n", dirp->d_name);
-    //     printf("%d", w.ws_row);
-    //     free(cur_flags->flags);
-    //     closedir(dp);
-    //     return 0;
-    // }
+    struct dirent **dirp = malloc(sizeof(struct dirent*) * 0);
+    DIR *dp;
+    int i = 0;
+    if (cur_flags->count == 0) {
+        dp = opendir(".");
+        while ((dirp[i] = readdir(dp)) != NULL) {
+            i++;
+        }
+        free(cur_flags->flags);
+        closedir(dp);
+    }
     
     printf("count flags = %d\n", cur_flags->count);
     for (int i = 0; i < cur_flags->count; i++) {
