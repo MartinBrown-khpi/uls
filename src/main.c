@@ -24,16 +24,20 @@ int main(int argc, char const *argv[]) {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
-    struct dirent **dirp = malloc(sizeof(struct dirent*) * 0);
+    struct dirent **dirp = malloc(sizeof(struct dirent *));
     DIR *dp;
     int size_dirp = 0;
     if (cur_flags->count == 0) {
         dp = opendir(".");
         while ((dirp[size_dirp] = readdir(dp)) != NULL) {
+            printf("%s\n", dirp[size_dirp]->d_name);
             size_dirp++;
         }
-        //free(cur_flags->flags);
         closedir(dp);
+    }
+    printf("\n\n");
+    for (int j = 0; j < size_dirp;j++) {
+        printf("%s\n", dirp[j]->d_name);
     }
     
     printf("count flags = %d\n", cur_flags->count);
