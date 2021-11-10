@@ -47,6 +47,6 @@ bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
 void move_char_back(char *arr, int size, char ch);
 
 //LS -l
-long_data_t **mx_get_all_long_data(int first_file, int argc, char const *argv[]);
+long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp);
 long_data_t *mx_get_long_info(const char *filename);
 #endif /* ULS_H */

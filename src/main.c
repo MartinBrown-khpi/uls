@@ -26,13 +26,13 @@ int main(int argc, char const *argv[]) {
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
     struct dirent **dirp = malloc(sizeof(struct dirent*) * 0);
     DIR *dp;
-    int i = 0;
+    int size_dirp = 0;
     if (cur_flags->count == 0) {
         dp = opendir(".");
-        while ((dirp[i] = readdir(dp)) != NULL) {
-            i++;
+        while ((dirp[size_dirp] = readdir(dp)) != NULL) {
+            size_dirp++;
         }
-        free(cur_flags->flags);
+        //free(cur_flags->flags);
         closedir(dp);
     }
     
@@ -70,17 +70,20 @@ int main(int argc, char const *argv[]) {
     }
     //set color (придумаем)
     // get first !flag 
-    int first_file = mx_get_first_file(argc, argv);
     //if(usable_flags->is_long) {
-        long_data_t **all_long_data = mx_get_all_long_data(first_file, argc, argv);
-        for (int i = 0; i < 15; i++) {
+        // for (int i = 0; i < size_dirp; i++) {
+        //     printf("dirp = %s\n", dirp[2]->d_name);
+        // }
+        printf("dirp = %s\n", dirp[2]->d_name);
+        long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
+        for (int i = 0; i < size_dirp; i++) {
             if (all_long_data[i] == NULL) {
                 exit(1);
             }
             printf("namefile = %s\n", all_long_data[i]->f_namefile);
             printf("f_zie = %lld\n", all_long_data[i]->f_size);
         }
-
+        
         //sort 
         //print
 
