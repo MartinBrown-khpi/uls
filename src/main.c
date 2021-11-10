@@ -20,7 +20,6 @@
 
 #include <stdio.h>
 int main(int argc, char const *argv[]) {
-    //mx_usage(argc);
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
