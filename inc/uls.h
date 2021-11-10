@@ -5,8 +5,8 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
-static int COUNT_FLAGS = 4;
-static char FLAGS[4] = {'l', 'a', 'A', '1'};
+static int COUNT_FLAGS = 9;
+static char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
 
 typedef struct cur_flags {
     char *flags;
@@ -18,6 +18,12 @@ typedef struct all_flags {
     bool is_list;
     bool is_A;
     bool is_a;
+    bool is_reverse;
+    bool is_common_sort;
+    bool is_t_sort;
+    bool is_u_sort;
+    bool is_c_sort;
+    bool is_S_sort;
 }all_flags_t;
 
 typedef struct long_data {

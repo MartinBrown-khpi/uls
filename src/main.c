@@ -48,14 +48,24 @@ int main(int argc, char const *argv[]) {
     usable_flags->is_long = false;
     usable_flags->is_A = false;
     usable_flags->is_a = false;
+    
+    usable_flags->is_reverse = false;
+    usable_flags->is_common_sort = true;
+    usable_flags->is_c_sort = false;
+    usable_flags->is_S_sort = false;
+    usable_flags->is_t_sort = false;
+    usable_flags->is_u_sort = false;
+
 
     for (int i = 0; i < cur_flags->count; i++) {
         switch (cur_flags->flags[i]) {
         case 'l':
             usable_flags->is_long = true;
+            usable_flags->is_list = false;
             break;
         case '1':
             usable_flags->is_list = true;
+            usable_flags->is_long = false;
             break;
         case 'a':
             usable_flags->is_a = true;
@@ -64,7 +74,23 @@ int main(int argc, char const *argv[]) {
         case 'A':
             usable_flags->is_A = true;
             usable_flags->is_a = false;
-
+            break;
+        case 'r':
+            usable_flags->is_reverse = true;
+            break;
+        case 't':
+            usable_flags->is_t_sort = true;
+            break;
+        case 'u':
+            usable_flags->is_u_sort= true;
+            break;
+        case 'c':
+            usable_flags->is_c_sort = true;
+            break;
+        case 'S':
+            usable_flags->is_S_sort = true;
+            break;
+        
         default:
             break;
         }
