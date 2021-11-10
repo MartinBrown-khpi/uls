@@ -4,7 +4,7 @@
 #include "libmx.h"
 #include <sys/stat.h>
 #include <sys/ioctl.h>
-
+#include <dirent.h>
 static int COUNT_FLAGS = 4;
 static char FLAGS[4] = {'l', 'a', 'A', '1'};
 

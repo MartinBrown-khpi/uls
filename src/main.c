@@ -21,8 +21,23 @@
 
 #include <stdio.h>
 int main(int argc, char const *argv[]) {
-    mx_usage(argc);
+    //mx_usage(argc);
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
+    //printf("%d\n%d\n", w.ws_col, w.ws_row);
+    DIR *dp;
+    struct dirent *dirp;
+    if (cur_flags->count == 0) {
+        dp = opendir(".");
+        while ((dirp = readdir(dp)) != NULL)
+            printf("%s\n", dirp->d_name);
+        printf("%d", w.ws_row);
+        free(cur_flags->flags);
+        closedir(dp);
+        return 0;
+    }
+    
     printf("count flags = %d\n", cur_flags->count);
     for (int i = 0; i < cur_flags->count; i++) {
         printf("%c\t", cur_flags->flags[i]);
