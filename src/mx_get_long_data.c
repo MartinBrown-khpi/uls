@@ -3,7 +3,7 @@
 
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp){
 
-    long_data_t ** all_data = malloc(sizeof(long_data_t*) * 15);
+    long_data_t ** all_data = malloc(sizeof(long_data_t*) * size_dirp);
     for (int i = 0; i < size_dirp; i++) {
         all_data[i] = mx_get_long_info(dirp[i]->d_name);
     }

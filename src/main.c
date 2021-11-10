@@ -33,25 +33,15 @@ int main(int argc, char const *argv[]) {
         closedir(dp);
     struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * size_dirp);
     size_dirp = 0;
-    if (cur_flags->count == 0) {
         dp = opendir(".");
         while ((dirp[size_dirp] = readdir(dp)) != NULL) {
-            printf("%s\n", dirp[size_dirp]->d_name);
+            //printf("%s\n", dirp[size_dirp]->d_name);
             dirp = mx_realloc(dirp, size_dirp);
             size_dirp++;
         }
         closedir(dp);
-    }
-    printf("\n\n");
-    for (int j = 0; j < size_dirp;j++) {
-        printf("%s\n", dirp[j]->d_name);
-    }
-    
-    printf("count flags = %d\n", cur_flags->count);
-    for (int i = 0; i < cur_flags->count; i++) {
-        printf("%c\t", cur_flags->flags[i]);
-    }
-    
+
+
     all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
     usable_flags->is_list = true;
@@ -79,35 +69,25 @@ int main(int argc, char const *argv[]) {
             break;
         }
     }
+
     //set color (придумаем)
     // get first !flag 
-    //if(usable_flags->is_long) {
-        // for (int i = 0; i < size_dirp; i++) {
-        //     printf("dirp = %s\n", dirp[2]->d_name);
-        // }
-        printf("dirp = %s\n", dirp[2]->d_name);
+    if(usable_flags->is_long) {
+        //printf("dirp = %s\n", dirp[2]->d_name);
         long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
-        for (int i = 0; i < size_dirp; i++) {
-            if (all_long_data[i] == NULL) {
-                exit(1);
-            }
-            printf("namefile = %s\n", all_long_data[i]->f_namefile);
-            printf("f_zie = %lld\n", all_long_data[i]->f_size);
-        }
-        
+    
         //sort 
         //print
+        if (false) {
+            printf("lonng name = %s\n", all_long_data[1]->f_namefile);
+        }
 
-    //}
+    }
     // else if (usable_flags->is_list) {
     //     "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
     //     //sort
     //     //print 
     // }
-
-    // struct stat stat_g;
-    // stat(argv[1], &stat_g);
-    // printf("%hu\n", stat_g.st_mode);
     if (cur_flags->count != 0) {
         mx_strdel(&cur_flags->flags);
         free(cur_flags);
