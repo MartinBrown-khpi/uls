@@ -31,6 +31,7 @@ int main(int argc, char const *argv[]) {
     if (cur_flags->count == 0) {
         dp = opendir(".");
         while ((dirp = readdir(dp)) != NULL)
+        if (mx_strcmp(dirp->d_name, "uls"))
             printf("%s\n", dirp->d_name);
         printf("%d", w.ws_row);
         free(cur_flags->flags);
