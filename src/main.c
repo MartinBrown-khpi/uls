@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]) {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     cur_flags_t *cur_flags = mx_get_flags(argc, argv);
-    struct dirent **dirp = malloc(sizeof(struct dirent *));
+    struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * 11);
     DIR *dp;
     int size_dirp = 0;
     if (cur_flags->count == 0) {
