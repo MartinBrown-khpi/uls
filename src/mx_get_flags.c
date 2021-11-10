@@ -8,7 +8,6 @@ cur_flags_t *mx_get_flags(int argc, char const *argv[]) {
     char *cur_flags_tmp;
     for (int i = 1; i < argc; i++) {
         if (argv[i][0] != '-') {
-            
             return cur_flags;
         }
         for (int j = 1; j < mx_strlen(argv[i]); j++) {

@@ -5,13 +5,22 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 
-static int COUNT_FLAGS = 3;
-static char FLAGS[3] = {'l', 'a', 'A'};
+static int COUNT_FLAGS = 4;
+static char FLAGS[4] = {'l', 'a', 'A', '1'};
 
 typedef struct cur_flags {
     char *flags;
     int count;
 } cur_flags_t;
+
+typedef struct all_flags {
+    bool is_long;
+    bool is_list;
+    bool is_A;
+    bool is_a;
+}all_flags_t;
+
+
 
 //ERRORS
 void mx_printerr(const char *err);
