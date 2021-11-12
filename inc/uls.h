@@ -67,4 +67,8 @@ void get_redable_uid(long_data_t *long_data);
 void get_redable_gid(long_data_t *long_data);
 //print 
 void mx_print_long_data(long_data_t **all_long_data);
+
+// dir info
+struct dirent **get_inf_from_dir(char *dir_name, int *size_dirp);
+
 #endif /* ULS_H */

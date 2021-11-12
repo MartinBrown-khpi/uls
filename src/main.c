@@ -32,37 +32,21 @@ int main(int argc, char const *argv[]) {
     const char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
 
     cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
+    
+    int arguments_count = -1;
+    for (int i = 0; i < argc; i++) {
+        if (argv[i][0] != '-') {
+            arguments_count++;
+        }
+    }
 
     int size_dirp = 0;
     
-    DIR *dp;
-    struct dirent *tmp;
-    dp = opendir(".");
-    while ((tmp= readdir(dp)) != NULL) {
-            size_dirp++;
-        }
-    closedir(dp);
-    
-    struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * size_dirp);
-    dp = opendir(".");
-    for (int i = 0; i < size_dirp; i++) {
-        dirp[i] = readdir(dp);
-        if (mx_strcmp(dirp[i]->d_name, "uls") == 0) {
-            i--;
-            size_dirp--;
-        }
-        if (dirp[i] == NULL) {
-            mx_printerr("cant read\n");
-            exit(1);
-        }
+    struct dirent **dirp = get_inf_from_dir(".", &size_dirp);
+
+    for (int i = 0; i < size_dirp; i ++) {
+        printf("%s\n", dirp[i]->d_name);
     }
-    // Vozmozhno mesto ute4ki ili oshibki
-    // Elsi naebnetsa, smotret suda 
-    dirp = mx_realloc(dirp, size_dirp);
-
-
-    closedir(dp);
-
     all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
     usable_flags->is_list = true;
