@@ -71,4 +71,7 @@ void mx_print_long_data(long_data_t **all_long_data);
 //sort 
 void mx_insertion_sort(long_data_t **arr, int size, bool (*cmp) (long_data_t *first, long_data_t *sec));
 bool default_cmp(long_data_t *first, long_data_t *sec);
+// dir info
+struct dirent **get_inf_from_dir(char *dir_name, int *size_dirp);
+
 #endif /* ULS_H */
