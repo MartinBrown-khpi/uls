@@ -26,8 +26,10 @@ typedef struct all_flags {
 
 typedef struct long_data {
     mode_t f_mode;
+    char *f_redable_mode;
     nlink_t f_links;
     uid_t f_uid;
+    char *f_redable_id;
     gid_t f_gid;
     off_t f_size;
     struct timespec *f_time_change;
@@ -53,6 +55,7 @@ void move_char_back(char *arr, int size, char ch);
 //LS -l
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp);
 long_data_t *mx_get_long_info(const char *filename);
+void get_redable_mode(long_data_t *long_data);
 
 //print 
 void mx_print_long_data(long_data_t **all_long_data);

@@ -44,14 +44,16 @@ int main(int argc, char const *argv[]) {
     closedir(dp);
     
     struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * size_dirp);
-    int dirp_index = 0;
+
     dp = opendir(".");
-    while (dirp_index < size_dirp) {
-        dirp[dirp_index] = readdir(dp);
-        //printf("%s\n", dirp[size_dirp]->d_name);
-        //dirp = mx_realloc(dirp, size_dirp);
-        dirp_index++;
+    for (int i = 0; i < size_dirp; i++) {
+        dirp[i] = readdir(dp);
+        if (dirp[i] == NULL) {
+            mx_printerr("cant read\n");
+            exit(1);
+        }
     }
+
     closedir(dp);
 
     all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
@@ -111,12 +113,16 @@ int main(int argc, char const *argv[]) {
     //set color (придумаем)
     // get first !flag 
     if(usable_flags->is_long) {
-        printf("dirp = %s\n", dirp[2]->d_name);
         long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
-    
+        for (int i = 0; i < size_dirp; i++) {
+            get_redable_mode(all_long_data[i]);
+            printf("lonng name = %s\t", all_long_data[i]->f_namefile);
+            printf("%s\n", all_long_data[i]->f_redable_mode);
+        }
         //sort 
         //print
-        printf("lonng name = %s\n", all_long_data[1]->f_namefile);
+        // printf("lonng name = %s\n", all_long_data[1]->redable_mode);
+        // printf("read mode = %s\n", all_long_data[1]->redable_mode);
         //mx_print_long_data(all_long_data);
 
     }

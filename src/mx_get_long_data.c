@@ -31,3 +31,46 @@ long_data_t *mx_get_long_info(const char *filename) {
     long_data->f_namefile = mx_strdup(filename);
     return long_data;
 }
+
+void get_redable_mode(long_data_t *long_data) {
+    char *redable_mode = (char *)malloc(sizeof(char) * 10);
+    // Test for a type file.
+    
+    if (S_ISLNK(long_data->f_mode)) redable_mode[0] = 'l';
+    else if (S_ISCHR(long_data->f_mode)) redable_mode[0] = 'c';
+    else if (S_ISBLK(long_data->f_mode)) redable_mode[0] = 'b';
+    else if (S_ISFIFO(long_data->f_mode)) redable_mode[0] = 'p';
+    else if (S_ISSOCK(long_data->f_mode)) redable_mode[0] = 's';
+    else redable_mode[0] = (S_ISDIR(long_data->f_mode) ? 'd' : '-');
+
+    // Is REDABLE
+    redable_mode[1] = (long_data->f_mode & S_IRUSR ? 'r' : '-');
+
+    // is WRITABLE
+    redable_mode[2] = (long_data->f_mode & S_IWUSR ? 'w' : '-');
+
+    // is 
+    if (long_data->f_mode & S_ISUID) {
+            redable_mode[3] = (long_data->f_mode & S_IXUSR ? 's' : 'S');
+    }
+    else  redable_mode[3] = (long_data->f_mode & S_IXUSR ? 'x' : '-');
+
+    redable_mode[4] = (long_data->f_mode & S_IRGRP ? 'r' : '-');
+    redable_mode[5] = (long_data->f_mode & S_IWGRP ? 'w' : '-');
+        
+    if (long_data->f_mode & S_ISGID) {
+        redable_mode[6] = (long_data->f_mode & S_IXGRP ? 's' : 'S');
+    }
+    else redable_mode[6] = (long_data->f_mode & S_IXUSR ? 'x' : '-');
+    
+    redable_mode[7] = (long_data->f_mode & S_IROTH ? 'r' : '-');
+    
+    redable_mode[8] = (long_data->f_mode & S_IWOTH ? 'w' : '-');
+        
+    if (long_data->f_mode & S_ISVTX) {
+        redable_mode[9] = (long_data->f_mode & S_IXOTH ? 't' : 'T');
+    }
+    else redable_mode[9] = (long_data->f_mode & S_IXUSR ? 'x' : '-');
+
+    long_data->f_redable_mode = redable_mode;
+}
