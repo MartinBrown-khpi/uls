@@ -67,4 +67,8 @@ void get_redable_uid(long_data_t *long_data);
 void get_redable_gid(long_data_t *long_data);
 //print 
 void mx_print_long_data(long_data_t **all_long_data);
+
+//sort 
+void mx_insertion_sort(long_data_t **arr, int size, bool (*cmp) (long_data_t *first, long_data_t *sec));
+bool default_cmp(long_data_t *first, long_data_t *sec);
 #endif /* ULS_H */
