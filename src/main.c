@@ -125,10 +125,14 @@ int main(int argc, char const *argv[]) {
             get_redable_mode(all_long_data[i]);
             get_redable_uid(all_long_data[i]);
             get_redable_gid(all_long_data[i]);
-            printf("lonng name = %s\t", all_long_data[i]->f_namefile);
-            printf("%s\t", all_long_data[i]->f_redable_gid);
-            printf("%s\t", all_long_data[i]->f_redable_id);
-            printf("%s\n", all_long_data[i]->f_redable_mode);
+            printf("%s ", all_long_data[i]->f_redable_mode);
+            printf("%d ", all_long_data[i]->f_links);
+            printf("%s ", all_long_data[i]->f_redable_id);
+            printf("%s ", all_long_data[i]->f_redable_gid);
+            printf("%lld ", all_long_data[i]->f_size);
+            printf("%s ", ctime(&all_long_data[i]->f_time_modification->tv_sec));
+            printf("%s\n", all_long_data[i]->f_namefile);
+            
         }
         //sort 
         //print

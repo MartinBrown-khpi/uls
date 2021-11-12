@@ -7,6 +7,7 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
+#include <time.h>
 
 typedef struct cur_flags {
     char *flags;
@@ -35,7 +36,9 @@ typedef struct long_data {
     gid_t f_gid;
     char *f_redable_gid;
     off_t f_size;
-    struct timespec *f_time_change;
+    struct timespec *f_time_modification;
+    struct timespec *f_time_last_acces;
+    struct timespec *f_time_last_status;
     char *f_namefile;
 }long_data_t;
 
