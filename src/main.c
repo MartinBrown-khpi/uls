@@ -27,18 +27,46 @@
 Добавить проверку на корректность введенных файлов/директорий в качестве агрументов, начать обрабатывать ошибки ввода
 */
 #include <stdio.h>
-int main(int argc, char const *argv[]) {
-    const int COUNT_FLAGS = 9;
-    const char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
 
-    cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
-    
+static int count_dir_and_files(int argc, char const *argv[]) {
     int arguments_count = -1;
     for (int i = 0; i < argc; i++) {
         if (argv[i][0] != '-') {
             arguments_count++;
         }
     }
+    return arguments_count;
+}
+
+static char **parse_arguments(int argc, char const *argv[], int arguments_count) {
+    char **arguments = malloc(sizeof(char *) * arguments_count);
+    for (int i = 1, j = 0; i < argc && j < arguments_count; i++) {
+        if (argv[i][0] != '-') {
+            arguments[j] = mx_strdup(argv[i]);
+            j++;
+        }
+    }
+    return arguments;
+}
+
+int main(int argc, char const *argv[]) {
+    const int COUNT_FLAGS = 9;
+    const char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
+
+    cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
+    
+    int arguments_count = count_dir_and_files(argc, argv);
+
+    if (arguments_count) {
+        printf("%d", arguments_count);
+    }
+
+    char **arguments = parse_arguments(argc, argv, arguments_count);
+
+    for (int i = 0; i < arguments_count; i++) {
+        printf("%s\n", arguments[i]);
+    }
+    printf("\n\n\n");
 
     int size_dirp = 0;
     
