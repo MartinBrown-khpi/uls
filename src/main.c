@@ -25,6 +25,7 @@
 Убратть нахуй глобальные переменные, оставить доступ к флагам только функции, которая будет устанавливать булевские клюки
 Добавить иф на парсер флагов, что бы не работал просто минус
 Добавить проверку на корректность введенных файлов/директорий в качестве агрументов, начать обрабатывать ошибки ввода
+File path + file name struct 
 */
 #include <stdio.h>
 
@@ -77,119 +78,114 @@ int main(int argc, char const *argv[]) {
     args_validator(arguments, arguments_count);
 
     int size_dirp = 0;
-    
-    struct dirent **dirp = get_inf_from_dir(".", &size_dirp);
+        struct dirent **dirp = get_inf_from_dir("src/", &size_dirp);
 
-    for (int i = 0; i < size_dirp; i ++) {
-        printf("%s\n", dirp[i]->d_name);
-    }
-    all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
+    // for (int i = 0; i < size_dirp; i ++) {
+    //     printf("%s\n", dirp[i]->d_name);
+    // }
+        all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
-    usable_flags->is_list = true;
-    usable_flags->is_long = false;
-    usable_flags->is_A = false;
-    usable_flags->is_a = false;
-    
-    usable_flags->is_reverse = false;
-    usable_flags->is_common_sort = true;
-    usable_flags->is_c_sort = false;
-    usable_flags->is_S_sort = false;
-    usable_flags->is_t_sort = false;
-    usable_flags->is_u_sort = false;
-
-
-    for (int i = 0; i < cur_flags->count; i++) {
-        switch (cur_flags->flags[i]) {
-        case 'l':
-            usable_flags->is_long = true;
-            usable_flags->is_list = false;
-            break;
-        case '1':
-            usable_flags->is_list = true;
-            usable_flags->is_long = false;
-            break;
-        case 'a':
-            usable_flags->is_a = true;
-            usable_flags->is_A = false;   
-            break;
-        case 'A':
-            usable_flags->is_A = true;
-            usable_flags->is_a = false;
-            break;
-        case 'r':
-            usable_flags->is_reverse = true;
-            break;
-        case 't':
-            usable_flags->is_t_sort = true;
-            break;
-        case 'u':
-            usable_flags->is_u_sort= true;
-            usable_flags->is_c_sort = false;
-            break;
-        case 'c':
-            usable_flags->is_c_sort = true;
-            usable_flags->is_u_sort= false;
-            break;
-        case 'S':
-            usable_flags->is_S_sort = true;
-            break;
+        usable_flags->is_list = true;
+        usable_flags->is_long = false;
+        usable_flags->is_A = false;
+        usable_flags->is_a = false;
         
-        default:
-            break;
-        }
-    }
+        usable_flags->is_reverse = false;
+        usable_flags->is_common_sort = true;
+        usable_flags->is_c_sort = false;
+        usable_flags->is_S_sort = false;
+        usable_flags->is_t_sort = false;
+        usable_flags->is_u_sort = false;
 
-    long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
-        for (int i = 0; i < size_dirp; i++) {
-            get_redable_mode(all_long_data[i]);
-            get_redable_uid(all_long_data[i]);
-            get_redable_gid(all_long_data[i]);
-            // printf("%s ", all_long_data[i]->f_redable_mode);
-            // printf("%d ", all_long_data[i]->f_links);
-            // printf("%s ", all_long_data[i]->f_redable_id);
-            // printf("%s ", all_long_data[i]->f_redable_gid);
-            // printf("%lld ", all_long_data[i]->f_size);
-            // printf("%s ", ctime(&all_long_data[i]->f_time_modification->tv_nsec));
-            // printf("%s\n", all_long_data[i]->f_namefile);
+
+        for (int i = 0; i < cur_flags->count; i++) {
+            switch (cur_flags->flags[i]) {
+            case 'l':
+                usable_flags->is_long = true;
+                usable_flags->is_list = false;
+                break;
+            case '1':
+                usable_flags->is_list = true;
+                usable_flags->is_long = false;
+                break;
+            case 'a':
+                usable_flags->is_a = true;
+                usable_flags->is_A = false;   
+                break;
+            case 'A':
+                usable_flags->is_A = true;
+                usable_flags->is_a = false;
+                break;
+            case 'r':
+                usable_flags->is_reverse = true;
+                break;
+            case 't':
+                usable_flags->is_t_sort = true;
+                break;
+            case 'u':
+                usable_flags->is_u_sort= true;
+                usable_flags->is_c_sort = false;
+                break;
+            case 'c':
+                usable_flags->is_c_sort = true;
+                usable_flags->is_u_sort= false;
+                break;
+            case 'S':
+                usable_flags->is_S_sort = true;
+                break;
             
-        }
-        /* Select a sort function. */
-        bool (*sort_func)(long_data_t *, long_data_t *)  = NULL;
-        if (usable_flags->is_S_sort) {
-            sort_func = mx_size_cmp;
-        }
-        else if (usable_flags->is_t_sort) {
-            //time sort
-            sort_func = mx_time_modif_cmp;
-        }
-        else if (usable_flags->is_u_sort) {
-            //vremya последнего доступа для сортировки 
-            sort_func = mx_time_access_cmp;
-        }
-        else if (usable_flags->is_c_sort) {
-            //использовать время последней модификации описателя файла 
-            sort_func = mx_time_status_cmp;
-        } 
-        else {
-            sort_func = mx_default_cmp;
+            default:
+                break;
+            }
         }
 
-    mx_insertion_sort(all_long_data, size_dirp, sort_func);
-    printf("------------------------------------\n\n\n\n");
-    for (int i = 0; i < size_dirp; i++) {
-        printf("%s\n", all_long_data[i]->f_namefile);
-    }
-        //print
+        long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
+            for (int i = 0; i < size_dirp; i++) {
+                get_redable_mode(all_long_data[i]);
+                get_redable_uid(all_long_data[i]);
+                get_redable_gid(all_long_data[i]);
+                // printf("%s ", all_long_data[i]->f_redable_mode);
+                // printf("%d ", all_long_data[i]->f_links);
+                // printf("%s ", all_long_data[i]->f_redable_id);
+                // printf("%s ", all_long_data[i]->f_redable_gid);
+                // printf("%lld ", all_long_data[i]->f_size);
+                // printf("%s ", ctime(&all_long_data[i]->f_time_modification->tv_nsec));
+                // printf("%s\n", all_long_data[i]->f_namefile);
+                
+            }
+            /* Select a sort function. */
+            bool (*sort_func)(long_data_t *, long_data_t *)  = NULL;
+            if (usable_flags->is_S_sort) {
+                sort_func = mx_size_cmp;
+            }
+            else if (usable_flags->is_t_sort) {
+                //time sort
+                sort_func = mx_time_modif_cmp;
+            }
+            else if (usable_flags->is_u_sort) {
+                //vremya последнего доступа для сортировки 
+                sort_func = mx_time_access_cmp;
+            }
+            else if (usable_flags->is_c_sort) {
+                //использовать время последней модификации описателя файла 
+                sort_func = mx_time_status_cmp;
+            } 
+            else {
+                sort_func = mx_default_cmp;
+            }
+
+        mx_insertion_sort(all_long_data, size_dirp, sort_func);
+        printf("------------------------------------\n\n\n\n");
+        for (int i = 0; i < size_dirp; i++) {
+            printf("%s\n", all_long_data[i]->f_namefile);
+        }
 
     // else if (usable_flags->is_list) {
     //     "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
     //     //sort
     //     //print 
     // }
-    if (cur_flags->count != 0) {
-        mx_strdel(&cur_flags->flags);
-        free(cur_flags);
-    }
+    
 
     return 0;
 }
