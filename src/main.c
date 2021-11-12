@@ -104,9 +104,11 @@ int main(int argc, char const *argv[]) {
             break;
         case 'u':
             usable_flags->is_u_sort= true;
+            usable_flags->is_c_sort = false;
             break;
         case 'c':
             usable_flags->is_c_sort = true;
+            usable_flags->is_u_sort= false;
             break;
         case 'S':
             usable_flags->is_S_sort = true;
@@ -125,20 +127,35 @@ int main(int argc, char const *argv[]) {
             get_redable_mode(all_long_data[i]);
             get_redable_uid(all_long_data[i]);
             get_redable_gid(all_long_data[i]);
-            printf("%s ", all_long_data[i]->f_redable_mode);
-            printf("%d ", all_long_data[i]->f_links);
-            printf("%s ", all_long_data[i]->f_redable_id);
-            printf("%s ", all_long_data[i]->f_redable_gid);
-            printf("%lld ", all_long_data[i]->f_size);
-            printf("%s ", ctime(&all_long_data[i]->f_time_modification->tv_nsec));
-            printf("%s\n", all_long_data[i]->f_namefile);
+            // printf("%s ", all_long_data[i]->f_redable_mode);
+            // printf("%d ", all_long_data[i]->f_links);
+            // printf("%s ", all_long_data[i]->f_redable_id);
+            // printf("%s ", all_long_data[i]->f_redable_gid);
+            // printf("%lld ", all_long_data[i]->f_size);
+            // printf("%s ", ctime(&all_long_data[i]->f_time_modification->tv_nsec));
+            // printf("%s\n", all_long_data[i]->f_namefile);
             
         }
-        //sort 
+        /* Select a sort function. */
+        if (usable_flags->is_S_sort) {
+            //size sort
+        }
+        else if (usable_flags->is_t_sort) {
+            //time sort
+        }
+        else if (usable_flags->is_u_sort) {
+            //vremya последнего доступа для сортировки 
+        }
+        else if (usable_flags->is_c_sort) {
+            //использовать время последней модификации описателя файла 
+        } 
+        else {
+            //common sort
+        }
+
+
         //print
-        // printf("lonng name = %s\n", all_long_data[1]->redable_mode);
-        // printf("read mode = %s\n", all_long_data[1]->redable_mode);
-        //mx_print_long_data(all_long_data);
+
 
     }
     // else if (usable_flags->is_list) {
