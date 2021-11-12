@@ -38,6 +38,17 @@ static int count_dir_and_files(int argc, char const *argv[]) {
     return arguments_count;
 }
 
+static void args_validator(char **arguments, int arguments_count) { 
+    struct stat buff;
+    for (int i = 0; i < arguments_count; i++) {
+        if (stat(arguments[i], &buff) == -1) {
+            // popravit vivod oshibki
+            // 4istit pam9t pri exit() ili sdelat bool i vozvrashat v main
+            printf("Invalid file_name\n");
+        }
+    }
+}
+
 static char **parse_arguments(int argc, char const *argv[], int arguments_count) {
     char **arguments = malloc(sizeof(char *) * arguments_count);
     for (int i = 1, j = 0; i < argc && j < arguments_count; i++) {
@@ -63,10 +74,7 @@ int main(int argc, char const *argv[]) {
 
     char **arguments = parse_arguments(argc, argv, arguments_count);
 
-    for (int i = 0; i < arguments_count; i++) {
-        printf("%s\n", arguments[i]);
-    }
-    printf("\n\n\n");
+    args_validator(arguments, arguments_count);
 
     int size_dirp = 0;
     
