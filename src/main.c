@@ -130,7 +130,7 @@ int main(int argc, char const *argv[]) {
             printf("%s ", all_long_data[i]->f_redable_id);
             printf("%s ", all_long_data[i]->f_redable_gid);
             printf("%lld ", all_long_data[i]->f_size);
-            printf("%s ", ctime(&all_long_data[i]->f_time_modification->tv_sec));
+            printf("%s ", ctime(&all_long_data[i]->f_time_modification->tv_nsec));
             printf("%s\n", all_long_data[i]->f_namefile);
             
         }
