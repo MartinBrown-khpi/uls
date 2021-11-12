@@ -139,10 +139,7 @@ int main(int argc, char const *argv[]) {
         }
     }
 
-    //set color (придумаем)
-    // get first !flag 
-    if(usable_flags->is_long) {
-        long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
+    long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
         for (int i = 0; i < size_dirp; i++) {
             get_redable_mode(all_long_data[i]);
             get_redable_uid(all_long_data[i]);
@@ -157,27 +154,33 @@ int main(int argc, char const *argv[]) {
             
         }
         /* Select a sort function. */
+        bool (*sort_func)(long_data_t *, long_data_t *)  = NULL;
         if (usable_flags->is_S_sort) {
-            //size sort
+            sort_func = mx_size_cmp;
         }
         else if (usable_flags->is_t_sort) {
             //time sort
+            sort_func = mx_time_modif_cmp;
         }
         else if (usable_flags->is_u_sort) {
             //vremya последнего доступа для сортировки 
+            sort_func = mx_time_access_cmp;
         }
         else if (usable_flags->is_c_sort) {
             //использовать время последней модификации описателя файла 
+            sort_func = mx_time_status_cmp;
         } 
         else {
-            //common sort
+            sort_func = mx_default_cmp;
         }
 
-
+    mx_insertion_sort(all_long_data, size_dirp, sort_func);
+    printf("------------------------------------\n\n\n\n");
+    for (int i = 0; i < size_dirp; i++) {
+        printf("%s\n", all_long_data[i]->f_namefile);
+    }
         //print
 
-
-    }
     // else if (usable_flags->is_list) {
     //     "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
     //     //sort

@@ -42,7 +42,31 @@ bool mx_time_modif_cmp(long_data_t *first, long_data_t *sec) {
         return false;
     }
 
-    if (first->f_time_modification->tv_sec > sec->f_time_modification->tv_sec) {
+    if (first->f_time_modification->tv_nsec < sec->f_time_modification->tv_nsec) {
+        return true;
+    }
+    return false;
+}
+
+bool mx_time_access_cmp(long_data_t *first, long_data_t *sec) {
+    if (!first || !sec) {
+        mx_printerr("NULL pointer in time_modif_cmp");
+        return false;
+    }
+
+    if (first->f_time_last_acces->tv_sec < sec->f_time_last_acces->tv_sec) {
+        return true;
+    }
+    return false;
+}
+
+bool mx_time_status_cmp(long_data_t *first, long_data_t *sec) {
+    if (!first || !sec) {
+        mx_printerr("NULL pointer in time_modif_cmp");
+        return false;
+    }
+
+    if (first->f_time_last_status->tv_sec > sec->f_time_last_status->tv_sec) {
         return true;
     }
     return false;
