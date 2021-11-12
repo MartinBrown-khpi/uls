@@ -11,7 +11,6 @@ long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp){
 }
 
 
-
 long_data_t *mx_get_long_info(const char *filename) {
     struct stat buff;
     long_data_t *long_data = malloc(sizeof(long_data_t));

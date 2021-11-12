@@ -1,6 +1,6 @@
 #include "uls.h"
 
-cur_flags_t *mx_get_flags(int argc, char const *argv[]) {
+cur_flags_t *mx_get_flags(const int COUNT_FLAGS, char const FLAGS[], int argc, char const *argv[]) {
     cur_flags_t *cur_flags = malloc(sizeof(cur_flags_t));
     cur_flags->flags = NULL;
     cur_flags->count = 0;
@@ -11,9 +11,9 @@ cur_flags_t *mx_get_flags(int argc, char const *argv[]) {
             return cur_flags;
         }
         for (int j = 1; j < mx_strlen(argv[i]); j++) {
-            if (!is_valid_flag(argv[i][j])) {
+            if (!is_valid_flag(COUNT_FLAGS, FLAGS, argv[i][j])) {
                 mx_illegal_option(argv, argv[i][j]);
-                mx_print_usage();
+                mx_print_usage(FLAGS);
                 exit(1);
             }
             else {
@@ -50,7 +50,7 @@ bool is_in_cur_flags(cur_flags_t *cur_flags, char flag) {
     return false;
 }
 
-bool is_valid_flag(char flag)  {
+bool is_valid_flag(const int COUNT_FLAGS, char const FLAGS[], char flag)  {
     for (int i = 0; i < COUNT_FLAGS; i++) {
         if (FLAGS[i] == flag) {
             return true;

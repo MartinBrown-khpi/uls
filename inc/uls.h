@@ -5,8 +5,6 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
-static int COUNT_FLAGS = 9;
-static char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
 
 typedef struct cur_flags {
     char *flags;
@@ -43,12 +41,12 @@ int mx_get_first_file(int argc, char const *argv[]);
 void mx_printerr(const char *err);
 
 void mx_illegal_option(char const *argv[] ,char flag);
-void mx_usage(int argc);
-void mx_print_usage();
-// PARSE FLAGS 
-cur_flags_t *mx_get_flags(int argc, char const *argv[]);
 
-bool is_valid_flag(char flag);
+void mx_print_usage(char const FLAGS[]);
+// PARSE FLAGS 
+cur_flags_t *mx_get_flags(const int COUNT_FLAGS, char const FLAGS[] , int argc, char const *argv[]);
+
+bool is_valid_flag(const int COUNT_FLAGS, char const FLAGS[], char flag);
 bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
 void move_char_back(char *arr, int size, char ch);
 

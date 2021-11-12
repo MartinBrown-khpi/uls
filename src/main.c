@@ -17,29 +17,41 @@
     // printf("%d\n%d\n", w.ws_col, w.ws_row);
 
 */
-
+/* TODO
+Разобраться со списком доступных хедеров и библиотек
+Спиздить у Вовы ахуенную структуру айтемов
+По возможности начать убирать хардкод и утечки памяти
+Написать парсер для файлнеймов, у Вовы тоже есть
+Убратть нахуй глобальные переменные, оставить доступ к флагам только функции, которая будет устанавливать булевские клюки
+Добавить иф на парсер флагов, что бы не работал просто минус
+Добавить проверку на корректность введенных файлов/директорий в качестве агрументов, начать обрабатывать ошибки ввода
+*/
 #include <stdio.h>
 int main(int argc, char const *argv[]) {
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-    cur_flags_t *cur_flags = mx_get_flags(argc, argv);
-    DIR *dp;
+    const int COUNT_FLAGS = 9;
+    const char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
+
+    cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
+
     int size_dirp = 0;
-    struct dirent *tmp;
+    
+    DIR *dp;
     dp = opendir(".");
-    while ((tmp= readdir(dp)) != NULL) {
+    while ((readdir(dp) != NULL)) {
             size_dirp++;
         }
-        closedir(dp);
+    closedir(dp);
+    
+    size_dirp = 0; 
     struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * size_dirp);
-    size_dirp = 0;
-        dp = opendir(".");
-        while ((dirp[size_dirp] = readdir(dp)) != NULL) {
-            //printf("%s\n", dirp[size_dirp]->d_name);
-            dirp = mx_realloc(dirp, size_dirp);
-            size_dirp++;
-        }
-        closedir(dp);
+    
+    dp = opendir(".");
+    while ((dirp[size_dirp] = readdir(dp)) != NULL) {
+        //printf("%s\n", dirp[size_dirp]->d_name);
+        dirp = mx_realloc(dirp, size_dirp);
+        size_dirp++;
+    }
+    closedir(dp);
 
 
     all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
