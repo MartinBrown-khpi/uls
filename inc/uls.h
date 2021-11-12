@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
+#include <pwd.h>
+#include <grp.h>
 
 typedef struct cur_flags {
     char *flags;
@@ -31,6 +33,7 @@ typedef struct long_data {
     uid_t f_uid;
     char *f_redable_id;
     gid_t f_gid;
+    char *f_redable_gid;
     off_t f_size;
     struct timespec *f_time_change;
     char *f_namefile;
@@ -55,8 +58,10 @@ void move_char_back(char *arr, int size, char ch);
 //LS -l
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp);
 long_data_t *mx_get_long_info(const char *filename);
-void get_redable_mode(long_data_t *long_data);
 
+void get_redable_mode(long_data_t *long_data);
+void get_redable_uid(long_data_t *long_data);
+void get_redable_gid(long_data_t *long_data);
 //print 
 void mx_print_long_data(long_data_t **all_long_data);
 #endif /* ULS_H */

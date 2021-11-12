@@ -74,3 +74,25 @@ void get_redable_mode(long_data_t *long_data) {
 
     long_data->f_redable_mode = redable_mode;
 }
+
+void get_redable_uid(long_data_t *long_data) {
+    struct passwd *user = getpwuid(long_data->f_uid);
+    if (user == NULL) {
+        mx_printerr("cant get pwuid");
+        exit(1);
+    }
+    char *user_name = malloc(sizeof(char) * mx_strlen(user->pw_name));
+    mx_strcpy(user_name, user->pw_name);
+    long_data->f_redable_id = user_name;
+}
+
+void get_redable_gid(long_data_t *long_data) {
+    struct group *char_group = getgrgid(long_data->f_gid);
+    if (char_group == NULL) {
+        long_data->f_redable_gid = mx_strdup(mx_itoa(long_data->f_gid));
+    }
+    else {
+        long_data->f_redable_gid = mx_strdup(char_group->gr_name);
+    }
+
+}
