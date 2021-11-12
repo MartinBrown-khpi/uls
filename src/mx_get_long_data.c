@@ -17,6 +17,7 @@ long_data_t *mx_get_long_info(const char *filename) {
     long_data->f_time_change = malloc(sizeof(long_data->f_time_change));
     if (stat(filename, &buff) == -1 ) {
         mx_printerr("cant get file stat");
+        printf("%s\n", filename);
         return NULL;
     }
 

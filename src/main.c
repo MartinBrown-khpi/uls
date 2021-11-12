@@ -36,23 +36,23 @@ int main(int argc, char const *argv[]) {
     int size_dirp = 0;
     
     DIR *dp;
+    struct dirent *tmp;
     dp = opendir(".");
-    while ((readdir(dp) != NULL)) {
+    while ((tmp= readdir(dp)) != NULL) {
             size_dirp++;
         }
     closedir(dp);
     
-    size_dirp = 0; 
     struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * size_dirp);
-    
+    int dirp_index = 0;
     dp = opendir(".");
-    while ((dirp[size_dirp] = readdir(dp)) != NULL) {
+    while (dirp_index < size_dirp) {
+        dirp[dirp_index] = readdir(dp);
         //printf("%s\n", dirp[size_dirp]->d_name);
-        dirp = mx_realloc(dirp, size_dirp);
-        size_dirp++;
+        //dirp = mx_realloc(dirp, size_dirp);
+        dirp_index++;
     }
     closedir(dp);
-
 
     all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
@@ -111,12 +111,13 @@ int main(int argc, char const *argv[]) {
     //set color (придумаем)
     // get first !flag 
     if(usable_flags->is_long) {
-        //printf("dirp = %s\n", dirp[2]->d_name);
+        printf("dirp = %s\n", dirp[2]->d_name);
         long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp);
     
         //sort 
         //print
         printf("lonng name = %s\n", all_long_data[1]->f_namefile);
+        //mx_print_long_data(all_long_data);
 
     }
     // else if (usable_flags->is_list) {

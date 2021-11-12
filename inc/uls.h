@@ -53,4 +53,7 @@ void move_char_back(char *arr, int size, char ch);
 //LS -l
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp);
 long_data_t *mx_get_long_info(const char *filename);
+
+//print 
+void mx_print_long_data(long_data_t **all_long_data);
 #endif /* ULS_H */
