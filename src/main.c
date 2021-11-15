@@ -62,14 +62,6 @@ static char **parse_arguments(int argc, char const *argv[], int arguments_count)
 }
 
 int main(int argc, char const *argv[]) {
-
-    
-    
-    
-    
-    
-    
-    
     const int COUNT_FLAGS = 9;
     const char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
 
@@ -87,15 +79,6 @@ int main(int argc, char const *argv[]) {
         arguments = parse_arguments(argc, argv, arguments_count);
         args_validator(arguments, arguments_count);
     }
-    // printf("xui\n");
-    // printf("arg  = %s\n", arguments[0]);
-    
-
-
-
-    // for (int i = 0; i < size_dirp; i ++) {
-    //     printf("%s\n", dirp[i]->d_name);
-    // }
         all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
         usable_flags->is_list = false;
@@ -172,8 +155,6 @@ int main(int argc, char const *argv[]) {
             sort_func = mx_default_cmp;
         }
 
-        
-    
         // цикл проходит через все аргументы
         int size_dirp;
         struct dirent **dirp;

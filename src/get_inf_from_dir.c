@@ -1,10 +1,5 @@
 #include "uls.h"
-//   int arguments_count = -1;
-//     for (int i = 0; i < argc; i++) {
-//         if (argv[i][0] != '-') {
-//             arguments_count++;
-//         }
-//     }
+
 #include <stdio.h>
 
 struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp) {
