@@ -1,8 +1,9 @@
 #include "uls.h"
 
-
+#include <stdio.h>
 //return true if 1 > 2
 bool mx_default_cmp(long_data_t *first, long_data_t *sec) {
+    printf("default cmp\n");
     if (!first || !sec) {
         mx_printerr("NULL pointer in default cmp");
         return false;
@@ -25,6 +26,7 @@ bool mx_default_cmp(long_data_t *first, long_data_t *sec) {
 
 //return true if 1 > 2
 bool mx_size_cmp(long_data_t *first, long_data_t *sec) {
+    printf("size cmp\n");
     if (!first || !sec) {
         mx_printerr("NULL pointer in size cmp");
         return false;
@@ -37,6 +39,7 @@ bool mx_size_cmp(long_data_t *first, long_data_t *sec) {
 
 //return true if 1 > 2
 bool mx_time_modif_cmp(long_data_t *first, long_data_t *sec) {
+    printf("mx_time_modif_cmp cmp\n");
     if (!first || !sec) {
         mx_printerr("NULL pointer in time_modif_cmp");
         return false;
@@ -49,6 +52,7 @@ bool mx_time_modif_cmp(long_data_t *first, long_data_t *sec) {
 }
 
 bool mx_time_access_cmp(long_data_t *first, long_data_t *sec) {
+    printf("mx_time_access_cmp cmp\n");
     if (!first || !sec) {
         mx_printerr("NULL pointer in time_modif_cmp");
         return false;
@@ -61,6 +65,7 @@ bool mx_time_access_cmp(long_data_t *first, long_data_t *sec) {
 }
 
 bool mx_time_status_cmp(long_data_t *first, long_data_t *sec) {
+    printf("mx_time_status_cmp\n");
     if (!first || !sec) {
         mx_printerr("NULL pointer in time_modif_cmp");
         return false;

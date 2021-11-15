@@ -40,6 +40,7 @@ typedef struct long_data {
     struct timespec *f_time_last_acces;
     struct timespec *f_time_last_status;
     char *f_namefile;
+    char *f_pathfile;
 }long_data_t;
 
 // help func
@@ -59,7 +60,7 @@ bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
 void move_char_back(char *arr, int size, char ch);
 
 //LS -l
-long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp);
+long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const char *namedir);
 long_data_t *mx_get_long_info(const char *filename);
 
 void get_redable_mode(long_data_t *long_data);
@@ -76,6 +77,6 @@ bool mx_time_modif_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_access_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_status_cmp(long_data_t *first, long_data_t *sec);
 // dir info
-struct dirent **get_inf_from_dir(char *dir_name, int *size_dirp);
+struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp);
 
 #endif /* ULS_H */
