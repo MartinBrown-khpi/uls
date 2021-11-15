@@ -16,3 +16,13 @@ void mx_insertion_sort(long_data_t **arr, int size, bool (*cmp) (long_data_t *fi
     }
 }
 
+void reverse_array(long_data_t **arr, int size) {
+    long_data_t *tmp;
+    for (int i = 0; i < size / 2; i++) {
+        tmp = arr[i];
+        arr[i] = arr[size-i-1];
+        arr[size-i-1] = tmp;
+    }
+
+
+}

@@ -146,7 +146,6 @@ int main(int argc, char const *argv[]) {
             case 'S':
                 usable_flags->is_S_sort = true;
                 break;
-            
             default:
                 break;
             }
@@ -193,6 +192,9 @@ int main(int argc, char const *argv[]) {
 
             // сортировка 
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
+            if (usable_flags->is_reverse) {
+                reverse_array(all_long_data, size_dirp);
+            }
             // printf("------------------------------------\n");
             // for (int i = 0; i < size_dirp; i++) {
             //     if (all_long_data[i]->f_namefile[0] != '.')

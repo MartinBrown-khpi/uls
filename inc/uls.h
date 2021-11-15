@@ -76,6 +76,7 @@ bool mx_size_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_modif_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_access_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_status_cmp(long_data_t *first, long_data_t *sec);
+void reverse_array(long_data_t **arr, int size);
 // dir info
 struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp);
 // print -1 flag
