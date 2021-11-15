@@ -195,7 +195,8 @@ int main(int argc, char const *argv[]) {
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
             printf("------------------------------------\n");
             for (int i = 0; i < size_dirp; i++) {
-                printf("%s\n", all_long_data[i]->f_namefile);
+                if (all_long_data[i]->f_namefile[0] != '.')
+                    printf("%s\n", all_long_data[i]->f_namefile);
             }
             // вывод   
         }
