@@ -14,7 +14,7 @@ struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp) {
     dp = opendir(dir_name);
 
     if (dp == NULL) {
-        //TODO если аргемент файл тут выбивает сигфолт
+        return NULL;
     }
 
     while ((tmp= readdir(dp)) != NULL) {

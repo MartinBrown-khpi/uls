@@ -171,6 +171,7 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < arguments_count; i++) {
             int size_dirp = 0;
             struct dirent **dirp = get_inf_from_dir(arguments[i], &size_dirp);
+            if (size_dirp == 0) size_dirp++;
             long_data_t **all_long_data = mx_get_all_long_data(size_dirp, dirp, arguments[i]);
 
             for (int j = 0; j < size_dirp; j++) {
@@ -181,7 +182,7 @@ int main(int argc, char const *argv[]) {
 
             // сортировка 
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
-            printf("------------------------------------\n\n\n\n");
+            printf("------------------------------------\n");
             for (int i = 0; i < size_dirp; i++) {
                 printf("%s\n", all_long_data[i]->f_namefile);
             }

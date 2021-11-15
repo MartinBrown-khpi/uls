@@ -3,7 +3,14 @@
 
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const char *namedir){
     char *dir_path;
-    long_data_t ** all_data = malloc(sizeof(long_data_t*) * size_dirp);
+    long_data_t ** all_data;
+    printf("size dirp = %d\n", size_dirp);
+    if (dirp == NULL) {
+        all_data =  malloc(sizeof(long_data_t*));
+        all_data[0] = mx_get_long_info(namedir);
+        return all_data;
+    }
+    all_data = malloc(sizeof(long_data_t*) * size_dirp);
     for (int i = 0; i < size_dirp; i++) {
         dir_path = mx_strjoin(namedir, "/");
         all_data[i] = mx_get_long_info( mx_strjoin(dir_path, dirp[i]->d_name));
