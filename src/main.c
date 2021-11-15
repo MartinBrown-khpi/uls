@@ -161,11 +161,11 @@ int main(int argc, char const *argv[]) {
             //time sort
             sort_func = mx_time_modif_cmp;
         }
-        else if (usable_flags->is_u_sort) {
+        else if (usable_flags->is_u_sort && usable_flags->is_t_sort) {
             //vremya последнего доступа для сортировки 
             sort_func = mx_time_access_cmp;
         }
-        else if (usable_flags->is_c_sort) {
+        else if (usable_flags->is_c_sort && usable_flags->is_t_sort) {
            //использовать время последней модификации описателя файла 
             sort_func = mx_time_status_cmp;
         } 
