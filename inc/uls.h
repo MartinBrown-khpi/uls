@@ -78,5 +78,6 @@ bool mx_time_access_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_status_cmp(long_data_t *first, long_data_t *sec);
 // dir info
 struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp);
-
+// print -1 flag
+void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usable_flags);
 #endif /* ULS_H */

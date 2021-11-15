@@ -27,7 +27,7 @@ long_data_t *mx_get_long_info(const char *filename, const char *path) {
     long_data->f_time_last_acces = malloc(sizeof(long_data->f_time_last_acces));
     long_data->f_time_last_status = malloc(sizeof(long_data->f_time_last_status));
     long_data->f_time_modification = malloc(sizeof(long_data->f_time_modification));
-    if (stat(tmp, &buff) == -1 ) {
+    if (lstat(tmp, &buff) == -1 ) {
         mx_printerr("cant get file stat");
         printf("%s\n", filename);
         return NULL;

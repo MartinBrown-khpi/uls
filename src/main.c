@@ -77,7 +77,7 @@ int main(int argc, char const *argv[]) {
     
     int arguments_count = count_dir_and_files(argc, argv);
     char **arguments = NULL;
-    printf("arg count = %d", arguments_count);
+    // printf("arg count = %d", arguments_count);
     if (arguments_count == 0) {
         arguments = malloc(sizeof(char *));
         arguments[0] = mx_strdup(".");
@@ -87,8 +87,8 @@ int main(int argc, char const *argv[]) {
         arguments = parse_arguments(argc, argv, arguments_count);
         args_validator(arguments, arguments_count);
     }
-    printf("xui\n");
-    printf("arg  = %s\n", arguments[0]);
+    // printf("xui\n");
+    // printf("arg  = %s\n", arguments[0]);
     
 
 
@@ -98,7 +98,7 @@ int main(int argc, char const *argv[]) {
     // }
         all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
-        usable_flags->is_list = true;
+        usable_flags->is_list = false;
         usable_flags->is_long = false;
         usable_flags->is_A = false;
         usable_flags->is_a = false;
@@ -157,7 +157,7 @@ int main(int argc, char const *argv[]) {
         if (usable_flags->is_S_sort) {
                sort_func = mx_size_cmp;
         }
-        else if (usable_flags->is_t_sort) {
+        else if (usable_flags->is_t_sort && !usable_flags->is_u_sort && !usable_flags->is_c_sort) {
             //time sort
             sort_func = mx_time_modif_cmp;
         }
@@ -193,16 +193,18 @@ int main(int argc, char const *argv[]) {
 
             // сортировка 
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
-            printf("------------------------------------\n");
-            for (int i = 0; i < size_dirp; i++) {
-                if (all_long_data[i]->f_namefile[0] != '.')
-                    printf("%s\n", all_long_data[i]->f_namefile);
-            }
+            // printf("------------------------------------\n");
+            // for (int i = 0; i < size_dirp; i++) {
+            //     if (all_long_data[i]->f_namefile[0] != '.')
+            //         printf("%s\n", all_long_data[i]->f_namefile);
+            // }
             // вывод   
         }
         
 
-            
+        if (usable_flags->is_list) {
+            mx_print_list(all_long_data, size_dirp, usable_flags);
+        }
 
 
 
