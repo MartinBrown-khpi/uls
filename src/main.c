@@ -62,6 +62,14 @@ static char **parse_arguments(int argc, char const *argv[], int arguments_count)
 }
 
 int main(int argc, char const *argv[]) {
+
+    
+    
+    
+    
+    
+    
+    
     const int COUNT_FLAGS = 9;
     const char FLAGS[9] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S'};
 
