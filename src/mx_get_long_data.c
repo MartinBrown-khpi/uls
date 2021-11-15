@@ -40,12 +40,12 @@ long_data_t *mx_get_long_info(const char *filename, const char *path) {
     long_data->f_size = buff.st_size;
     long_data->f_uid = buff.st_uid;
     long_data->f_gid = buff.st_gid;
-    long_data->f_time_last_acces->tv_nsec = buff.st_atime;
-    long_data->f_time_last_acces->tv_sec = buff.st_atime;
-    long_data->f_time_last_status->tv_nsec  = buff.st_ctime;
-    long_data->f_time_last_status->tv_sec = buff.st_ctime;
-    long_data->f_time_modification->tv_nsec = buff.st_mtime;
-    long_data->f_time_modification->tv_nsec = buff.st_mtime;
+    // long_data->f_time_last_acces->tv_nsec = buff.st_atime;
+    long_data->f_time_last_acces->tv_sec = buff.st_atimespec.tv_sec;
+    // long_data->f_time_last_status->tv_nsec  = buff.st_ctime;
+    long_data->f_time_last_status->tv_sec = buff.st_ctimespec.tv_sec;
+    // long_data->f_time_modification->tv_nsec = buff.st_mtime;
+    long_data->f_time_modification->tv_sec = buff.st_mtimespec.tv_sec;
     long_data->f_namefile = mx_strdup(filename);
     long_data->f_pathfile = mx_strdup(path);
     return long_data;
