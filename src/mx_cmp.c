@@ -24,6 +24,10 @@ bool mx_size_cmp(long_data_t *first, long_data_t *sec) {
 
     if (first->f_size < sec->f_size) {
         return true;
+    } else if (first->f_size == sec->f_size) {
+        if (mx_strcmp(first->f_namefile, sec->f_namefile) > 0) {
+            return true;
+        }
     }
     return false;
 }
