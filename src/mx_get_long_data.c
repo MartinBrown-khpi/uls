@@ -7,25 +7,29 @@ long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const ch
     printf("size dirp = %d\n", size_dirp);
     if (dirp == NULL) {
         all_data =  malloc(sizeof(long_data_t*));
-        all_data[0] = mx_get_long_info(namedir);
+        all_data[0] = mx_get_long_info(namedir, "");
         return all_data;
     }
     all_data = malloc(sizeof(long_data_t*) * size_dirp);
     for (int i = 0; i < size_dirp; i++) {
         dir_path = mx_strjoin(namedir, "/");
-        all_data[i] = mx_get_long_info( mx_strjoin(dir_path, dirp[i]->d_name));
+        //printf("%s\n", dir_path);
+        all_data[i] = mx_get_long_info(dirp[i]->d_name, dir_path);
+        printf("%s\n", mx_strjoin(dir_path, dirp[i]->d_name));
+        printf("%s\n", dirp[i]->d_name);
     }
     return all_data;
 }
 
 
-long_data_t *mx_get_long_info(const char *filename) {
+long_data_t *mx_get_long_info(const char *filename, const char *path) {
+    char *tmp = mx_strjoin(path, filename);
     struct stat buff;
     long_data_t *long_data = malloc(sizeof(long_data_t));
     long_data->f_time_last_acces = malloc(sizeof(long_data->f_time_last_acces));
     long_data->f_time_last_status = malloc(sizeof(long_data->f_time_last_status));
     long_data->f_time_modification = malloc(sizeof(long_data->f_time_modification));
-    if (stat(filename, &buff) == -1 ) {
+    if (stat(tmp, &buff) == -1 ) {
         mx_printerr("cant get file stat");
         printf("%s\n", filename);
         return NULL;
@@ -43,6 +47,7 @@ long_data_t *mx_get_long_info(const char *filename) {
     long_data->f_time_modification->tv_nsec = buff.st_mtime;
     long_data->f_time_modification->tv_nsec = buff.st_mtime;
     long_data->f_namefile = mx_strdup(filename);
+    long_data->f_pathfile = mx_strdup(path);
     return long_data;
 }
 

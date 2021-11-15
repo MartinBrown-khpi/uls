@@ -61,7 +61,7 @@ void move_char_back(char *arr, int size, char ch);
 
 //LS -l
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const char *namedir);
-long_data_t *mx_get_long_info(const char *filename);
+long_data_t *mx_get_long_info(const char *filename, const char *path);
 
 void get_redable_mode(long_data_t *long_data);
 void get_redable_uid(long_data_t *long_data);
