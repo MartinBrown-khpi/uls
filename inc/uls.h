@@ -45,6 +45,8 @@ typedef struct long_data {
 
 // help func
 int mx_get_first_file(int argc, char const *argv[]);
+int mx_get_max_int(int *arr, int size);
+int mx_get_rank(int digit);
 
 //ERRORS
 void mx_printerr(const char *err);
@@ -66,8 +68,6 @@ long_data_t *mx_get_long_info(const char *filename, const char *path);
 void get_redable_mode(long_data_t *long_data);
 void get_redable_uid(long_data_t *long_data);
 void get_redable_gid(long_data_t *long_data);
-//print 
-void mx_print_long_data(long_data_t **all_long_data);
 
 //sort 
 void mx_insertion_sort(long_data_t **arr, int size, bool (*cmp) (long_data_t *first, long_data_t *sec));
@@ -81,4 +81,11 @@ void reverse_array(long_data_t **arr, int size);
 struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp);
 // print -1 flag
 void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usable_flags);
+//print -l flag
+void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
+void mx_print_redable_mode(long_data_t *long_data);
+void mx_print_links(long_data_t *long_data, int max_rank_link);
+void mx_print_redable_uid(long_data_t *long_data);
+void mx_print_redable_gid(long_data_t *long_data);
+void mx_print_size(long_data_t *long_data, int max_rank_size);
 #endif /* ULS_H */
