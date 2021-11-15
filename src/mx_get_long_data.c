@@ -15,8 +15,6 @@ long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const ch
         dir_path = mx_strjoin(namedir, "/");
         //printf("%s\n", dir_path);
         all_data[i] = mx_get_long_info(dirp[i]->d_name, dir_path);
-        printf("%s\n", mx_strjoin(dir_path, dirp[i]->d_name));
-        printf("%s\n", dirp[i]->d_name);
     }
     return all_data;
 }
