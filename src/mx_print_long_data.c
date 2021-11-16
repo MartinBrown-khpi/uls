@@ -16,6 +16,8 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
     int max_rank_size = mx_get_rank(mx_get_max_int(arr, size));
     free(arr);
 
+
+
     for (int i = 0; i < size; i++) {
         if (usable_flags->is_a) {
             mx_print_redable_mode(all_long_data[i]);
@@ -23,6 +25,8 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
             mx_print_redable_uid(all_long_data[i]);
             mx_print_redable_gid(all_long_data[i]);
             mx_print_size(all_long_data[i], max_rank_size);
+            mx_print_date_time(all_long_data[i]);
+            mx_print_namefile(all_long_data[i]);
             mx_printchar('\n');
         }
     }
@@ -56,6 +60,20 @@ void mx_print_size(long_data_t *long_data, int max_rank_size) {
         mx_printchar(' ');
     }
     mx_printint(long_data->f_size);
+}
+
+void mx_print_date_time(long_data_t *long_data) {
+    char *strtime = ctime(&long_data->f_time_modification->tv_sec);
+    
+    char **splitarrtime = mx_strsplit(strtime, ' ');
+    mx_print_month(splitarrtime);
+    mx_print_day(splitarrtime);
+    mx_print_time(splitarrtime);
+}
+
+void mx_print_namefile(long_data_t *long_data) {
+    mx_printchar(' ');
+    mx_printstr(long_data->f_namefile);
 }
 
 int mx_get_max_int(int *arr, int size) {

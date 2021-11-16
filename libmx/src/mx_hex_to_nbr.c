@@ -1,13 +1,5 @@
 #include "libmx.h"
 
-static bool mx_isdigit(int c) {
-
-    if (c >= '0' && c <= '9') {
-        return true;
-    }
-    return false;
-}
-
 static bool mx_islower(int c) {
 
     if (c >= 'a' && c <= 'z') {

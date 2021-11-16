@@ -44,6 +44,7 @@ typedef struct long_data {
 }long_data_t;
 
 // help func
+int mx_atoi(const char *str);
 int mx_get_first_file(int argc, char const *argv[]);
 int mx_get_max_int(int *arr, int size);
 int mx_get_rank(int digit);
@@ -88,4 +89,10 @@ void mx_print_links(long_data_t *long_data, int max_rank_link);
 void mx_print_redable_uid(long_data_t *long_data);
 void mx_print_redable_gid(long_data_t *long_data);
 void mx_print_size(long_data_t *long_data, int max_rank_size);
+void mx_print_date_time(long_data_t *long_data);
+    // time print func
+    void mx_print_month(char **splitarrtime);
+    void mx_print_day(char **splitarrtime);
+    void mx_print_time(char **splitarrtime);
+void mx_print_namefile(long_data_t *long_data);
 #endif /* ULS_H */

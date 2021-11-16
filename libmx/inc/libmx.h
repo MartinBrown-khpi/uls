@@ -6,6 +6,10 @@
 #include <stdbool.h>
 #include <fcntl.h>
 #include <malloc/malloc.h>
+
+
+bool mx_isdigit(int c);
+int mx_atoi(const char *str);
 /*
 ACT : UTILS PACK
 */

@@ -78,6 +78,7 @@ int main(int argc, char const *argv[]) {
     else {
         arguments = parse_arguments(argc, argv, arguments_count);
         args_validator(arguments, arguments_count);
+        mx_bubble_sort(arguments, arguments_count);
     }
         all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
@@ -159,6 +160,7 @@ int main(int argc, char const *argv[]) {
         int size_dirp;
         struct dirent **dirp;
         long_data_t **all_long_data;
+        
         for (int i = 0; i < arguments_count; i++) {
             size_dirp = 0;
             dirp = get_inf_from_dir(arguments[i], &size_dirp);
@@ -182,14 +184,15 @@ int main(int argc, char const *argv[]) {
             //         printf("%s\n", all_long_data[i]->f_namefile);
             // }
             // вывод   
+            if (usable_flags->is_list) {
+                mx_print_list(all_long_data, size_dirp, usable_flags);
+            } else if (usable_flags->is_long) {
+                mx_print_long_data(all_long_data, size_dirp, usable_flags);
+            }
         }
         
 
-        if (usable_flags->is_list) {
-            mx_print_list(all_long_data, size_dirp, usable_flags);
-        } else if (usable_flags->is_long) {
-            mx_print_long_data(all_long_data, size_dirp, usable_flags);
-        }
+
 
 
 
