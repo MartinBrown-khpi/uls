@@ -21,7 +21,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
             mx_print_redable_gid(all_long_data[i]);
             mx_print_size(all_long_data, i, size, usable_flags);
             mx_print_date_time(all_long_data[i], usable_flags);
-            mx_print_namefile(all_long_data[i]);
+            mx_print_namefile(all_long_data[i], usable_flags);
             mx_printchar('\n');
         }
         else if (usable_flags->is_A) {
@@ -33,7 +33,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
                 mx_print_redable_gid(all_long_data[i]);
                 mx_print_size(all_long_data, i, size, usable_flags);
                 mx_print_date_time(all_long_data[i], usable_flags);
-                mx_print_namefile(all_long_data[i]);
+                mx_print_namefile(all_long_data[i], usable_flags);
                 mx_printchar('\n');
             } 
         }  
@@ -45,7 +45,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
                 mx_print_redable_gid(all_long_data[i]);
                 mx_print_size(all_long_data, i, size, usable_flags);
                 mx_print_date_time(all_long_data[i], usable_flags);
-                mx_print_namefile(all_long_data[i]);
+                mx_print_namefile(all_long_data[i], usable_flags);
                 mx_printchar('\n');
             }
         }
@@ -138,10 +138,7 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
     mx_del_strarr(&splitarrtime);
 }
 
-void mx_print_namefile(long_data_t *long_data) {
-    mx_printchar(' ');
-    mx_printstr(long_data->f_namefile);
-}
+
 
 int mx_get_max_int(int *arr, int size) {
     int max = 0;
