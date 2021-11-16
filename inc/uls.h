@@ -96,4 +96,10 @@ void mx_print_date_time(long_data_t *long_data);
     void mx_print_day(char **splitarrtime);
     void mx_print_time(char **splitarrtime);
 void mx_print_namefile(long_data_t *long_data);
+
+//print -c flag
+int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
+
+void mx_print_files(long_data_t **data, int size);
+
 #endif /* ULS_H */

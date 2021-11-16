@@ -13,7 +13,7 @@ struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp) {
     }
 
     while ((tmp= readdir(dp)) != NULL) {
-            *size_dirp = *size_dirp + 1;
+        *size_dirp = *size_dirp + 1;
     }
     closedir(dp);
     

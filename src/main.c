@@ -190,7 +190,10 @@ int main(int argc, char const *argv[]) {
             // вывод   
             if (usable_flags->is_list) {
                 mx_print_list(all_long_data, size_dirp, usable_flags);
-            } else if (usable_flags->is_long) {
+            } else if (usable_flags->is_c_sort) {
+                mx_print_files(all_long_data, size_dirp);
+            }
+            else if (usable_flags->is_long) {
                 mx_print_long_data(all_long_data, size_dirp, usable_flags);
             }
         }
