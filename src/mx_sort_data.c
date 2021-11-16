@@ -23,6 +23,4 @@ void reverse_array(long_data_t **arr, int size) {
         arr[i] = arr[size-i-1];
         arr[size-i-1] = tmp;
     }
-
-
 }

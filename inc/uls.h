@@ -27,6 +27,7 @@ typedef struct all_flags {
     bool is_c_sort;
     bool is_S_sort;
     bool is_h_long;
+    bool is_T_long;
 }all_flags_t;
 
 typedef struct long_data {
@@ -91,12 +92,14 @@ void mx_print_links(long_data_t *long_data, int max_rank_link);
 void mx_print_redable_uid(long_data_t *long_data);
 void mx_print_redable_gid(long_data_t *long_data);
 void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *usable_flags);
-void mx_print_date_time(long_data_t *long_data);
+void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags);
     // time print func
     void mx_print_month(char **splitarrtime);
     void mx_print_day(char **splitarrtime);
     void mx_print_time(char **splitarrtime);
+    void mx_print_year(char **splitarrtime);
 void mx_print_namefile(long_data_t *long_data);
+
 
 //print -c flag
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);

@@ -20,7 +20,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
             mx_print_redable_uid(all_long_data[i]);
             mx_print_redable_gid(all_long_data[i]);
             mx_print_size(all_long_data, i, size, usable_flags);
-            mx_print_date_time(all_long_data[i]);
+            mx_print_date_time(all_long_data[i], usable_flags);
             mx_print_namefile(all_long_data[i]);
             mx_printchar('\n');
         }
@@ -32,7 +32,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
                 mx_print_redable_uid(all_long_data[i]);
                 mx_print_redable_gid(all_long_data[i]);
                 mx_print_size(all_long_data, i, size, usable_flags);
-                mx_print_date_time(all_long_data[i]);
+                mx_print_date_time(all_long_data[i], usable_flags);
                 mx_print_namefile(all_long_data[i]);
                 mx_printchar('\n');
             } 
@@ -44,7 +44,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
                 mx_print_redable_uid(all_long_data[i]);
                 mx_print_redable_gid(all_long_data[i]);
                 mx_print_size(all_long_data, i, size, usable_flags);
-                mx_print_date_time(all_long_data[i]);
+                mx_print_date_time(all_long_data[i], usable_flags);
                 mx_print_namefile(all_long_data[i]);
                 mx_printchar('\n');
             }
@@ -118,13 +118,23 @@ void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *us
 
 }
 
-void mx_print_date_time(long_data_t *long_data) {
+void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
     char *strtime = ctime(&long_data->f_time_modification->tv_sec);
-    
     char **splitarrtime = mx_strsplit(strtime, ' ');
-    mx_print_month(splitarrtime);
-    mx_print_day(splitarrtime);
-    mx_print_time(splitarrtime);
+    if (usable_flags->is_T_long) {
+        mx_print_month(splitarrtime);
+        mx_print_day(splitarrtime);
+        mx_printchar(' ');
+        mx_printstr(splitarrtime[3]);
+        mx_print_year(splitarrtime);
+        mx_del_strarr(&splitarrtime);
+    }
+    else {
+
+        mx_print_month(splitarrtime);
+        mx_print_day(splitarrtime);
+        mx_print_time(splitarrtime);    
+    }
     mx_del_strarr(&splitarrtime);
 }
 

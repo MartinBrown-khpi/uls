@@ -24,3 +24,10 @@ void mx_print_time(char **splitarrtime) {
         }
     }
 }
+
+void mx_print_year(char **splitarrtime) {
+    mx_printchar(' ');
+    for (int i = 0; splitarrtime[4][i] != '\n'; i++) {
+        mx_printchar(splitarrtime[4][i]);
+    }
+}
