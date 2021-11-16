@@ -205,7 +205,7 @@ int main(int argc, char const *argv[]) {
                 mx_print_long_data(all_long_data, size_dirp, usable_flags);
             }
             else if (usable_flags->is_C_print) {
-                mx_print_files(all_long_data, size_dirp);
+                mx_print_files(all_long_data, size_dirp, usable_flags);
             }
         }
         

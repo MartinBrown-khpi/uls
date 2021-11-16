@@ -64,7 +64,7 @@ int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
 	return base_row;
 }
 // dobavit flags 
-void mx_print_files(long_data_t **data, int size) {
+void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     // if (files == NULL || *files == NULL) {
     //     return;
     // }
@@ -147,22 +147,48 @@ void mx_print_files(long_data_t **data, int size) {
             i++;
         }
     }
+    // eto iskusstvo 
     else {
         for (int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
                 if ((j * rows + i ) < file_count) {
+                    if (cur->is_A){
+                       if (mx_strcmp(file_array[j * rows + i], ".") != 0
+                        && mx_strcmp(file_array[j * rows + i], "..") != 0) {
+                            mx_printstr(file_array[j * rows + i]);
+                            if((j + 1) * rows + i < file_count) {
+                                for (int k = 0; k < max_len - mx_strlen(file_array[j * rows + i]); k++) {
+                                    mx_printchar(' ');
+                                }
+                            }
+                        }
+                    }
+                    if (cur->is_a) {
+                        mx_printstr(file_array[j * rows + i]);
+                        if((j + 1) * rows + i < file_count) {
+                            for (int k = 0; k < max_len - mx_strlen(file_array[j * rows + i]); k++) {
+                                mx_printchar(' ');
+                            }
+                        }
+                    }
+                    if (!cur->is_A && !cur->is_a) {
+                        if (file_array[j * rows + i][0] != '.') {
+                            mx_printstr(file_array[j * rows + i]);
+                            // if (flags->G) {
+                            //     mx_printstr(NO_COLOR);
+                            // }
+                            if((j + 1) * rows + i < file_count) {
+                                for (int k = 0; k < max_len - mx_strlen(file_array[j * rows + i]); k++) {
+                                    mx_printchar(' ');
+                                }
+                            }
+                        }
+                    }
+                    
                     // if (flags->G) {
                     //     mx_find_color(file_array[j * rows + i], files, full_name);
                     // }
-                    mx_printstr(file_array[j * rows + i]);
-                    // if (flags->G) {
-                    //     mx_printstr(NO_COLOR);
-                    // }
-                    if((j + 1) * rows + i < file_count) {
-                        for (int k = 0; k < max_len - mx_strlen(file_array[j * rows + i]); k++) {
-                            mx_printchar(' ');
-                        }
-                    }
+                    
                 }
             }
             mx_printchar('\n');
