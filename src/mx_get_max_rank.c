@@ -13,8 +13,8 @@ int mx_get_max_size_rank(long_data_t **all_long_data, int size, all_flags_t *usa
     else if (usable_flags->is_A) {
         for (int i = 0; i < size; i++) {
             if (all_long_data[i]->f_size > bigger_dog && 
-            mx_strcmp(all_long_data[i]->f_namefile, "." != 0) &&
-            mx_strcmp(all_long_data[i]->f_namefile, ".." != 0)) {
+            mx_strcmp(all_long_data[i]->f_namefile, ".") != 0 &&
+            mx_strcmp(all_long_data[i]->f_namefile, "..") != 0) {
                 bigger_dog = all_long_data[i]->f_size;
             }
         }

@@ -4,10 +4,12 @@
 #include "libmx.h"
 #include <sys/stat.h>
 #include <sys/ioctl.h>
+#include <sys/xattr.h>
 #include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
+#include <sys/types.h>
 
 //COLORS
 #define ANSI_COLOR_RED     "\x1b[31m"

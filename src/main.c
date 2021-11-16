@@ -26,6 +26,9 @@
 Добавить иф на парсер флагов, что бы не работал просто минус
 Добавить проверку на корректность введенных файлов/директорий в качестве агрументов, начать обрабатывать ошибки ввода
 File path + file name struct 
+int xui = listxattr("/.ssh", l, 1024,  XATTR_SHOWCOMPRESSION);
+если list возвращает не -1 то принтим @
+ -> /Volumes/Storage/cache/ayevtushen/.cocoapods
 */
 #include <stdio.h>
 
@@ -64,6 +67,17 @@ static char **parse_arguments(int argc, char const *argv[], int arguments_count)
 int main(int argc, char const *argv[]) {
     const int COUNT_FLAGS = 13;
     const char FLAGS[13] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h', 'C', 'T', 'G'};
+
+    // char buf[1024];  
+    // long jj= readlink("/Users/ayevtushen/", buf, 1024);  
+    // printf("jj = %ld\n", jj);
+    // printf("buf = %s\n", buf);
+    
+    // char  l[1024];
+    // int xui = listxattr("/Users/ayevtushen/.DS_Store", l, 1024,  XATTR_NOFOLLOW);
+
+    // printf("l = %s\n", l);
+    // printf("xui = %d\n", xui);
 
     cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
     
