@@ -8,11 +8,6 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
     }
     int max_rank_link = mx_get_rank(mx_get_max_int(arr, size));
     free(arr);
-
-
-
-
-
     for (int i = 0; i < size; i++) {
         if (usable_flags->is_a) {
             mx_print_redable_mode(all_long_data[i]);

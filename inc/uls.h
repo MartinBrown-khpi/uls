@@ -116,6 +116,6 @@ void mx_print_namefile(long_data_t *long_data, all_flags_t *usable_flags);
 //print -c flag
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
 
-void mx_print_files(long_data_t **data, int size);
+void mx_print_files(long_data_t **data, int size, all_flags_t *cur);
 
 #endif /* ULS_H */
