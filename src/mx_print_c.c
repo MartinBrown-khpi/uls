@@ -63,7 +63,7 @@ int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
     free(filenames_len);
 	return base_row;
 }
-
+// dobavit flags 
 void mx_print_files(long_data_t **data, int size) {
     // if (files == NULL || *files == NULL) {
     //     return;
@@ -131,7 +131,7 @@ void mx_print_files(long_data_t **data, int size) {
                 str++;
             }
             mx_printstr(str);
-            if(data[i] == NULL) mx_printchar('\n');
+            if(data[i + 1] == NULL) mx_printchar('\n');
             else {
                 mx_printchar(' ');
                 int size = mx_strlen(str);
