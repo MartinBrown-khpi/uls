@@ -15,6 +15,7 @@ typedef struct cur_flags {
 } cur_flags_t;
 
 typedef struct all_flags {
+    bool is_C_print;
     bool is_long;
     bool is_list;
     bool is_A;

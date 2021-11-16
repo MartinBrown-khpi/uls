@@ -62,8 +62,8 @@ static char **parse_arguments(int argc, char const *argv[], int arguments_count)
 }
 
 int main(int argc, char const *argv[]) {
-    const int COUNT_FLAGS = 10;
-    const char FLAGS[10] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h'};
+    const int COUNT_FLAGS = 11;
+    const char FLAGS[11] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h', 'C'};
 
     cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
     
@@ -82,11 +82,13 @@ int main(int argc, char const *argv[]) {
     }
         all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
+        usable_flags->is_C_print = true;
         usable_flags->is_list = false;
         usable_flags->is_long = false;
         usable_flags->is_A = false;
         usable_flags->is_a = false;
         
+
         usable_flags->is_reverse = false;
         usable_flags->is_common_sort = true;
         usable_flags->is_c_sort = false;
@@ -101,11 +103,17 @@ int main(int argc, char const *argv[]) {
             case 'l':
                 usable_flags->is_long = true;
                 usable_flags->is_list = false;
+                usable_flags->is_C_print = false;
                 break;
             case '1':
                 usable_flags->is_list = true;
                 usable_flags->is_long = false;
+                usable_flags->is_C_print = false;
                 break;
+            case 'C':
+                usable_flags->is_C_print = true;
+                usable_flags->is_list = false;
+                usable_flags->is_long = false;
             case 'a':
                 usable_flags->is_a = true;
                 usable_flags->is_A = false;   
@@ -190,11 +198,12 @@ int main(int argc, char const *argv[]) {
             // вывод   
             if (usable_flags->is_list) {
                 mx_print_list(all_long_data, size_dirp, usable_flags);
-            } else if (usable_flags->is_c_sort) {
-                mx_print_files(all_long_data, size_dirp);
-            }
+            } 
             else if (usable_flags->is_long) {
                 mx_print_long_data(all_long_data, size_dirp, usable_flags);
+            }
+            else if (usable_flags->is_C_print) {
+                mx_print_files(all_long_data, size_dirp);
             }
         }
         
