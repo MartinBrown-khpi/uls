@@ -62,8 +62,8 @@ static char **parse_arguments(int argc, char const *argv[], int arguments_count)
 }
 
 int main(int argc, char const *argv[]) {
-    const int COUNT_FLAGS = 12;
-    const char FLAGS[12] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h', 'C', 'T'};
+    const int COUNT_FLAGS = 13;
+    const char FLAGS[13] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h', 'C', 'T', 'G'};
 
     cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
     
@@ -98,6 +98,7 @@ int main(int argc, char const *argv[]) {
         
         usable_flags->is_h_long = false;
         usable_flags->is_T_long = false;
+        usable_flags->is_G_color = false;
         for (int i = 0; i < cur_flags->count; i++) {
             switch (cur_flags->flags[i]) {
             case 'l':
@@ -144,6 +145,8 @@ int main(int argc, char const *argv[]) {
                 break;
             case 'T':
                 usable_flags->is_T_long = true;
+            case 'G':
+                usable_flags->is_G_color = true;
             default:
                 break;
             }
