@@ -1,6 +1,8 @@
 #include "uls.h"
 
 #include <stdio.h>
+
+// TODO getxattr @ + ровняние типа
 void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags) {
     int *arr = malloc(sizeof(int) * size);
     for (int i = 0; i < size; i++) {
