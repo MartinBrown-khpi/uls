@@ -115,7 +115,7 @@ void mx_print_namefile(long_data_t *long_data, all_flags_t *usable_flags);
 
 //print -c flag
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
-
+int mx_get_max_size_rank(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 void mx_print_files(long_data_t **data, int size, all_flags_t *cur);
 
 #endif /* ULS_H */

@@ -112,7 +112,7 @@ void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *us
     }
 
 }
-
+// TODO неправиьно считает ранг
 void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
     char *strtime = ctime(&long_data->f_time_modification->tv_sec);
     char **splitarrtime = mx_strsplit(strtime, ' ');
