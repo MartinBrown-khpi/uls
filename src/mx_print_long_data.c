@@ -105,7 +105,7 @@ void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *us
         }
 
     if (usable_flags->is_h_long) {
-        for (int j = 0; j <= bigger_size_rank - size_rank; j++) {
+        for (int j = 0; j < bigger_size_rank - size_rank; j++) {
             mx_printchar(' ');
         }
         
