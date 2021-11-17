@@ -16,6 +16,11 @@ void mx_print_namefile(long_data_t *long_data, all_flags_t *usable_flags) {
             mx_printstr(long_data->f_namefile);
             mx_printstr(ANSI_COLOR_RESET);
         }
+        else if S_ISLNK( long_data->f_mode ) {
+            mx_printstr(ANSI_COLOR_MAGENTA);
+            mx_printstr(long_data->f_namefile);
+            mx_printstr(ANSI_COLOR_RESET);
+        }
         else {
             mx_printstr(long_data->f_namefile);
         }

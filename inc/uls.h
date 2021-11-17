@@ -10,6 +10,7 @@
 #include <grp.h>
 #include <time.h>
 #include <sys/types.h>
+#include <sys/acl.h>
 
 //COLORS
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -41,6 +42,7 @@ typedef struct all_flags {
     bool is_h_long;
     bool is_T_long;
     bool is_G_color;
+    bool is_at;
 }all_flags_t;
 
 typedef struct long_data {
@@ -58,6 +60,9 @@ typedef struct long_data {
     struct timespec *f_time_last_status;
     char *f_namefile;
     char *f_pathfile;
+    char *at_link;
+    char *readlink;
+    int xattr;
     bool is_plus;
     bool is_link;
     char type_size;

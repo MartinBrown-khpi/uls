@@ -65,8 +65,8 @@ static char **parse_arguments(int argc, char const *argv[], int arguments_count)
 }
 
 int main(int argc, char const *argv[]) {
-    const int COUNT_FLAGS = 13;
-    const char FLAGS[13] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h', 'C', 'T', 'G'};
+    const int COUNT_FLAGS = 14;
+    const char FLAGS[14] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h', 'C', 'T', 'G', '@'};
 
     // char buf[1024];  
     // long jj= readlink("/Users/ayevtushen/", buf, 1024);  
@@ -113,6 +113,7 @@ int main(int argc, char const *argv[]) {
         usable_flags->is_h_long = false;
         usable_flags->is_T_long = false;
         usable_flags->is_G_color = false;
+        usable_flags->is_at = false;
         for (int i = 0; i < cur_flags->count; i++) {
             switch (cur_flags->flags[i]) {
             case 'l':
@@ -159,8 +160,13 @@ int main(int argc, char const *argv[]) {
                 break;
             case 'T':
                 usable_flags->is_T_long = true;
+                break;
             case 'G':
                 usable_flags->is_G_color = true;
+                break;
+            case '@':
+                usable_flags->is_at = true;
+                break;
             default:
                 break;
             }
@@ -204,8 +210,37 @@ int main(int argc, char const *argv[]) {
                 get_redable_gid(all_long_data[j]); 
                 all_long_data[j]->type_size = 'B';
                 all_long_data[j]->size_remainder = 0;
+                all_long_data[j]->at_link = NULL;
+                all_long_data[j]->readlink = NULL;
             }
+            // есть ли @ и +
+            acl_t acl;
+            char buff[1024];
+            char sec_buff[1024];
+            int check;
+            int at_xattr;
+            for (int j = 0; j < size_dirp; j++) {
+                char *path_namefile = mx_strcat(all_long_data[j]->f_pathfile, all_long_data[j]->f_namefile);
+                check = listxattr(path_namefile, buff, 1024,  XATTR_NOFOLLOW);
+                at_xattr = getxattr(path_namefile, buff, sec_buff, 1024, 0, 0);
+                if (check > 0) {
+                    all_long_data[j]->is_link = true; 
+                    all_long_data[j]->at_link = mx_strdup(buff);
+                    all_long_data[j]->xattr = at_xattr;
 
+                }
+
+                acl = acl_get_file(path_namefile, ACL_TYPE_EXTENDED);
+                if (acl != NULL) {
+                    all_long_data[j]->is_plus = true;
+                }
+
+                if ( S_ISLNK( all_long_data[j]->f_mode )) {
+                    char *linkname = mx_strnew(all_long_data[j]->f_size);
+                    readlink(path_namefile, linkname, all_long_data[j]->f_size );
+                    all_long_data[j]->readlink = linkname;
+                }
+            }
             // сортировка 
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
             if (usable_flags->is_reverse) {
@@ -215,6 +250,7 @@ int main(int argc, char const *argv[]) {
                 mx_print_list(all_long_data, size_dirp, usable_flags);
             } 
             else if (usable_flags->is_long) {
+
                 if (usable_flags->is_h_long) {
                     mx_translate_size(all_long_data, size_dirp);
                 }

@@ -18,7 +18,20 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
             mx_print_size(all_long_data, i, size, usable_flags);
             mx_print_date_time(all_long_data[i], usable_flags);
             mx_print_namefile(all_long_data[i], usable_flags);
+            if ( all_long_data[i]->readlink != NULL) {
+                mx_printstr(" -> ");
+                mx_printstr(all_long_data[i]->readlink);
+            }
             mx_printchar('\n');
+            if (usable_flags->is_at) {
+                if (all_long_data[i]->at_link != NULL) {
+                   mx_printchar('\t');
+                    mx_printstr(all_long_data[i]->at_link);
+                    mx_printstr("\t   ");
+                    mx_printint(all_long_data[i]->xattr);
+                    mx_printchar('\n');
+                }
+            }
         }
         else if (usable_flags->is_A) {
             if (mx_strcmp(all_long_data[i]->f_namefile, ".") != 0 &&
@@ -30,7 +43,20 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
                 mx_print_size(all_long_data, i, size, usable_flags);
                 mx_print_date_time(all_long_data[i], usable_flags);
                 mx_print_namefile(all_long_data[i], usable_flags);
+                if ( all_long_data[i]->readlink != NULL) {
+                    mx_printstr(" -> ");
+                    mx_printstr(all_long_data[i]->readlink);
+                }
                 mx_printchar('\n');
+                if (usable_flags->is_at) {
+                    if (all_long_data[i]->at_link != NULL) {
+                        mx_printchar('\t');
+                        mx_printstr(all_long_data[i]->at_link);
+                        mx_printstr("\t   ");
+                        mx_printint(all_long_data[i]->xattr);
+                        mx_printchar('\n');
+                    }
+                }
             } 
         }  
         else {
@@ -42,7 +68,20 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
                 mx_print_size(all_long_data, i, size, usable_flags);
                 mx_print_date_time(all_long_data[i], usable_flags);
                 mx_print_namefile(all_long_data[i], usable_flags);
+                if ( all_long_data[i]->readlink != NULL) {
+                    mx_printstr(" -> ");
+                    mx_printstr(all_long_data[i]->readlink);
+                }
                 mx_printchar('\n');
+                if (usable_flags->is_at) {
+                    if (all_long_data[i]->at_link != NULL) {
+                        mx_printchar('\t');
+                        mx_printstr(all_long_data[i]->at_link);
+                        mx_printstr("\t   ");
+                        mx_printint(all_long_data[i]->xattr);
+                        mx_printchar('\n');
+                    }
+                }
             }
         }
     }
@@ -149,7 +188,6 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
     }
     mx_del_strarr(&splitarrtime);
 }
-
 
 
 int mx_get_max_int(int *arr, int size) {

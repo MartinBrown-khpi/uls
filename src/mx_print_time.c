@@ -1,7 +1,6 @@
 #include "uls.h"
 
 void mx_print_month(char **splitarrtime) {
-    mx_printchar(' ');
     mx_printstr(splitarrtime[1]);
 }
 
