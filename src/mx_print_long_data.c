@@ -4,16 +4,11 @@
 
 // TODO getxattr @ + ровняние типа
 void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags) {
-    int *arr = malloc(sizeof(int) * size);
-    for (int i = 0; i < size; i++) {
-        arr[i] = all_long_data[i]->f_links;
-    }
-    int max_rank_link = mx_get_rank(mx_get_max_int(arr, size));
-    free(arr);
+
     for (int i = 0; i < size; i++) {
         if (usable_flags->is_a) {
             mx_print_redable_mode(all_long_data[i]);
-            mx_print_links(all_long_data[i], max_rank_link);
+            mx_print_links(all_long_data[i]);
             mx_print_redable_uid(all_long_data[i]);
             mx_print_redable_gid(all_long_data[i]);
             mx_print_size(all_long_data, i, size, usable_flags);
@@ -25,7 +20,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
             if (mx_strcmp(all_long_data[i]->f_namefile, ".") != 0 &&
                 mx_strcmp(all_long_data[i]->f_namefile, "..")) {
                 mx_print_redable_mode(all_long_data[i]);
-                mx_print_links(all_long_data[i], max_rank_link);
+                mx_print_links(all_long_data[i]);
                 mx_print_redable_uid(all_long_data[i]);
                 mx_print_redable_gid(all_long_data[i]);
                 mx_print_size(all_long_data, i, size, usable_flags);
@@ -37,7 +32,7 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
         else {
             if (all_long_data[i]->f_namefile[0] != '.') {
                 mx_print_redable_mode(all_long_data[i]);
-                mx_print_links(all_long_data[i], max_rank_link);
+                mx_print_links(all_long_data[i]);
                 mx_print_redable_uid(all_long_data[i]);
                 mx_print_redable_gid(all_long_data[i]);
                 mx_print_size(all_long_data, i, size, usable_flags);
@@ -53,11 +48,8 @@ void mx_print_redable_mode(long_data_t *long_data) {
     mx_printstr(long_data->f_redable_mode);
 }
 
-void mx_print_links(long_data_t *long_data, int max_rank_link) {
-    int rank_data = mx_get_rank(long_data->f_links);
-    for (int i = 0; i < 2 + max_rank_link - rank_data; i++) {
-        mx_printchar(' ');
-    }
+void mx_print_links(long_data_t *long_data) {
+    mx_printchar(' ');
     mx_printint(long_data->f_links);
 }
 
@@ -72,13 +64,8 @@ void mx_print_redable_gid(long_data_t *long_data) {
 }
 
 void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *usable_flags) {
-    //ищем кол-во пробелов 
-    int *arr = malloc(sizeof(int) * size);
-    for (int i = 0; i < size; i++) {
-        arr[i] = all_long_data[i]->f_size;
-    }
-    int max_rank_size = mx_get_rank(mx_get_max_int(arr, size));
-    free(arr);
+    size++;
+
     if (usable_flags->is_h_long) {
         char sizes[5] = {'B', 'K', 'M', 'G', 'T'}; 
         int current_size = 0;
@@ -92,24 +79,11 @@ void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *us
         if (remainder > 0.5f) {
             all_long_data[i]->f_size++;
         }
-        arr = malloc(sizeof(int) * size);
-        for (int i = 0; i < size; i++) {
-            arr[i] = all_long_data[i]->f_size;
-        }
-        max_rank_size = mx_get_rank(mx_get_max_int(arr, size));
-        free(arr);
-        int rank_data = mx_get_rank(all_long_data[i]->f_size);
-        for (int i = 0; i < 2 + max_rank_size - rank_data; i++) {
-            mx_printchar(' ');
-        }
+        
         mx_printint(all_long_data[i]->f_size);
         mx_printchar(sizes[current_size]);
     }
     else {
-        int rank_data = mx_get_rank(all_long_data[i]->f_size);
-        for (int i = 0; i < 2 + max_rank_size - rank_data; i++) {
-            mx_printchar(' ');
-        }
         mx_printint(all_long_data[i]->f_size);
     }
 
