@@ -52,11 +52,15 @@ typedef struct long_data {
     gid_t f_gid;
     char *f_redable_gid;
     off_t f_size;
+    int size_remainder;
     struct timespec *f_time_modification;
     struct timespec *f_time_last_acces;
     struct timespec *f_time_last_status;
     char *f_namefile;
     char *f_pathfile;
+    bool is_plus;
+    bool is_link;
+    char type_size;
 }long_data_t;
 
 // help func
@@ -98,12 +102,14 @@ void reverse_array(long_data_t **arr, int size);
 struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp);
 // print -1 flag
 void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usable_flags);
+// translate -h flag
+void mx_translate_size(long_data_t **all_long_data, int size);
 //print -l flag
 void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 void mx_print_redable_mode(long_data_t *long_data);
-void mx_print_links(long_data_t *long_data);
-void mx_print_redable_uid(long_data_t *long_data);
-void mx_print_redable_gid(long_data_t *long_data);
+void mx_print_links(long_data_t *long_data, int biggest_link_rank);
+void mx_print_redable_uid(long_data_t *long_data, int biggest_uid_size);
+void mx_print_redable_gid(long_data_t *long_data, int biggest_gid_size);
 void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *usable_flags);
 void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags);
     // time print func
@@ -112,12 +118,17 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags);
     void mx_print_time(char **splitarrtime);
     void mx_print_year(char **splitarrtime);
 void mx_print_namefile(long_data_t *long_data, all_flags_t *usable_flags);
+// func for spaces -l
+int mx_get_max_size_rank(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
+int mx_get_max_link_rank(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
+int mx_get_biggest_uid(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
+int mx_get_biggest_gid(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 // -G color func
 
 
 //print -c flag
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
-int mx_get_max_size_rank(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
+
 void mx_print_files(long_data_t **data, int size, all_flags_t *cur);
 
 #endif /* ULS_H */

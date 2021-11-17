@@ -202,6 +202,8 @@ int main(int argc, char const *argv[]) {
                 get_redable_mode(all_long_data[j]);
                 get_redable_uid(all_long_data[j]);
                 get_redable_gid(all_long_data[j]); 
+                all_long_data[j]->type_size = 'B';
+                all_long_data[j]->size_remainder = 0;
             }
 
             // сортировка 
@@ -209,16 +211,13 @@ int main(int argc, char const *argv[]) {
             if (usable_flags->is_reverse) {
                 reverse_array(all_long_data, size_dirp);
             }
-            // printf("------------------------------------\n");
-            // for (int i = 0; i < size_dirp; i++) {
-            //     if (all_long_data[i]->f_namefile[0] != '.')
-            //         printf("%s\n", all_long_data[i]->f_namefile);
-            // }
-            // вывод   
             if (usable_flags->is_list) {
                 mx_print_list(all_long_data, size_dirp, usable_flags);
             } 
             else if (usable_flags->is_long) {
+                if (usable_flags->is_h_long) {
+                    mx_translate_size(all_long_data, size_dirp);
+                }
                 mx_print_long_data(all_long_data, size_dirp, usable_flags);
             }
             else if (usable_flags->is_C_print) {
