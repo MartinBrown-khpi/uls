@@ -1,4 +1,4 @@
-NAME	=	uls
+NAME	=	myuls
 
 CFLG	=	-std=c11 $(addprefix -W, all extra error pedantic) -g
 

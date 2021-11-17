@@ -1,5 +1,9 @@
 #include "uls.h"
 
+// Не работает с выводом в 1 строку
+// Не работает с файлом в агрументе
+// Нужно фильтровать аргументы исходя из флага
+
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
     struct winsize ws;
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
@@ -64,6 +68,9 @@ int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
 	return base_row;
 }
 // dobavit flags 
+// В эту функцию не дожны прилетать -а -А
+// Надо сортировать выше
+#include <stdio.h>
 void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     // if (files == NULL || *files == NULL) {
     //     return;
@@ -73,11 +80,13 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     //     mx_print_comma(*files, flags, full_name);
     //     return ;
     // }
-
-    // if(flags->one){
-    //     mx_print_files_in_line(*files, flags, full_name);
+    cur->is_A = false;
+    // if(cur->is_list){
+    //     mx_print_files_in_line(data, size, cur);
     //     return;
     // }
+
+    //printf("HUI\n");
 
     int file_count = size;
     int cols = 0;
@@ -115,7 +124,9 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     while (max_len % 8 != 0) {
         max_len++;
     }
-
+    // if (cur->is_A) {
+    //     file_count -= 2;
+    // }
     int rows = mx_get_cols(file_count, &cols, col_max_arr, max_len);
     i = 0;
     if(rows == 1){
@@ -150,46 +161,27 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     // eto iskusstvo 
     else {
         for (int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+            bool is_flag = false;
+            for(int j = 0; j < cols; j++){     
                 if ((j * rows + i ) < file_count) {
-                    bool is_flag = false;
-                    if (cur->is_A){
-                       if (mx_strcmp(file_array[j * rows + i], ".") != 0
-                        && mx_strcmp(file_array[j * rows + i], "..") != 0) {
-                            mx_printstr(file_array[j * rows + i]);
-                            is_flag = true;
-                        }
-                    }
-                    if (cur->is_a) {
-                        mx_printstr(file_array[j * rows + i]);
-                        is_flag = true;
-                    }
-                    if (!cur->is_A && !cur->is_a) {
-                        if (file_array[j * rows + i][0] != '.') {
-                            mx_printstr(file_array[j * rows + i]);
-                            is_flag = true;
-                            // if (flags->G) {
-                            //     mx_printstr(NO_COLOR);
-                            // }
-                        }
-                    }
-                    if (is_flag == true) {
-                        if((j + 1) * rows + i < file_count) {
+                    
+                    mx_printstr(file_array[j * rows + i]);
+                    is_flag = true;
+                    
+                    
+                    if((j + 1) * rows + i < file_count) {
                         for (int k = 0; k < max_len - mx_strlen(file_array[j * rows + i]); k++) {
                             mx_printchar(' ');
                         }
-                    }
                     }
                     
                     // if (flags->G) {
                     //     mx_find_color(file_array[j * rows + i], files, full_name);
                     // }
-                    
                 }
             }
             mx_printchar('\n');
         }
     }
-
     mx_del_strarr(&file_array);
 }
