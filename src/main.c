@@ -32,11 +32,24 @@ int xui = listxattr("/.ssh", l, 1024,  XATTR_SHOWCOMPRESSION);
 */
 #include <stdio.h>
 
-char *agruments_filter(long_data_t **data, int size_dirp) {
-       char *str;
-       char *temp_string = NULL;
-        int i = 0;
-        while(i < size_dirp) {
+char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur) {
+    char *str;
+    char *temp_string = NULL;
+
+    for (int i = 0; i < size_dirp; i++) {
+        if (cur->is_A) {
+            if (mx_strcmp(data[i]->f_namefile, ".") == 0 ||
+                mx_strcmp(data[i]->f_namefile, "..") == 0) {
+                    continue;
+                }
+        }
+        if (cur->is_a) {
+            if (data[i]->f_namefile[0] == '.') {
+                continue;
+            }
+        }
+        printf("%s\n", data[i]->f_namefile);
+
         if (data[i]->f_pathfile || (str = mx_memrchr(data[i]->f_namefile , '/', mx_strlen(data[i]->f_namefile))) == NULL) {
             temp_string = mx_strjoin(temp_string, data[i]->f_namefile);
         }
@@ -47,7 +60,6 @@ char *agruments_filter(long_data_t **data, int size_dirp) {
         if(data[i]->f_mode == DT_DIR)
             temp_string = mx_strjoin(temp_string, "/");
         temp_string = mx_strjoin(temp_string, "\n");
-        i++;
     }
     return temp_string;
 }
@@ -284,7 +296,7 @@ int main(int argc, char const *argv[]) {
             // Все названия для вывода заносятся в темп стринг
             // Выводить название директории надо только тогда когда 2 или больше агрумента
             // Сначала выводятся файлы потом диры
-                char *temp_string = agruments_filter(all_long_data, size_dirp);
+                char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);
                 if (mx_strcmp(all_long_data[i]->f_pathfile, "./.") != 0) {
                     printf("%s:\n", all_long_data[i]->f_pathfile);
                 }
