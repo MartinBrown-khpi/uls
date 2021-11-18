@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp) {
+char **get_inf_from_dir(const char *dir_name, int *size_dirp) {
     DIR *dp;
     struct dirent *tmp;
     dp = opendir(dir_name);
@@ -16,12 +16,15 @@ struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp) {
     }
     closedir(dp);
     
-    struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * (*size_dirp));
+    //struct dirent **dirp = (struct dirent **)malloc(sizeof(struct dirent *) * (*size_dirp));
+    char **dirp = (char **)malloc(sizeof(char *) * (*size_dirp));
+    tmp = NULL;
     dp = opendir(dir_name);
 
     for (int i = 0; i < *size_dirp; i++) {
-        dirp[i] = readdir(dp);
-        if (mx_strcmp(dirp[i]->d_name, "uls") == 0) {
+        tmp = readdir(dp);
+        dirp[i] = mx_strdup(tmp->d_name);
+        if (mx_strcmp(dirp[i], "uls") == 0) {
             i--;
              *size_dirp = *size_dirp - 1;
         }

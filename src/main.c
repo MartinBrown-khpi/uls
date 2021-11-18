@@ -156,14 +156,14 @@ int main(int argc, char const *argv[]) {
 
         // цикл проходит через все аргументы
         int size_dirp;
-        struct dirent **dirp;
+        //struct dirent **dirp;
         long_data_t **all_long_data;
         
         for (int i = 0; i < arguments_count; i++) {
             size_dirp = 0;
-            dirp = get_inf_from_dir(arguments[i], &size_dirp);
+            char **names_arr = get_inf_from_dir(arguments[i], &size_dirp);
             if (size_dirp == 0) size_dirp++;
-            all_long_data = mx_get_all_long_data(size_dirp, dirp, arguments[i]);
+            all_long_data = mx_get_all_long_data(size_dirp, names_arr, arguments[i]);
 
             for (int j = 0; j < size_dirp; j++) {
                 get_redable_mode(all_long_data[j]);
@@ -208,7 +208,7 @@ int main(int argc, char const *argv[]) {
             // Сначала выводятся файлы потом диры
                 char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);
                 // ne ebu ne rabotaet
-                if (dirp[i]->d_type == DT_DIR) {
+                if (all_long_data[i]->f_mode == DT_DIR) {
                     //printf("%s:\n", all_long_data[i]->f_pathfile);
                 }
                 //printf("%s\n", temp_string);

@@ -1,10 +1,10 @@
 #include "uls.h"
 #include <stdio.h>
 
-long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const char *namedir){
+long_data_t **mx_get_all_long_data(int size_dirp, char **names_arr, const char *namedir){
     char *dir_path;
     long_data_t ** all_data;
-    if (dirp == NULL) {
+    if (names_arr == NULL) {
         all_data =  malloc(sizeof(long_data_t*));
         all_data[0] = mx_get_long_info(namedir, "");
         return all_data;
@@ -13,7 +13,7 @@ long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const ch
     for (int i = 0; i < size_dirp; i++) {
         dir_path = mx_strjoin(namedir, "/");
         //printf("%s\n", dir_path);
-        all_data[i] = mx_get_long_info(dirp[i]->d_name, dir_path);
+        all_data[i] = mx_get_long_info(names_arr[i], dir_path);
     }
     return all_data;
 }

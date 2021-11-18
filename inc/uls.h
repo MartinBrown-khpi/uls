@@ -75,6 +75,7 @@ int mx_atoi(const char *str);
 int mx_get_first_file(int argc, char const *argv[]);
 int mx_get_max_int(int *arr, int size);
 int mx_get_rank(int digit);
+char **dirp_to_strarr(int size_dirp, struct dirent **dirp);
 
 //ERRORS
 void mx_printerr(const char *err);
@@ -90,7 +91,7 @@ bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
 void move_char_back(char *arr, int size, char ch);
 
 //LS -l
-long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const char *namedir);
+long_data_t **mx_get_all_long_data(int size_dirp, char **names_arr, const char *namedir);
 long_data_t *mx_get_long_info(const char *filename, const char *path);
 
 int mx_get_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
@@ -108,7 +109,7 @@ bool mx_time_access_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_status_cmp(long_data_t *first, long_data_t *sec);
 void reverse_array(long_data_t **arr, int size);
 // dir info
-struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp);
+char **get_inf_from_dir(const char *dir_name, int *size_dirp);
 // print -1 flag
 void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usable_flags);
 // translate -h flag
