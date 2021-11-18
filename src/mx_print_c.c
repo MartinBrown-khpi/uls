@@ -9,7 +9,7 @@ int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
 	int col = 80;
 	if(isatty(1))
-    	col = ws.ws_col;      
+    col = ws.ws_col;      
     int cur_file_size = 0;		
 	int *filenames_len = (int*)malloc(sizeof(int) * file_count);
 	*cal_col = 0;

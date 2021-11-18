@@ -170,7 +170,17 @@ void mx_print_size(long_data_t **all_long_data, int i, int size, all_flags_t *us
 }
 // TODO неправиьно считает ранг
 void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
-    char *strtime = ctime(&long_data->f_time_modification->tv_sec);
+    char *strtime = NULL;
+    if (usable_flags->is_u_sort) {
+        strtime = ctime(&long_data->f_time_last_acces->tv_sec);
+    } 
+    else if (usable_flags->is_c_sort)  {
+        strtime = ctime(&long_data->f_time_last_status->tv_sec);
+    }
+    else {
+        strtime = ctime(&long_data->f_time_modification->tv_sec);
+    }
+    
     char **splitarrtime = mx_strsplit(strtime, ' ');
     if (usable_flags->is_T_long) {
         mx_print_month(splitarrtime);

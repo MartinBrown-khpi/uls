@@ -60,6 +60,7 @@ typedef struct long_data {
     struct timespec *f_time_last_status;
     char *f_namefile;
     char *f_pathfile;
+    char *concat_name_path;
     char *at_link;
     char *readlink;
     int xattr;
@@ -94,7 +95,8 @@ long_data_t *mx_get_long_info(const char *filename, const char *path);
 void get_redable_mode(long_data_t *long_data);
 void get_redable_uid(long_data_t *long_data);
 void get_redable_gid(long_data_t *long_data);
-
+void mx_islink(long_data_t *long_data);
+void mx_isplus(long_data_t *long_data);
 //sort 
 void mx_insertion_sort(long_data_t **arr, int size, bool (*cmp) (long_data_t *first, long_data_t *sec));
 bool mx_default_cmp(long_data_t *first, long_data_t *sec);

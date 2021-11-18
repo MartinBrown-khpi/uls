@@ -46,6 +46,9 @@ long_data_t *mx_get_long_info(const char *filename, const char *path) {
     long_data->f_time_modification->tv_sec = buff.st_mtimespec.tv_sec;
     long_data->f_namefile = mx_strdup(filename);
     long_data->f_pathfile = mx_strdup(path);
+    
+    long_data->concat_name_path = mx_strcat (mx_strdup(path), long_data->f_namefile);
+    //long_data->concat_name_path[mx_strlen(long_data->f_pathfile)] = '\0';
     return long_data;
 }
 
