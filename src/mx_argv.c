@@ -32,7 +32,7 @@ char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur) {
     }
     return temp_string;
 }
-
+#include <stdio.h>
 int mx_get_rows_count(const char* str) {
     int rows_count = 0;
     for (int i = 0; str[i] != '\0'; i++) {

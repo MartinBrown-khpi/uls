@@ -202,7 +202,7 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
 
 void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags) {
     int total = mx_get_total(all_long_data, size, usable_flags);
-    if (size != 1) {
+    if (size != 2) {
         mx_printstr("total ");
         mx_printint(total);
         mx_printchar('\n');

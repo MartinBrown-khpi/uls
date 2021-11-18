@@ -147,7 +147,7 @@ int main(int argc, char const *argv[]) {
             sort_func = mx_time_access_cmp;
         }
         else if (usable_flags->is_c_sort && usable_flags->is_t_sort) {
-           //использовать время последней модификации описателя файла 
+            //использовать время последней модификации описателя файла 
             sort_func = mx_time_status_cmp;
         } 
         else {
@@ -159,12 +159,27 @@ int main(int argc, char const *argv[]) {
         //struct dirent **dirp;
         long_data_t **all_long_data;
         
+        // вытаскиваем файлы из arguments
+        int count_files = 0;
+        char **files_arguments_arr = mx_pop_files(arguments, &arguments_count, &count_files);
+        if (count_files != 0) {
+            printf("in files %s\n", files_arguments_arr[0]);
+        }
+        // нужно каким-то образом их вывести 
+        // чтобы вывести нужно удалять первый символ в файле (пооддставляет атоматом )
+        char **names_arr;
         for (int i = 0; i < arguments_count; i++) {
+
             size_dirp = 0;
-            char **names_arr = get_inf_from_dir(arguments[i], &size_dirp);
+            if (arguments[i] != NULL) {
+                names_arr = get_inf_from_dir(arguments[i], &size_dirp);
+            }
+            else continue;
+            
+
             if (size_dirp == 0) size_dirp++;
             all_long_data = mx_get_all_long_data(size_dirp, names_arr, arguments[i]);
-
+            
             for (int j = 0; j < size_dirp; j++) {
                 get_redable_mode(all_long_data[j]);
                 get_redable_uid(all_long_data[j]);
@@ -174,6 +189,7 @@ int main(int argc, char const *argv[]) {
                 all_long_data[j]->at_link = NULL;
                 all_long_data[j]->readlink = NULL;
             }
+            printf("concat = %s\n", all_long_data[i]->concat_name_path);
             // есть ли @ и +
             for (int j = 0; j < size_dirp; j++) {
                 mx_islink(all_long_data[j]);
@@ -181,11 +197,13 @@ int main(int argc, char const *argv[]) {
             }
             // сортировка 
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
+            
             // принт директори
             if ((size_dirp != 1 && arguments_count > 1) || arguments_count != arguments_before_vaidation) {
                 mx_printstr(arguments[i]);
                 mx_printstr(" :\n");
             }
+            
             if (usable_flags->is_reverse) {
                 reverse_array(all_long_data, size_dirp);
             }
@@ -193,13 +211,13 @@ int main(int argc, char const *argv[]) {
                 mx_print_list(all_long_data, size_dirp, usable_flags);
             } 
             else if (usable_flags->is_long) {
-
             if (usable_flags->is_h_long) {
                     mx_translate_size(all_long_data, size_dirp);
                 }
                 mx_print_long_data(all_long_data, size_dirp, usable_flags);
             }
             else if (usable_flags->is_C_print) {
+                     
             // Все ФАЙЛЫ должны заносится в темп спринг для их вывода
             // после вывода файла ставится некст лайн
             // Обрезать из названия дир ./
@@ -212,8 +230,10 @@ int main(int argc, char const *argv[]) {
                     //printf("%s:\n", all_long_data[i]->f_pathfile);
                 }
                 //printf("%s\n", temp_string);
+               
                 int rows_count = mx_get_rows_count(temp_string);
                 //printf("%d\n", rows_count);
+                
                 mx_print_files(temp_string, rows_count, usable_flags);
             }
             if (i + 1 != arguments_count && arguments_count != 1 )  {

@@ -76,6 +76,7 @@ int mx_get_first_file(int argc, char const *argv[]);
 int mx_get_max_int(int *arr, int size);
 int mx_get_rank(int digit);
 char **dirp_to_strarr(int size_dirp, struct dirent **dirp);
+char **mx_pop_files(char **arguments, int *count_arguments, int *count_files);
 
 //ERRORS
 void mx_printerr(const char *err);
