@@ -71,7 +71,7 @@ int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
 // В эту функцию не дожны прилетать -а -А
 // Надо сортировать выше
 #include <stdio.h>
-void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
+void mx_print_files(char *temp_string, int size, all_flags_t *cur) {
     // if (files == NULL || *files == NULL) {
     //     return;
     // }
@@ -86,30 +86,19 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     //     return;
     // }
 
-    //printf("HUI\n");
-
     int file_count = size;
     int cols = 0;
     int col_max_arr[256];
-    char *str = NULL;
     
-    char *temp_string = NULL;
+    
     int i = 0;
-    while(i < file_count) {
-        if (data[i]->f_pathfile || (str = mx_memrchr(data[i]->f_namefile , '/', mx_strlen(data[i]->f_namefile))) == NULL) {
-            temp_string = mx_strjoin(temp_string, data[i]->f_namefile);
-        }
-        else {
-            str++;
-            temp_string = mx_strjoin(temp_string, str);
-        }
-        if(data[i]->f_mode == DT_DIR)
-            temp_string = mx_strjoin(temp_string, "/");
-        temp_string = mx_strjoin(temp_string, "\n");
-        i++;
-    }
+
     char **file_array = mx_strsplit(temp_string, '\n');
     free(temp_string);
+
+    // for(int i = 0; i < file_count; i++) {
+    //     printf("%s\n", file_array[i]);
+    // }
 
     int max_len = mx_strlen(file_array[0]);
     for (int i = 1; i < file_count; i++) {
@@ -136,10 +125,8 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
             bool is_flag = false;
             for(int j = 0; j < cols; j++){     
                 if ((j * rows + i ) < file_count) {
-                    
                     mx_printstr(file_array[j * rows + i]);
                     is_flag = true;
-                    
                     
                     if((j + 1) * rows + i < file_count) {
                         for (int k = 0; k < max_len - mx_strlen(file_array[j * rows + i]); k++) {

@@ -32,6 +32,26 @@ int xui = listxattr("/.ssh", l, 1024,  XATTR_SHOWCOMPRESSION);
 */
 #include <stdio.h>
 
+char *agruments_filter(long_data_t **data, int size_dirp) {
+       char *str;
+       char *temp_string = NULL;
+        int i = 0;
+        while(i < size_dirp) {
+        if (data[i]->f_pathfile || (str = mx_memrchr(data[i]->f_namefile , '/', mx_strlen(data[i]->f_namefile))) == NULL) {
+            temp_string = mx_strjoin(temp_string, data[i]->f_namefile);
+        }
+        else {
+            str++;
+            temp_string = mx_strjoin(temp_string, str);
+        }
+        if(data[i]->f_mode == DT_DIR)
+            temp_string = mx_strjoin(temp_string, "/");
+        temp_string = mx_strjoin(temp_string, "\n");
+        i++;
+    }
+    return temp_string;
+}
+
 static int count_dir_and_files(int argc, char const *argv[]) {
     int arguments_count = -1;
     for (int i = 0; i < argc; i++) {
@@ -228,21 +248,27 @@ int main(int argc, char const *argv[]) {
             } 
             else if (usable_flags->is_long) {
 
-                if (usable_flags->is_h_long) {
+            if (usable_flags->is_h_long) {
                     mx_translate_size(all_long_data, size_dirp);
                 }
                 mx_print_long_data(all_long_data, size_dirp, usable_flags);
             }
             else if (usable_flags->is_C_print) {
-                mx_print_files(all_long_data, size_dirp, usable_flags);
+            // Добавить сортировку по -А -а
+            // Все ФАЙЛЫ должны заносится в темп спринг для их вывода
+            // после вывода файла ставится некст лайн
+            // Обрезать из названия дир ./
+            // Все названия для вывода заносятся в темп стринг
+            // Выводить название директории надо только тогда когда 2 или больше агрумента
+            // Сначала выводятся файлы потом диры
+                char *temp_string = agruments_filter(all_long_data, size_dirp);
+                if (mx_strcmp(all_long_data[i]->f_pathfile, "./.") != 0) {
+                    printf("%s:\n", all_long_data[i]->f_pathfile);
+                }
+                mx_print_files(temp_string, size_dirp, usable_flags);
             }
+            
         }
-        
-
-
-
-
-
     // else if (usable_flags->is_list) {
     //     "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
     //     //sort

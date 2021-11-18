@@ -136,6 +136,6 @@ int mx_get_biggest_gid(long_data_t **all_long_data, int size, all_flags_t *usabl
 //print -c flag
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
 
-void mx_print_files(long_data_t **data, int size, all_flags_t *cur);
+void mx_print_files(char *temp_string, int size, all_flags_t *cur);
 
 #endif /* ULS_H */
