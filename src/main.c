@@ -44,7 +44,7 @@ char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur) {
                 }
         }
         //seg fault
-        if (!cur->is_a) {
+        if (!cur->is_a && !cur->is_A) {
             if (data[i]->f_namefile[0] == '.') {
                 continue;
             }

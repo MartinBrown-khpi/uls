@@ -3,7 +3,6 @@
 #include <stdio.h>
 
 struct dirent **get_inf_from_dir(const char *dir_name, int *size_dirp) {
-
     DIR *dp;
     struct dirent *tmp;
     dp = opendir(dir_name);
