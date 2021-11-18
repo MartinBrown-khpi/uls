@@ -246,32 +246,9 @@ int main(int argc, char const *argv[]) {
                 all_long_data[j]->readlink = NULL;
             }
             // есть ли @ и +
-            acl_t acl;
-            char buff[1024];
-            char sec_buff[1024];
-            int check;
-            int at_xattr;
             for (int j = 0; j < size_dirp; j++) {
-                char *path_namefile = mx_strcat(all_long_data[j]->f_pathfile, all_long_data[j]->f_namefile);
-                check = listxattr(path_namefile, buff, 1024,  XATTR_NOFOLLOW);
-                at_xattr = getxattr(path_namefile, buff, sec_buff, 1024, 0, 0);
-                if (check > 0) {
-                    all_long_data[j]->is_link = true; 
-                    all_long_data[j]->at_link = mx_strdup(buff);
-                    all_long_data[j]->xattr = at_xattr;
-
-                }
-
-                acl = acl_get_file(path_namefile, ACL_TYPE_EXTENDED);
-                if (acl != NULL) {
-                    all_long_data[j]->is_plus = true;
-                }
-
-                if ( S_ISLNK( all_long_data[j]->f_mode )) {
-                    char *linkname = mx_strnew(all_long_data[j]->f_size);
-                    readlink(path_namefile, linkname, all_long_data[j]->f_size );
-                    all_long_data[j]->readlink = linkname;
-                }
+                mx_islink(all_long_data[j]);
+                mx_isplus(all_long_data[j]);
             }
             // сортировка 
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
