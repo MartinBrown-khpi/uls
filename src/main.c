@@ -43,7 +43,8 @@ char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur) {
                     continue;
                 }
         }
-        if (cur->is_a) {
+        //seg fault
+        if (!cur->is_a) {
             if (data[i]->f_namefile[0] == '.') {
                 continue;
             }
@@ -62,6 +63,16 @@ char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur) {
         temp_string = mx_strjoin(temp_string, "\n");
     }
     return temp_string;
+}
+
+int mx_get_rows_count(const char* str) {
+    int rows_count = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == '\n') {
+            rows_count++;
+        }
+    }
+    return rows_count;
 }
 
 static int count_dir_and_files(int argc, char const *argv[]) {
@@ -266,7 +277,6 @@ int main(int argc, char const *argv[]) {
                 mx_print_long_data(all_long_data, size_dirp, usable_flags);
             }
             else if (usable_flags->is_C_print) {
-            // Добавить сортировку по -А -а
             // Все ФАЙЛЫ должны заносится в темп спринг для их вывода
             // после вывода файла ставится некст лайн
             // Обрезать из названия дир ./
@@ -274,10 +284,14 @@ int main(int argc, char const *argv[]) {
             // Выводить название директории надо только тогда когда 2 или больше агрумента
             // Сначала выводятся файлы потом диры
                 char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);
-                if (mx_strcmp(all_long_data[i]->f_pathfile, "./.") != 0) {
+                // ne ebu ne rabotaet
+                if (dirp[i]->d_type == DT_DIR) {
                     printf("%s:\n", all_long_data[i]->f_pathfile);
                 }
-                mx_print_files(temp_string, size_dirp, usable_flags);
+                printf("%s\n", temp_string);
+                int rows_count = mx_get_rows_count(temp_string);
+                printf("%d\n", rows_count);
+                mx_print_files(temp_string, rows_count, usable_flags);
             }
             
         }
