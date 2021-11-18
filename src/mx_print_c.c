@@ -95,7 +95,7 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     
     char *temp_string = NULL;
     int i = 0;
-    while(i < size) {
+    while(i < file_count) {
         if (data[i]->f_pathfile || (str = mx_memrchr(data[i]->f_namefile , '/', mx_strlen(data[i]->f_namefile))) == NULL) {
             temp_string = mx_strjoin(temp_string, data[i]->f_namefile);
         }
@@ -129,37 +129,9 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
     // }
     int rows = mx_get_cols(file_count, &cols, col_max_arr, max_len);
     i = 0;
-    if(rows == 1){
-        while(i < size){
-            // if (flags->G)
-            // {
-            //     mx_print_color(temp);
-            //}
-            if (data[i]->f_pathfile || (str = mx_memrchr(data[i]->f_namefile, '/', mx_strlen(data[i]->f_namefile))) == NULL) {
-                str = data[i]->f_namefile;
-            }
-            else {
-                str++;
-            }
-            mx_printstr(str);
-            if(data[i + 1] == NULL) mx_printchar('\n');
-            else {
-                mx_printchar(' ');
-                int size = mx_strlen(str);
-                while (size != max_temp) {
-                    mx_printchar(' ');
-                    size++;
-                }
-            }
-            // if (flags->G)
-            // {
-            //     mx_printstr(NO_COLOR);
-            // }
-            i++;
-        }
-    }
+    printf("%d\n", rows);
+    max_temp++;
     // eto iskusstvo 
-    else {
         for (int i = 0; i < rows; i++){
             bool is_flag = false;
             for(int j = 0; j < cols; j++){     
@@ -182,6 +154,5 @@ void mx_print_files(long_data_t **data, int size, all_flags_t *cur) {
             }
             mx_printchar('\n');
         }
-    }
     mx_del_strarr(&file_array);
 }
