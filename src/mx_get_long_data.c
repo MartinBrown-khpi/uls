@@ -4,7 +4,6 @@
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const char *namedir){
     char *dir_path;
     long_data_t ** all_data;
-    printf("size dirp = %d\n", size_dirp);
     if (dirp == NULL) {
         all_data =  malloc(sizeof(long_data_t*));
         all_data[0] = mx_get_long_info(namedir, "");
@@ -33,6 +32,7 @@ long_data_t *mx_get_long_info(const char *filename, const char *path) {
         return NULL;
     }
     //popravit
+    long_data->f_bloks = buff.st_blocks;
     long_data->f_mode  = buff.st_mode;
     long_data->f_links = buff.st_nlink;
     long_data->f_size = buff.st_size;
@@ -46,7 +46,6 @@ long_data_t *mx_get_long_info(const char *filename, const char *path) {
     long_data->f_time_modification->tv_sec = buff.st_mtimespec.tv_sec;
     long_data->f_namefile = mx_strdup(filename);
     long_data->f_pathfile = mx_strdup(path);
-    
     long_data->concat_name_path = mx_strcat (mx_strdup(path), long_data->f_namefile);
     //long_data->concat_name_path[mx_strlen(long_data->f_pathfile)] = '\0';
     return long_data;

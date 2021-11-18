@@ -54,6 +54,7 @@ typedef struct long_data {
     gid_t f_gid;
     char *f_redable_gid;
     off_t f_size;
+    blksize_t f_bloks;
     int size_remainder;
     struct timespec *f_time_modification;
     struct timespec *f_time_last_acces;
@@ -92,6 +93,7 @@ void move_char_back(char *arr, int size, char ch);
 long_data_t **mx_get_all_long_data(int size_dirp, struct dirent **dirp, const char *namedir);
 long_data_t *mx_get_long_info(const char *filename, const char *path);
 
+int mx_get_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 void get_redable_mode(long_data_t *long_data);
 void get_redable_uid(long_data_t *long_data);
 void get_redable_gid(long_data_t *long_data);
@@ -112,6 +114,7 @@ void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usab
 // translate -h flag
 void mx_translate_size(long_data_t **all_long_data, int size);
 //print -l flag
+void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 void mx_print_redable_mode(long_data_t *long_data);
 void mx_print_links(long_data_t *long_data, int biggest_link_rank);
@@ -137,5 +140,10 @@ int mx_get_biggest_gid(long_data_t **all_long_data, int size, all_flags_t *usabl
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
 
 void mx_print_files(char *temp_string, int size, all_flags_t *cur);
+// mx_argv func
 
+char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur);
+int mx_get_rows_count(const char* str);
+int count_dir_and_files(int argc, char const *argv[]);
+char **parse_arguments(int argc, char const *argv[], int *arguments_count);
 #endif /* ULS_H */

@@ -32,111 +32,29 @@ int xui = listxattr("/.ssh", l, 1024,  XATTR_SHOWCOMPRESSION);
 */
 #include <stdio.h>
 
-char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur) {
-    char *str;
-    char *temp_string = NULL;
-
-    for (int i = 0; i < size_dirp; i++) {
-        if (cur->is_A) {
-            if (mx_strcmp(data[i]->f_namefile, ".") == 0 ||
-                mx_strcmp(data[i]->f_namefile, "..") == 0) {
-                    continue;
-                }
-        }
-        //seg fault
-        if (!cur->is_a && !cur->is_A) {
-            if (data[i]->f_namefile[0] == '.') {
-                continue;
-            }
-        }
-        printf("%s\n", data[i]->f_namefile);
-
-        if (data[i]->f_pathfile || (str = mx_memrchr(data[i]->f_namefile , '/', mx_strlen(data[i]->f_namefile))) == NULL) {
-            temp_string = mx_strjoin(temp_string, data[i]->f_namefile);
-        }
-        else {
-            str++;
-            temp_string = mx_strjoin(temp_string, str);
-        }
-        if(data[i]->f_mode == DT_DIR)
-            temp_string = mx_strjoin(temp_string, "/");
-        temp_string = mx_strjoin(temp_string, "\n");
-    }
-    return temp_string;
-}
-
-int mx_get_rows_count(const char* str) {
-    int rows_count = 0;
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == '\n') {
-            rows_count++;
-        }
-    }
-    return rows_count;
-}
-
-static int count_dir_and_files(int argc, char const *argv[]) {
-    int arguments_count = -1;
-    for (int i = 0; i < argc; i++) {
-        if (argv[i][0] != '-') {
-            arguments_count++;
-        }
-    }
-    return arguments_count;
-}
-
-static void args_validator(char **arguments, int arguments_count) { 
-    struct stat buff;
-    for (int i = 0; i < arguments_count; i++) {
-        if (stat(arguments[i], &buff) == -1) {
-            // popravit vivod oshibki
-            // 4istit pam9t pri exit() ili sdelat bool i vozvrashat v main
-            printf("Invalid file_name\n");
-        }
-    }
-}
-
-static char **parse_arguments(int argc, char const *argv[], int arguments_count) {
-    char **arguments = malloc(sizeof(char *) * arguments_count);
-    for (int i = 1, j = 0; i < argc && j < arguments_count; i++) {
-        if (argv[i][0] != '-') {
-            arguments[j] = mx_strdup(argv[i]);
-            j++;
-        }
-    }
-    return arguments;
-}
 
 int main(int argc, char const *argv[]) {
     const int COUNT_FLAGS = 14;
     const char FLAGS[14] = {'l', 'a', 'A', '1', 'r', 't', 'u', 'c', 'S', 'h', 'C', 'T', 'G', '@'};
 
-    // char buf[1024];  
-    // long jj= readlink("/Users/ayevtushen/", buf, 1024);  
-    // printf("jj = %ld\n", jj);
-    // printf("buf = %s\n", buf);
-    
-    // char  l[1024];
-    // int xui = listxattr("/Users/ayevtushen/.DS_Store", l, 1024,  XATTR_NOFOLLOW);
-
-    // printf("l = %s\n", l);
-    // printf("xui = %d\n", xui);
 
     cur_flags_t *cur_flags = mx_get_flags(COUNT_FLAGS, FLAGS, argc, argv);
     
     int arguments_count = count_dir_and_files(argc, argv);
     char **arguments = NULL;
-    // printf("arg count = %d", arguments_count);
+    int arguments_before_vaidation = arguments_count;
+
     if (arguments_count == 0) {
         arguments = malloc(sizeof(char *));
         arguments[0] = mx_strdup(".");
         arguments_count++;
+        arguments_before_vaidation = arguments_count;
     }
     else {
-        arguments = parse_arguments(argc, argv, arguments_count);
-        args_validator(arguments, arguments_count);
+        arguments = parse_arguments(argc, argv, &arguments_count);
         mx_bubble_sort(arguments, arguments_count);
     }
+    
         all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
         usable_flags->is_C_print = true;
@@ -263,6 +181,11 @@ int main(int argc, char const *argv[]) {
             }
             // сортировка 
             mx_insertion_sort(all_long_data, size_dirp, sort_func);
+            // принт директори
+            if ((size_dirp != 1 && arguments_count > 1) || arguments_count != arguments_before_vaidation) {
+                mx_printstr(arguments[i]);
+                mx_printstr(" :\n");
+            }
             if (usable_flags->is_reverse) {
                 reverse_array(all_long_data, size_dirp);
             }
@@ -286,20 +209,17 @@ int main(int argc, char const *argv[]) {
                 char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);
                 // ne ebu ne rabotaet
                 if (dirp[i]->d_type == DT_DIR) {
-                    printf("%s:\n", all_long_data[i]->f_pathfile);
+                    //printf("%s:\n", all_long_data[i]->f_pathfile);
                 }
-                printf("%s\n", temp_string);
+                //printf("%s\n", temp_string);
                 int rows_count = mx_get_rows_count(temp_string);
-                printf("%d\n", rows_count);
+                //printf("%d\n", rows_count);
                 mx_print_files(temp_string, rows_count, usable_flags);
             }
-            
+            if (i + 1 != arguments_count && arguments_count != 1 )  {
+                mx_printchar('\n');
+            }
         }
-    // else if (usable_flags->is_list) {
-    //     "stuktura" *t_dirs_list = mx_get_dirs_list((is_A, is_a));
-    //     //sort
-    //     //print 
-    // }
     
 
     return 0;

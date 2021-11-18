@@ -118,7 +118,7 @@ void mx_print_files(char *temp_string, int size, all_flags_t *cur) {
     // }
     int rows = mx_get_cols(file_count, &cols, col_max_arr, max_len);
     i = 0;
-    printf("%d\n", rows);
+    //printf("%d\n", rows);
     max_temp++;
     // eto iskusstvo 
         for (int i = 0; i < rows; i++){

@@ -8,8 +8,9 @@ void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usab
     int biggest_link_rank = mx_get_rank(mx_get_max_link_rank(all_long_data, size, usable_flags));
     int biggest_uid_size = mx_get_biggest_uid(all_long_data, size, usable_flags);
     int biggest_gid_size = mx_get_biggest_gid(all_long_data, size, usable_flags);
+    
+    mx_print_total(all_long_data, size, usable_flags);
     for (int i = 0; i < size; i++) {
-
         if (usable_flags->is_a) {
             mx_print_redable_mode(all_long_data[i]);
             mx_print_links(all_long_data[i], biggest_link_rank);
@@ -199,7 +200,20 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
     mx_del_strarr(&splitarrtime);
 }
 
+void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags) {
+    int total = mx_get_total(all_long_data, size, usable_flags);
+    if (size != 1) {
+        mx_printstr("total ");
+        mx_printint(total);
+        mx_printchar('\n');
+    }
+}
 
+// void mx_print_dirname(long_data_t **all_long_data, int size, all_flags_t *usable_flags) {
+
+// }
+
+// по моему функция уже не используется
 int mx_get_max_int(int *arr, int size) {
     int max = 0;
     for (int i = 0; i < size; i++) {
