@@ -75,6 +75,12 @@ int main(int argc, char const *argv[]) {
         usable_flags->is_T_long = false;
         usable_flags->is_G_color = false;
         usable_flags->is_at = false;
+
+        if (isatty(1) == 0) {
+            usable_flags->is_list = true;
+            usable_flags->is_C_print = false;
+        }
+
         for (int i = 0; i < cur_flags->count; i++) {
             switch (cur_flags->flags[i]) {
             case 'l':
