@@ -91,6 +91,7 @@ int main(int argc, char const *argv[]) {
                 usable_flags->is_C_print = true;
                 usable_flags->is_list = false;
                 usable_flags->is_long = false;
+                break;
             case 'a':
                 usable_flags->is_a = true;
                 usable_flags->is_A = false;   
@@ -192,11 +193,9 @@ int main(int argc, char const *argv[]) {
                     mx_print_long_data(all_long_data, count_files, usable_flags, is_files);
                 }   
             else if (usable_flags->is_C_print) {
-                     
                 char *temp_string = agruments_filter(all_long_data, count_files, usable_flags);
-            
-                
-                mx_print_files(temp_string, all_long_data , count_files, usable_flags);
+                if (temp_string)
+                    mx_print_files(temp_string, all_long_data , count_files, usable_flags);
             }
             mx_printchar('\n');
         }
@@ -213,9 +212,9 @@ int main(int argc, char const *argv[]) {
                         k++;
                     }
                     else {
-                        mx_printstr(arguments[i]);
-                        mx_printstr(":\n");
-                        mx_printstr("uls: ");
+                        mx_printerr(arguments[i]);
+                        mx_printerr(":\n");
+                        mx_printerr("uls: ");
                         mx_str_reverse(tmp);
                         mx_printerr(tmp);
                         mx_printerr(": ");
@@ -291,8 +290,8 @@ int main(int argc, char const *argv[]) {
                 //printf("%s\n", temp_string);
                
                 //printf("%d\n", rows_count);
-                
-                mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
+                if (temp_string)
+                    mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
             }
             if (i + 1 != arguments_count && arguments_count != 1 )  {
                 mx_printchar('\n');
