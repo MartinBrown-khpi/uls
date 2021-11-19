@@ -4,5 +4,5 @@ int mx_get_first_file(int argc, char const *argv[]) {
             return i;
         }
     }
-    return 0;
+    return -1;
 }
