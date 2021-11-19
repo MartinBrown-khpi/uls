@@ -198,10 +198,10 @@ int main(int argc, char const *argv[]) {
                 
                 mx_print_files(temp_string, all_long_data , count_files, usable_flags);
             }
+            mx_printchar('\n');
         }
         is_files = false;
         // нужно каким-то образом их вывести 
-
         for (int i = 0; i < arguments_count; i++) {
             DIR *dp;
             dp = opendir(arguments[i]);
@@ -262,7 +262,6 @@ int main(int argc, char const *argv[]) {
             
             // принт директори
             if ((size_dirp != 1 && arguments_count > 1) || arguments_count != arguments_before_vaidation) {
-                mx_printchar('\n');
                 mx_printstr(arguments[i]);
                 mx_printstr(":\n");
             }
