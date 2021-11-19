@@ -13,6 +13,7 @@ long_data_t **mx_get_all_long_data(int size_dirp, char **names_arr, const char *
     for (int i = 0; i < size_dirp; i++) {
         dir_path = mx_strjoin(namedir, "/");
         //printf("%s\n", dir_path);
+
         all_data[i] = mx_get_long_info(names_arr[i], dir_path);
     }
     return all_data;
@@ -46,13 +47,14 @@ long_data_t *mx_get_long_info(const char *filename, const char *path) {
     long_data->f_time_modification->tv_sec = buff.st_mtimespec.tv_sec;
     long_data->f_namefile = mx_strdup(filename);
     long_data->f_pathfile = mx_strdup(path);
-    long_data->concat_name_path = mx_strcat (mx_strdup(path), long_data->f_namefile);
-    //long_data->concat_name_path[mx_strlen(long_data->f_pathfile)] = '\0';
+    long_data->concat_name_path = mx_strjoin(long_data->f_pathfile, long_data->f_namefile);
+    //mx_strcat (mx_strdup(path), long_data->f_namefile)
+        //long_data->concat_name_path[mx_strlen(long_data->f_pathfile)] = '\0';
     return long_data;
 }
 
 void get_redable_mode(long_data_t *long_data) {
-    char *redable_mode = (char *)malloc(sizeof(char) * 10);
+    char *redable_mode = (char *)malloc(sizeof(char) * 11);
     // Test for a type file.
     
     if (S_ISLNK(long_data->f_mode)) redable_mode[0] = 'l';
@@ -90,7 +92,7 @@ void get_redable_mode(long_data_t *long_data) {
         redable_mode[9] = (long_data->f_mode & S_IXOTH ? 't' : 'T');
     }
     else redable_mode[9] = (long_data->f_mode & S_IXUSR ? 'x' : '-');
-
+    redable_mode[11] = '\0';
     long_data->f_redable_mode = redable_mode;
 }
 

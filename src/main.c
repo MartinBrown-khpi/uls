@@ -166,6 +166,7 @@ int main(int argc, char const *argv[]) {
             printf("in files %s\n", files_arguments_arr[0]);
         }
         // нужно каким-то образом их вывести 
+
         // чтобы вывести нужно удалять первый символ в файле (пооддставляет атоматом )
         char **names_arr;
         for (int i = 0; i < arguments_count; i++) {
@@ -189,7 +190,6 @@ int main(int argc, char const *argv[]) {
                 all_long_data[j]->at_link = NULL;
                 all_long_data[j]->readlink = NULL;
             }
-            printf("concat = %s\n", all_long_data[i]->concat_name_path);
             // есть ли @ и +
             for (int j = 0; j < size_dirp; j++) {
                 mx_islink(all_long_data[j]);

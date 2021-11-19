@@ -1,5 +1,5 @@
 #include "uls.h"
-
+#include <stdio.h>
 void mx_islink(long_data_t *long_data) {
     char buff[1024];
     char sec_buff[1024];
@@ -14,7 +14,6 @@ void mx_islink(long_data_t *long_data) {
         long_data->at_link = mx_strdup(buff);
         long_data->xattr = at_xattr;
     }
-
     if ( S_ISLNK( long_data->f_mode )) {
         char *linkname = mx_strnew(long_data->f_size);
         readlink(long_data->concat_name_path, linkname, long_data->f_size );
