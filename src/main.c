@@ -177,25 +177,25 @@ int main(int argc, char const *argv[]) {
             }
 
             mx_insertion_sort(all_long_data, count_files, sort_func);
-             if (usable_flags->is_reverse) {
+            
+            if (usable_flags->is_reverse) {
                 reverse_array(all_long_data, count_files);
             }
             if (usable_flags->is_list) {
                 mx_print_list(all_long_data, count_files, usable_flags);
             } 
             else if (usable_flags->is_long) {
-            if (usable_flags->is_h_long) {
-                    mx_translate_size(all_long_data, count_files);
-                }
-                mx_print_long_data(all_long_data, count_files, usable_flags);
-            }
+                if (usable_flags->is_h_long) {
+                        mx_translate_size(all_long_data, count_files);
+                    }
+                    mx_print_long_data(all_long_data, count_files, usable_flags);
+                }   
             else if (usable_flags->is_C_print) {
                      
                 char *temp_string = agruments_filter(all_long_data, count_files, usable_flags);
-               
-                int rows_count = mx_get_rows_count(temp_string);
+            
                 
-                mx_print_files(temp_string, rows_count, usable_flags);
+                mx_print_files(temp_string, all_long_data , count_files, usable_flags);
             }
         }
         // нужно каким-то образом их вывести 
@@ -211,9 +211,9 @@ int main(int argc, char const *argv[]) {
                         k++;
                     }
                     else {
-                        mx_printerr(arguments[i]);
-                        mx_printerr(":\n");
-                        mx_printerr("uls: ");
+                        mx_printstr(arguments[i]);
+                        mx_printstr(":\n");
+                        mx_printstr("uls: ");
                         mx_str_reverse(tmp);
                         mx_printerr(tmp);
                         mx_printerr(": ");
@@ -287,15 +287,11 @@ int main(int argc, char const *argv[]) {
             // Сначала выводятся файлы потом диры
                 char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);
                 // ne ebu ne rabotaet
-                if (all_long_data[i]->f_mode == DT_DIR) {
-                    //printf("%s:\n", all_long_data[i]->f_pathfile);
-                }
                 //printf("%s\n", temp_string);
                
-                int rows_count = mx_get_rows_count(temp_string);
                 //printf("%d\n", rows_count);
                 
-                mx_print_files(temp_string, rows_count, usable_flags);
+                mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
             }
             if (i + 1 != arguments_count && arguments_count != 1 )  {
                 mx_printchar('\n');

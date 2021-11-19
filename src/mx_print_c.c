@@ -71,7 +71,7 @@ int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
 // В эту функцию не дожны прилетать -а -А
 // Надо сортировать выше
 #include <stdio.h>
-void mx_print_files(char *temp_string, int size, all_flags_t *cur) {
+void mx_print_files(char *temp_string ,long_data_t **all_long_data, int size, all_flags_t *cur) {
     // if (files == NULL || *files == NULL) {
     //     return;
     // }
@@ -80,20 +80,17 @@ void mx_print_files(char *temp_string, int size, all_flags_t *cur) {
     //     mx_print_comma(*files, flags, full_name);
     //     return ;
     // }
-    cur->is_A = false;
     // if(cur->is_list){
     //     mx_print_files_in_line(data, size, cur);
     //     return;
     // }
 
-    int file_count = size;
+    int file_count = mx_get_rows_count(temp_string);
     int cols = 0;
     int col_max_arr[256];
-    
-    
-    int i = 0;
 
     char **file_array = mx_strsplit(temp_string, '\n');
+    
     free(temp_string);
 
     // for(int i = 0; i < file_count; i++) {
@@ -106,37 +103,27 @@ void mx_print_files(char *temp_string, int size, all_flags_t *cur) {
             max_len = mx_strlen(file_array[i]);
         }
     }
-    int max_temp = max_len;
     if (max_len % 8 == 0) {
         max_len++;
     }
     while (max_len % 8 != 0) {
         max_len++;
     }
-    // if (cur->is_A) {
-    //     file_count -= 2;
-    // }
+
     int rows = mx_get_cols(file_count, &cols, col_max_arr, max_len);
-    i = 0;
-    //printf("%d\n", rows);
-    max_temp++;
-    // eto iskusstvo 
         for (int i = 0; i < rows; i++){
-            bool is_flag = false;
             for(int j = 0; j < cols; j++){     
                 if ((j * rows + i ) < file_count) {
-                    mx_printstr(file_array[j * rows + i]);
-                    is_flag = true;
-                    
+                    for (int q = 0; q < size; q++) {
+                        if (mx_strcmp(all_long_data[q]->f_namefile, file_array[j * rows + i]) == 0) {
+                            mx_print_namefile(all_long_data[q], cur);
+                        }
+                    }
                     if((j + 1) * rows + i < file_count) {
                         for (int k = 0; k < max_len - mx_strlen(file_array[j * rows + i]); k++) {
                             mx_printchar(' ');
                         }
                     }
-                    
-                    // if (flags->G) {
-                    //     mx_find_color(file_array[j * rows + i], files, full_name);
-                    // }
                 }
             }
             mx_printchar('\n');
