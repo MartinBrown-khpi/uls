@@ -45,8 +45,10 @@ int mx_get_rows_count(const char* str) {
 
 int count_dir_and_files(int argc, char const *argv[]) {
     int arguments_count = -1;
+    int first_file = mx_get_first_file(argc, argv);
+    if (first_file == -1) first_file = 100;
     for (int i = 0; i < argc; i++) {
-        if (argv[i][0] != '-') {
+        if (argv[i][0] != '-' || i > first_file) {
             arguments_count++;
         }
     }
@@ -56,9 +58,11 @@ int count_dir_and_files(int argc, char const *argv[]) {
 
 char **parse_arguments(int argc, char const *argv[], int *arguments_count) {
     struct stat buff;
+    int first_file = mx_get_first_file(argc, argv);
+    if (first_file == -1) first_file = 100;
     char **arguments = malloc(sizeof(char *) * *arguments_count);
     for (int i = 1, j = 0; i < argc && j < *arguments_count; i++) {
-        if (argv[i][0] != '-') {
+        if (argv[i][0] != '-' || i > first_file) {
             if (stat(argv[i], &buff) == -1) {
                 mx_printstr(argv[0]);
                 mx_printstr(": ");
