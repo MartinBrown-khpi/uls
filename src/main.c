@@ -162,6 +162,7 @@ int main(int argc, char const *argv[]) {
         // вытаскиваем файлы из arguments
         int count_files = 0;
         char **files_arguments_arr = mx_pop_files(arguments, &arguments_count, &count_files);
+        bool is_files = true;
         if (count_files != 0) {
             all_long_data = mx_get_all_long_data(count_files, files_arguments_arr, ".");
             for (int i = 0; i < count_files; i++) {
@@ -188,7 +189,7 @@ int main(int argc, char const *argv[]) {
                 if (usable_flags->is_h_long) {
                         mx_translate_size(all_long_data, count_files);
                     }
-                    mx_print_long_data(all_long_data, count_files, usable_flags);
+                    mx_print_long_data(all_long_data, count_files, usable_flags, is_files);
                 }   
             else if (usable_flags->is_C_print) {
                      
@@ -198,6 +199,7 @@ int main(int argc, char const *argv[]) {
                 mx_print_files(temp_string, all_long_data , count_files, usable_flags);
             }
         }
+        is_files = false;
         // нужно каким-то образом их вывести 
 
         for (int i = 0; i < arguments_count; i++) {
@@ -275,7 +277,7 @@ int main(int argc, char const *argv[]) {
             if (usable_flags->is_h_long) {
                     mx_translate_size(all_long_data, size_dirp);
                 }
-                mx_print_long_data(all_long_data, size_dirp, usable_flags);
+                mx_print_long_data(all_long_data, size_dirp, usable_flags, is_files);
             }
             else if (usable_flags->is_C_print) {
                      

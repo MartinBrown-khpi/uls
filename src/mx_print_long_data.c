@@ -3,13 +3,13 @@
 #include <stdio.h>
 
 // TODO getxattr @ + ровняние типа
-void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags) {
+void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags, bool is_files) {
     // размер  большего элемнта считается здесь для всех фуннкций кроме size (нужен пересчет для флага -h)
     int biggest_link_rank = mx_get_rank(mx_get_max_link_rank(all_long_data, size, usable_flags));
     int biggest_uid_size = mx_get_biggest_uid(all_long_data, size, usable_flags);
     int biggest_gid_size = mx_get_biggest_gid(all_long_data, size, usable_flags);
     
-    mx_print_total(all_long_data, size, usable_flags);
+    mx_print_total(all_long_data, size, usable_flags, is_files);
     for (int i = 0; i < size; i++) {
         if (usable_flags->is_a) {
             mx_print_redable_mode(all_long_data[i]);
@@ -200,9 +200,9 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
     mx_del_strarr(&splitarrtime);
 }
 
-void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags) {
+void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags, bool is_files) {
     int total = mx_get_total(all_long_data, size, usable_flags);
-    if (size != 2) {
+    if (size != 2 && !is_files) {
         mx_printstr("total ");
         mx_printint(total);
         mx_printchar('\n');

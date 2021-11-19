@@ -120,8 +120,8 @@ void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usab
 // translate -h flag
 void mx_translate_size(long_data_t **all_long_data, int size);
 //print -l flag
-void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
-void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
+void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags, bool is_files);
+void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags, bool is_files);
 void mx_print_redable_mode(long_data_t *long_data);
 void mx_print_links(long_data_t *long_data, int biggest_link_rank);
 void mx_print_redable_uid(long_data_t *long_data, int biggest_uid_size);
