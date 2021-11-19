@@ -23,7 +23,7 @@ char **get_inf_from_dir(const char *dir_name, int *size_dirp) {
     for (int i = 0; i < *size_dirp; i++) {
         tmp = readdir(dp);
         dirp[i] = mx_strdup(tmp->d_name);
-        if (mx_strcmp(dirp[i], "YA zamenil  tyt") == 0) {
+        if (mx_strcmp(dirp[i], "uls") == 0) {
             i--;
             *size_dirp = *size_dirp - 1;
         }
