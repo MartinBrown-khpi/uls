@@ -6,29 +6,35 @@ long_data_t **mx_get_all_long_data(int size_dirp, char **names_arr, const char *
     long_data_t ** all_data;
     if (names_arr == NULL) {
         all_data =  malloc(sizeof(long_data_t*));
-        all_data[0] = mx_get_long_info(namedir, "");
+        all_data[0] = mx_get_long_info(namedir, "/");
         return all_data;
     }
     all_data = malloc(sizeof(long_data_t*) * size_dirp);
     for (int i = 0; i < size_dirp; i++) {
-            dir_path = mx_strjoin(namedir, "/");
-            all_data[i] = mx_get_long_info(names_arr[i], dir_path);
-        
+        dir_path = mx_strjoin(namedir, "/");
+        //printf("%s\n", dir_path);
+        all_data[i] = mx_get_long_info(names_arr[i], dir_path);
     }
     return all_data;
 }
 
 
 long_data_t *mx_get_long_info(const char *filename, const char *path) {
-    char *tmp = mx_strjoin(path, filename);
+    char *tmp;
+    if (filename[0] != '/') {
+        tmp = mx_strjoin(path, filename);
+    }
+    else {
+        tmp = (char *)filename;
+    }
     struct stat buff;
     long_data_t *long_data = malloc(sizeof(long_data_t));
     long_data->f_time_last_acces = malloc(sizeof(long_data->f_time_last_acces));
     long_data->f_time_last_status = malloc(sizeof(long_data->f_time_last_status));
     long_data->f_time_modification = malloc(sizeof(long_data->f_time_modification));
     if (lstat(tmp, &buff) == -1 ) {
-        mx_printerr("cant get file stat");
-        printf("%s\n", filename);
+        mx_printerr("cant get file stat\n");
+        printf("%s\n", tmp);
         return NULL;
     }
     //popravit

@@ -163,7 +163,44 @@ int main(int argc, char const *argv[]) {
         int count_files = 0;
         char **files_arguments_arr = mx_pop_files(arguments, &arguments_count, &count_files);
         if (count_files != 0) {
-            printf("in files %s\n", files_arguments_arr[0]);
+            all_long_data = mx_get_all_long_data(count_files, files_arguments_arr, ".");
+            for (int i = 0; i < count_files; i++) {
+                get_redable_mode(all_long_data[i]);
+                get_redable_uid(all_long_data[i]);
+                get_redable_gid(all_long_data[i]); 
+                all_long_data[i]->type_size = 'B';
+                all_long_data[i]->size_remainder = 0;
+                all_long_data[i]->at_link = NULL;
+                all_long_data[i]->readlink = NULL;
+                mx_islink(all_long_data[i]);
+                mx_isplus(all_long_data[i]);
+            }
+
+            mx_insertion_sort(all_long_data, count_files, sort_func);
+             if (usable_flags->is_reverse) {
+                reverse_array(all_long_data, count_files);
+            }
+            if (usable_flags->is_list) {
+                mx_print_list(all_long_data, count_files, usable_flags);
+            } 
+            else if (usable_flags->is_long) {
+            if (usable_flags->is_h_long) {
+                    mx_translate_size(all_long_data, count_files);
+                }
+                mx_print_long_data(all_long_data, count_files, usable_flags);
+            }
+            else if (usable_flags->is_C_print) {
+                     
+                char *temp_string = agruments_filter(all_long_data, count_files, usable_flags);
+               
+                int rows_count = mx_get_rows_count(temp_string);
+                
+                mx_print_files(temp_string, rows_count, usable_flags);
+            }
+
+            if (arguments_count != count_files )  {
+                mx_printchar('\n');
+            }
         }
         // нужно каким-то образом их вывести 
 
@@ -271,6 +308,5 @@ int main(int argc, char const *argv[]) {
             }
         }
     
-
     return 0;
 }
