@@ -220,6 +220,8 @@ int main(int argc, char const *argv[]) {
                         mx_printerr(": ");
                         mx_printerr(strerror(errno));
                         mx_printerr("\n");
+                        if (arguments_count > 2) 
+                            mx_printerr("\n");
                         break;
                     }
                 }
