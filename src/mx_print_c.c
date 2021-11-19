@@ -9,8 +9,8 @@ int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len) {
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
 	int col = 80;
 	if(isatty(1))
-    col = ws.ws_col;      
-    int cur_file_size = 0;		
+    	col = ws.ws_col;      
+    int cur_file_size = 0;     		
 	int *filenames_len = (int*)malloc(sizeof(int) * file_count);
 	*cal_col = 0;
 	int i = 0;
@@ -111,6 +111,7 @@ void mx_print_files(char *temp_string ,long_data_t **all_long_data, int size, al
     }
 
     int rows = mx_get_cols(file_count, &cols, col_max_arr, max_len);
+    
         for (int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){     
                 if ((j * rows + i ) < file_count) {
