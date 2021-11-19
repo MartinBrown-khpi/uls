@@ -191,11 +191,9 @@ int main(int argc, char const *argv[]) {
                     mx_print_long_data(all_long_data, count_files, usable_flags);
                 }   
             else if (usable_flags->is_C_print) {
-                     
                 char *temp_string = agruments_filter(all_long_data, count_files, usable_flags);
-            
-                
-                mx_print_files(temp_string, all_long_data , count_files, usable_flags);
+                if (temp_string)
+                    mx_print_files(temp_string, all_long_data , count_files, usable_flags);
             }
         }
         // нужно каким-то образом их вывести 
@@ -290,8 +288,8 @@ int main(int argc, char const *argv[]) {
                 //printf("%s\n", temp_string);
                
                 //printf("%d\n", rows_count);
-                
-                mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
+                if (temp_string)
+                    mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
             }
             if (i + 1 != arguments_count && arguments_count != 1 )  {
                 mx_printchar('\n');
