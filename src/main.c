@@ -212,9 +212,9 @@ int main(int argc, char const *argv[]) {
                         k++;
                     }
                     else {
-                        mx_printstr(arguments[i]);
-                        mx_printstr(":\n");
-                        mx_printstr("uls: ");
+                        mx_printerr(arguments[i]);
+                        mx_printerr(":\n");
+                        mx_printerr("uls: ");
                         mx_str_reverse(tmp);
                         mx_printerr(tmp);
                         mx_printerr(": ");
