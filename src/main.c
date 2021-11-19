@@ -91,6 +91,7 @@ int main(int argc, char const *argv[]) {
                 usable_flags->is_C_print = true;
                 usable_flags->is_list = false;
                 usable_flags->is_long = false;
+                break;
             case 'a':
                 usable_flags->is_a = true;
                 usable_flags->is_A = false;   
