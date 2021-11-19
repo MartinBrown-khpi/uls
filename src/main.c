@@ -197,32 +197,28 @@ int main(int argc, char const *argv[]) {
                 
                 mx_print_files(temp_string, rows_count, usable_flags);
             }
-
-            if (arguments_count != count_files )  {
-                mx_printchar('\n');
-            }
         }
         // нужно каким-то образом их вывести 
 
-        for (int i = 0 ; i < arguments_count; i++) {
+        for (int i = 0; i < arguments_count; i++) {
             DIR *dp;
             dp = opendir(arguments[i]);
             if (!dp) {
                 char *tmp = mx_strnew(mx_strlen(arguments[i]));
-                mx_printerr(arguments[i]);
-                mx_printerr(":\n");
                 for (int j = mx_strlen(arguments[i]) - 1, k = 0; j > 0; j--) {
                     if (arguments[i][j] != '/') {
                         tmp[k] = arguments[i][j];
                         k++;
                     }
                     else {
+                        mx_printerr(arguments[i]);
+                        mx_printerr(":\n");
                         mx_printerr("uls: ");
                         mx_str_reverse(tmp);
                         mx_printerr(tmp);
                         mx_printerr(": ");
                         mx_printerr(strerror(errno));
-                        mx_printerr("\n\n");
+                        mx_printerr("\n");
                         break;
                     }
                 }
@@ -230,11 +226,9 @@ int main(int argc, char const *argv[]) {
                 closedir(dp);
             }
         }
-
         // чтобы вывести нужно удалять первый символ в файле (пооддставляет атоматом )
         char **names_arr;
         for (int i = 0; i < arguments_count; i++) {
-
             size_dirp = 0;
             if (arguments[i] != NULL) {
                 names_arr = get_inf_from_dir(arguments[i], &size_dirp);
@@ -244,7 +238,6 @@ int main(int argc, char const *argv[]) {
             }
             else continue;
             
-
             if (size_dirp == 0) size_dirp++;
             all_long_data = mx_get_all_long_data(size_dirp, names_arr, arguments[i]);
             
@@ -267,6 +260,7 @@ int main(int argc, char const *argv[]) {
             
             // принт директори
             if ((size_dirp != 1 && arguments_count > 1) || arguments_count != arguments_before_vaidation) {
+                mx_printchar('\n');
                 mx_printstr(arguments[i]);
                 mx_printstr(":\n");
             }
