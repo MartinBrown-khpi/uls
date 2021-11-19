@@ -10,7 +10,9 @@
 #include <grp.h>
 #include <time.h>
 #include <sys/types.h>
+#include <errno.h>
 #include <sys/acl.h>
+#include <string.h>
 
 //COLORS
 #define ANSI_COLOR_RED     "\x1b[31m"

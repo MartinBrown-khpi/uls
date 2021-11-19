@@ -9,7 +9,7 @@ void mx_translate_size(long_data_t **all_long_data, int size) {
         remainder = all_long_data[i]->f_size;
 
         while (remainder >= 1000) {
-            remainder /= 1024;
+            remainder /= 1000;
             current_size++;
         }
 

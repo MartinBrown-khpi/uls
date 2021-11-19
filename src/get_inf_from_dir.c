@@ -5,9 +5,9 @@
 char **get_inf_from_dir(const char *dir_name, int *size_dirp) {
     DIR *dp;
     struct dirent *tmp;
-    dp = opendir(dir_name);
 
-    if (dp == NULL) {
+    dp = opendir(dir_name);
+    if (!dp) {
         return NULL;
     }
 
@@ -25,7 +25,7 @@ char **get_inf_from_dir(const char *dir_name, int *size_dirp) {
         dirp[i] = mx_strdup(tmp->d_name);
         if (mx_strcmp(dirp[i], "YA zamenil  tyt") == 0) {
             i--;
-             *size_dirp = *size_dirp - 1;
+            *size_dirp = *size_dirp - 1;
         }
         if (dirp[i] == NULL) {
             mx_printerr("cant read\n");

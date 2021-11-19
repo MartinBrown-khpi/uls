@@ -11,10 +11,9 @@ long_data_t **mx_get_all_long_data(int size_dirp, char **names_arr, const char *
     }
     all_data = malloc(sizeof(long_data_t*) * size_dirp);
     for (int i = 0; i < size_dirp; i++) {
-        dir_path = mx_strjoin(namedir, "/");
-        //printf("%s\n", dir_path);
-
-        all_data[i] = mx_get_long_info(names_arr[i], dir_path);
+            dir_path = mx_strjoin(namedir, "/");
+            all_data[i] = mx_get_long_info(names_arr[i], dir_path);
+        
     }
     return all_data;
 }

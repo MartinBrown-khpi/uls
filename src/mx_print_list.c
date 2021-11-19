@@ -19,6 +19,5 @@ void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usab
                 mx_printchar('\n');
             }
         }
-        
     }
 }

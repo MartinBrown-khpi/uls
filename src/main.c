@@ -167,6 +167,33 @@ int main(int argc, char const *argv[]) {
         }
         // нужно каким-то образом их вывести 
 
+        for (int i = 0 ; i < arguments_count; i++) {
+            DIR *dp;
+            dp = opendir(arguments[i]);
+            if (!dp) {
+                char *tmp = mx_strnew(mx_strlen(arguments[i]));
+                mx_printerr(arguments[i]);
+                mx_printerr(":\n");
+                for (int j = mx_strlen(arguments[i]) - 1, k = 0; j > 0; j--) {
+                    if (arguments[i][j] != '/') {
+                        tmp[k] = arguments[i][j];
+                        k++;
+                    }
+                    else {
+                        mx_printerr("uls: ");
+                        mx_str_reverse(tmp);
+                        mx_printerr(tmp);
+                        mx_printerr(": ");
+                        mx_printerr(strerror(errno));
+                        mx_printerr("\n\n");
+                        break;
+                    }
+                }
+            } else {
+                closedir(dp);
+            }
+        }
+
         // чтобы вывести нужно удалять первый символ в файле (пооддставляет атоматом )
         char **names_arr;
         for (int i = 0; i < arguments_count; i++) {
@@ -174,6 +201,9 @@ int main(int argc, char const *argv[]) {
             size_dirp = 0;
             if (arguments[i] != NULL) {
                 names_arr = get_inf_from_dir(arguments[i], &size_dirp);
+                if (names_arr == NULL) {
+                    continue;
+                }
             }
             else continue;
             
@@ -201,7 +231,7 @@ int main(int argc, char const *argv[]) {
             // принт директори
             if ((size_dirp != 1 && arguments_count > 1) || arguments_count != arguments_before_vaidation) {
                 mx_printstr(arguments[i]);
-                mx_printstr(" :\n");
+                mx_printstr(":\n");
             }
             
             if (usable_flags->is_reverse) {
