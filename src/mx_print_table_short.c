@@ -101,7 +101,7 @@ int mx_get_table_params(char **names, int names_count, int *cols, int *rows) {
 // В эту функцию не дожны прилетать -а -А
 // Надо сортировать выше
 #include <stdio.h>
-void mx_print_files(char *temp_string ,long_data_t **all_long_data, int size, all_flags_t *cur) {
+void mx_print_table_short(char *temp_string ,long_data_t **all_long_data, int size, all_flags_t *cur) {
     // if (files == NULL || *files == NULL) {
     //     return;
     // }

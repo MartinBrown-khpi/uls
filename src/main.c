@@ -172,9 +172,9 @@ int main(int argc, char const *argv[]) {
     if (count_files != 0) {
         all_long_data = mx_get_all_long_data(count_files, files_arguments_arr, ".");
         for (int i = 0; i < count_files; i++) {
-            get_redable_mode(all_long_data[i]);
-            get_redable_uid(all_long_data[i]);
-            get_redable_gid(all_long_data[i]); 
+            mx_get_redable_mode(all_long_data[i]);
+            mx_get_redable_uid(all_long_data[i]);
+            mx_get_redable_gid(all_long_data[i]); 
             all_long_data[i]->type_size = 'B';
             all_long_data[i]->size_remainder = 0;
             all_long_data[i]->at_link = NULL;
@@ -186,7 +186,7 @@ int main(int argc, char const *argv[]) {
         mx_insertion_sort(all_long_data, count_files, sort_func);
             
         if (usable_flags->is_reverse) {
-            reverse_array(all_long_data, count_files);
+            mx_reverse_array(all_long_data, count_files);
         }
         if (usable_flags->is_list) {
             mx_print_list(all_long_data, count_files, usable_flags);
@@ -200,7 +200,7 @@ int main(int argc, char const *argv[]) {
         else if (usable_flags->is_C_print) {
             char *temp_string = agruments_filter(all_long_data, count_files, usable_flags);
             if (temp_string) {
-                mx_print_files(temp_string, all_long_data , count_files, usable_flags);
+                mx_print_table_short(temp_string, all_long_data , count_files, usable_flags);
             }
         }
         mx_printchar('\n');
@@ -253,9 +253,9 @@ int main(int argc, char const *argv[]) {
         all_long_data = mx_get_all_long_data(size_dirp, names_arr, arguments[i]);
             
         for (int j = 0; j < size_dirp; j++) {
-            get_redable_mode(all_long_data[j]);
-            get_redable_uid(all_long_data[j]);
-            get_redable_gid(all_long_data[j]); 
+            mx_get_redable_mode(all_long_data[j]);
+            mx_get_redable_uid(all_long_data[j]);
+            mx_get_redable_gid(all_long_data[j]); 
             all_long_data[j]->type_size = 'B';
             all_long_data[j]->size_remainder = 0;
             all_long_data[j]->at_link = NULL;
@@ -276,7 +276,7 @@ int main(int argc, char const *argv[]) {
         }
             
         if (usable_flags->is_reverse) {
-            reverse_array(all_long_data, size_dirp);
+            mx_reverse_array(all_long_data, size_dirp);
         }
         if (usable_flags->is_list) {
             mx_print_list(all_long_data, size_dirp, usable_flags);
@@ -297,7 +297,7 @@ int main(int argc, char const *argv[]) {
         // Сначала выводятся файлы потом диры
         char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);   
             if (temp_string) {
-                mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
+                mx_print_table_short(temp_string, all_long_data , size_dirp, usable_flags);
             }
         }
         if (i + 1 != arguments_count && arguments_count != 1 ) {

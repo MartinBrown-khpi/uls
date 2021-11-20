@@ -58,7 +58,7 @@ long_data_t *mx_get_long_info(const char *filename, const char *path) {
     return long_data;
 }
 
-void get_redable_mode(long_data_t *long_data) {
+void mx_get_redable_mode(long_data_t *long_data) {
     char *redable_mode = (char *)malloc(sizeof(char) * 11);
     // Test for a type file.
     
@@ -101,7 +101,7 @@ void get_redable_mode(long_data_t *long_data) {
     long_data->f_redable_mode = redable_mode;
 }
 
-void get_redable_uid(long_data_t *long_data) {
+void mx_get_redable_uid(long_data_t *long_data) {
     struct passwd *user = getpwuid(long_data->f_uid);
     if (user == NULL) {
         mx_printerr("cant get pwuid");
@@ -112,7 +112,7 @@ void get_redable_uid(long_data_t *long_data) {
     long_data->f_redable_id = user_name;
 }
 
-void get_redable_gid(long_data_t *long_data) {
+void mx_get_redable_gid(long_data_t *long_data) {
     struct group *char_group = getgrgid(long_data->f_gid);
     if (char_group == NULL) {
         long_data->f_redable_gid = mx_strdup(mx_itoa(long_data->f_gid));

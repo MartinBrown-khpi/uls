@@ -75,36 +75,30 @@ typedef struct long_data {
 }long_data_t;
 
 // help func
-int mx_atoi(const char *str);
 int mx_get_first_file(int argc, char const *argv[]);
 int mx_get_max_int(int *arr, int size);
 int mx_get_rank(int digit);
-char **dirp_to_strarr(int size_dirp, struct dirent **dirp);
 char **mx_pop_files(char **arguments, int *count_arguments, int *count_files);
 
 //ERRORS
 void mx_printerr(const char *err);
-
 void mx_illegal_option(char const *argv[] ,char flag);
-
 void mx_print_usage(char const FLAGS[]);
+
 // PARSE FLAGS 
 cur_flags_t *mx_get_flags(const int COUNT_FLAGS, char const FLAGS[] , int argc, char const *argv[]);
-
-// bool is_valid_flag(const int COUNT_FLAGS, char const FLAGS[], char flag);
-// bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
-// void move_char_back(char *arr, int size, char ch);
 
 //LS -l
 long_data_t **mx_get_all_long_data(int size_dirp, char **names_arr, const char *namedir);
 long_data_t *mx_get_long_info(const char *filename, const char *path);
 
 int mx_get_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
-void get_redable_mode(long_data_t *long_data);
-void get_redable_uid(long_data_t *long_data);
-void get_redable_gid(long_data_t *long_data);
+void mx_get_redable_mode(long_data_t *long_data);
+void mx_get_redable_uid(long_data_t *long_data);
+void mx_get_redable_gid(long_data_t *long_data);
 void mx_islink(long_data_t *long_data);
 void mx_isplus(long_data_t *long_data);
+
 //sort 
 void mx_insertion_sort(long_data_t **arr, int size, bool (*cmp) (long_data_t *first, long_data_t *sec));
 bool mx_default_cmp(long_data_t *first, long_data_t *sec);
@@ -112,13 +106,17 @@ bool mx_size_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_modif_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_access_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_status_cmp(long_data_t *first, long_data_t *sec);
-void reverse_array(long_data_t **arr, int size);
+void mx_reverse_array(long_data_t **arr, int size);
+
 // dir info
 char **mx_get_inf_from_dir(const char *dir_name, int *size_dirp);
+
 // print -1 flag
 void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usable_flags);
+
 // translate -h flag
 void mx_translate_size(long_data_t **all_long_data, int size);
+
 //print -l flag
 void mx_print_total(long_data_t **all_long_data, int size, all_flags_t *usable_flags, bool is_files);
 void mx_print_long_data(long_data_t **all_long_data, int size, all_flags_t *usable_flags, bool is_files);
@@ -133,19 +131,20 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags);
     void mx_print_day(char **splitarrtime);
     void mx_print_time(char **splitarrtime);
     void mx_print_year(char **splitarrtime);
-void mx_print_namefile(long_data_t *long_data, all_flags_t *usable_flags);
+
 // func for spaces -l
 int mx_get_max_size_rank(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 int mx_get_max_link_rank(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 int mx_get_biggest_uid(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
 int mx_get_biggest_gid(long_data_t **all_long_data, int size, all_flags_t *usable_flags);
-// -G color func
 
+// -G color func
+void mx_print_namefile(long_data_t *long_data, all_flags_t *usable_flags);
 
 //print -c flag
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
+void mx_print_table_short(char *temp_string ,long_data_t **all_long_data, int size, all_flags_t *cur);
 
-void mx_print_files(char *temp_string ,long_data_t **all_long_data, int size, all_flags_t *cur);
 // mx_argv func
 
 char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur);
