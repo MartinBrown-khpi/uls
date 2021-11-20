@@ -55,34 +55,34 @@ int main(int argc, char const *argv[]) {
         mx_bubble_sort(arguments, arguments_count);
     }
     
-        all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
+    all_flags_t *usable_flags = malloc(sizeof(all_flags_t));
 
-        usable_flags->is_C_print = true;
-        usable_flags->is_list = false;
-        usable_flags->is_long = false;
-        usable_flags->is_A = false;
-        usable_flags->is_a = false;
+    usable_flags->is_C_print = true;
+    usable_flags->is_list = false;
+    usable_flags->is_long = false;
+    usable_flags->is_A = false;
+    usable_flags->is_a = false;
         
 
-        usable_flags->is_reverse = false;
-        usable_flags->is_common_sort = true;
-        usable_flags->is_c_sort = false;
-        usable_flags->is_S_sort = false;
-        usable_flags->is_t_sort = false;
-        usable_flags->is_u_sort = false;
+    usable_flags->is_reverse = false;
+    usable_flags->is_common_sort = true;
+    usable_flags->is_c_sort = false;
+    usable_flags->is_S_sort = false;
+    usable_flags->is_t_sort = false;
+    usable_flags->is_u_sort = false;
         
-        usable_flags->is_h_long = false;
-        usable_flags->is_T_long = false;
-        usable_flags->is_G_color = false;
-        usable_flags->is_at = false;
+    usable_flags->is_h_long = false;
+    usable_flags->is_T_long = false;
+    usable_flags->is_G_color = false;
+    usable_flags->is_at = false;
 
-        if (isatty(1) == 0) {
-            usable_flags->is_list = true;
-            usable_flags->is_C_print = false;
-        }
+    if (isatty(1) == 0) {
+        usable_flags->is_list = true;
+        usable_flags->is_C_print = false;
+    }
 
-        for (int i = 0; i < cur_flags->count; i++) {
-            switch (cur_flags->flags[i]) {
+    for (int i = 0; i < cur_flags->count; i++) {
+        switch (cur_flags->flags[i]) {
             case 'l':
                 usable_flags->is_long = true;
                 usable_flags->is_list = false;
@@ -141,170 +141,169 @@ int main(int argc, char const *argv[]) {
         }
 
         /* Select a sort function. */
-        bool (*sort_func)(long_data_t *, long_data_t *)  = NULL;
-        if (usable_flags->is_S_sort) {
-               sort_func = mx_size_cmp;
-        }
-        else if (usable_flags->is_t_sort && !usable_flags->is_u_sort && !usable_flags->is_c_sort) {
-            //time sort
-            sort_func = mx_time_modif_cmp;
-        }
-        else if (usable_flags->is_u_sort && usable_flags->is_t_sort) {
-            //vremya последнего доступа для сортировки 
-            sort_func = mx_time_access_cmp;
-        }
-        else if (usable_flags->is_c_sort && usable_flags->is_t_sort) {
-            //использовать время последней модификации описателя файла 
-            sort_func = mx_time_status_cmp;
-        } 
-        else {
-            sort_func = mx_default_cmp;
-        }
+    bool (*sort_func)(long_data_t *, long_data_t *)  = NULL;
+    if (usable_flags->is_S_sort) {
+        sort_func = mx_size_cmp;
+    }
+    else if (usable_flags->is_t_sort && !usable_flags->is_u_sort && !usable_flags->is_c_sort) {
+        //time sort
+        sort_func = mx_time_modif_cmp;
+    }
+    else if (usable_flags->is_u_sort && usable_flags->is_t_sort) {
+        //vremya последнего доступа для сортировки 
+        sort_func = mx_time_access_cmp;
+    }
+    else if (usable_flags->is_c_sort && usable_flags->is_t_sort) {
+        //использовать время последней модификации описателя файла 
+        sort_func = mx_time_status_cmp;
+    } 
+    else {
+        sort_func = mx_default_cmp;
+    }
 
-        // цикл проходит через все аргументы
-        int size_dirp;
-        //struct dirent **dirp;
-        long_data_t **all_long_data;
+    // цикл проходит через все аргументы
+    int size_dirp;
+    //struct dirent **dirp;
+    long_data_t **all_long_data;
         
-        // вытаскиваем файлы из arguments
-        int count_files = 0;
-        char **files_arguments_arr = mx_pop_files(arguments, &arguments_count, &count_files);
-        bool is_files = true;
-        if (count_files != 0) {
-            all_long_data = mx_get_all_long_data(count_files, files_arguments_arr, ".");
-            for (int i = 0; i < count_files; i++) {
-                get_redable_mode(all_long_data[i]);
-                get_redable_uid(all_long_data[i]);
-                get_redable_gid(all_long_data[i]); 
-                all_long_data[i]->type_size = 'B';
-                all_long_data[i]->size_remainder = 0;
-                all_long_data[i]->at_link = NULL;
-                all_long_data[i]->readlink = NULL;
-                mx_islink(all_long_data[i]);
-                mx_isplus(all_long_data[i]);
-            }
+    // вытаскиваем файлы из arguments
+    int count_files = 0;
+    char **files_arguments_arr = mx_pop_files(arguments, &arguments_count, &count_files);
+    bool is_files = true;
+    if (count_files != 0) {
+        all_long_data = mx_get_all_long_data(count_files, files_arguments_arr, ".");
+        for (int i = 0; i < count_files; i++) {
+            get_redable_mode(all_long_data[i]);
+            get_redable_uid(all_long_data[i]);
+            get_redable_gid(all_long_data[i]); 
+            all_long_data[i]->type_size = 'B';
+            all_long_data[i]->size_remainder = 0;
+            all_long_data[i]->at_link = NULL;
+            all_long_data[i]->readlink = NULL;
+            mx_islink(all_long_data[i]);
+            mx_isplus(all_long_data[i]);
+        }
 
-            mx_insertion_sort(all_long_data, count_files, sort_func);
+        mx_insertion_sort(all_long_data, count_files, sort_func);
             
-            if (usable_flags->is_reverse) {
-                reverse_array(all_long_data, count_files);
-            }
-            if (usable_flags->is_list) {
-                mx_print_list(all_long_data, count_files, usable_flags);
-            } 
-            else if (usable_flags->is_long) {
-                if (usable_flags->is_h_long) {
-                        mx_translate_size(all_long_data, count_files);
-                    }
-                    mx_print_long_data(all_long_data, count_files, usable_flags, is_files);
-                }   
-            else if (usable_flags->is_C_print) {
-                char *temp_string = agruments_filter(all_long_data, count_files, usable_flags);
-                if (temp_string)
-                    mx_print_files(temp_string, all_long_data , count_files, usable_flags);
-            }
-            mx_printchar('\n');
+        if (usable_flags->is_reverse) {
+            reverse_array(all_long_data, count_files);
         }
-        is_files = false;
-        // нужно каким-то образом их вывести 
-        for (int i = 0; i < arguments_count; i++) {
-            DIR *dp;
-            dp = opendir(arguments[i]);
-            if (!dp) {
-                char *tmp = mx_strnew(mx_strlen(arguments[i]));
-                for (int j = mx_strlen(arguments[i]) - 1, k = 0; j > 0; j--) {
-                    if (arguments[i][j] != '/') {
-                        tmp[k] = arguments[i][j];
-                        k++;
-                    }
-                    else {
-                        mx_printerr(arguments[i]);
-                        mx_printerr(":\n");
-                        mx_printerr("uls: ");
-                        mx_str_reverse(tmp);
-                        mx_printerr(tmp);
-                        mx_printerr(": ");
-                        mx_printerr(strerror(errno));
+        if (usable_flags->is_list) {
+            mx_print_list(all_long_data, count_files, usable_flags);
+        } 
+        else if (usable_flags->is_long) {
+            if (usable_flags->is_h_long) {
+                mx_translate_size(all_long_data, count_files);
+            }
+            mx_print_long_data(all_long_data, count_files, usable_flags, is_files);
+        }   
+        else if (usable_flags->is_C_print) {
+            char *temp_string = agruments_filter(all_long_data, count_files, usable_flags);
+            if (temp_string) {
+                mx_print_files(temp_string, all_long_data , count_files, usable_flags);
+            }
+        }
+        mx_printchar('\n');
+    }
+        
+    is_files = false;
+    // нужно каким-то образом их вывести 
+    for (int i = 0; i < arguments_count; i++) {
+        DIR *dp;
+        dp = opendir(arguments[i]);
+        if (!dp) {
+            char *tmp = mx_strnew(mx_strlen(arguments[i]));
+            for (int j = mx_strlen(arguments[i]) - 1, k = 0; j > 0; j--) {
+                if (arguments[i][j] != '/') {
+                    tmp[k] = arguments[i][j];
+                    k++;
+                }
+                else {
+                    mx_printerr(arguments[i]);
+                    mx_printerr(":\n");
+                    mx_printerr("uls: ");
+                    mx_str_reverse(tmp);
+                    mx_printerr(tmp);
+                    mx_printerr(": ");
+                    mx_printerr(strerror(errno));
+                    mx_printerr("\n");
+                    if (arguments_count > 1) {
                         mx_printerr("\n");
-                        if (arguments_count > 1) 
-                            mx_printerr("\n");
-                        break;
                     }
+                    break;
                 }
-            } else {
-                closedir(dp);
+            }
+        } else {
+            closedir(dp);
+        }
+    }
+        // чтобы вывести нужно удалять первый символ в файле (пооддставляет атоматом )
+    char **names_arr;
+    for (int i = 0; i < arguments_count; i++) {
+        size_dirp = 0;
+        if (arguments[i] != NULL) {
+            names_arr = get_inf_from_dir(arguments[i], &size_dirp);
+            if (names_arr == NULL) {
+                continue;
             }
         }
-        // чтобы вывести нужно удалять первый символ в файле (пооддставляет атоматом )
-        char **names_arr;
-        for (int i = 0; i < arguments_count; i++) {
-            size_dirp = 0;
-            if (arguments[i] != NULL) {
-                names_arr = get_inf_from_dir(arguments[i], &size_dirp);
-                if (names_arr == NULL) {
-                    continue;
-                }
-            }
-            else continue;
+        else continue;
             
-            if (size_dirp == 0) size_dirp++;
-            all_long_data = mx_get_all_long_data(size_dirp, names_arr, arguments[i]);
+        if (size_dirp == 0) size_dirp++;
+        all_long_data = mx_get_all_long_data(size_dirp, names_arr, arguments[i]);
             
-            for (int j = 0; j < size_dirp; j++) {
-                get_redable_mode(all_long_data[j]);
-                get_redable_uid(all_long_data[j]);
-                get_redable_gid(all_long_data[j]); 
-                all_long_data[j]->type_size = 'B';
-                all_long_data[j]->size_remainder = 0;
-                all_long_data[j]->at_link = NULL;
-                all_long_data[j]->readlink = NULL;
-            }
-            // есть ли @ и +
-            for (int j = 0; j < size_dirp; j++) {
-                mx_islink(all_long_data[j]);
-                mx_isplus(all_long_data[j]);
-            }
-            // сортировка 
-            mx_insertion_sort(all_long_data, size_dirp, sort_func);
+        for (int j = 0; j < size_dirp; j++) {
+            get_redable_mode(all_long_data[j]);
+            get_redable_uid(all_long_data[j]);
+            get_redable_gid(all_long_data[j]); 
+            all_long_data[j]->type_size = 'B';
+            all_long_data[j]->size_remainder = 0;
+            all_long_data[j]->at_link = NULL;
+            all_long_data[j]->readlink = NULL;
+        }
+        // есть ли @ и +
+        for (int j = 0; j < size_dirp; j++) {
+            mx_islink(all_long_data[j]);
+            mx_isplus(all_long_data[j]);
+        }
+        // сортировка 
+        mx_insertion_sort(all_long_data, size_dirp, sort_func);
             
-            // принт директори
-            if ((size_dirp != 1 && arguments_count > 1) || arguments_count != arguments_before_vaidation) {
-                mx_printstr(arguments[i]);
-                mx_printstr(":\n");
-            }
+        // принт директори
+        if ((size_dirp != 1 && arguments_count > 1) || arguments_count != arguments_before_vaidation) {
+            mx_printstr(arguments[i]);
+            mx_printstr(":\n");
+        }
             
-            if (usable_flags->is_reverse) {
-                reverse_array(all_long_data, size_dirp);
-            }
-            if (usable_flags->is_list) {
-                mx_print_list(all_long_data, size_dirp, usable_flags);
-            } 
-            else if (usable_flags->is_long) {
+        if (usable_flags->is_reverse) {
+            reverse_array(all_long_data, size_dirp);
+        }
+        if (usable_flags->is_list) {
+            mx_print_list(all_long_data, size_dirp, usable_flags);
+        } 
+        else if (usable_flags->is_long) {
             if (usable_flags->is_h_long) {
                     mx_translate_size(all_long_data, size_dirp);
                 }
-                mx_print_long_data(all_long_data, size_dirp, usable_flags, is_files);
-            }
-            else if (usable_flags->is_C_print) {
+            mx_print_long_data(all_long_data, size_dirp, usable_flags, is_files);
+        }
+        else if (usable_flags->is_C_print) {
                      
-            // Все ФАЙЛЫ должны заносится в темп спринг для их вывода
-            // после вывода файла ставится некст лайн
-            // Обрезать из названия дир ./
-            // Все названия для вывода заносятся в темп стринг
-            // Выводить название директории надо только тогда когда 2 или больше агрумента
-            // Сначала выводятся файлы потом диры
-                char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);
-                // ne ebu ne rabotaet
-                //printf("%s\n", temp_string);
-               
-                //printf("%d\n", rows_count);
-                if (temp_string)
-                    mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
-            }
-            if (i + 1 != arguments_count && arguments_count != 1 )  {
-                mx_printchar('\n');
+        // Все ФАЙЛЫ должны заносится в темп спринг для их вывода
+        // после вывода файла ставится некст лайн
+        // Обрезать из названия дир ./
+        // Все названия для вывода заносятся в темп стринг
+        // Выводить название директории надо только тогда когда 2 или больше агрумента
+        // Сначала выводятся файлы потом диры
+        char *temp_string = agruments_filter(all_long_data, size_dirp, usable_flags);   
+            if (temp_string) {
+                mx_print_files(temp_string, all_long_data , size_dirp, usable_flags);
             }
         }
-    
+        if (i + 1 != arguments_count && arguments_count != 1 ) {
+            mx_printchar('\n');
+        }
+    }
     return 0;
 }
