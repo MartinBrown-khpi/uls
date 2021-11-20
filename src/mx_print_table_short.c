@@ -1,9 +1,5 @@
 #include "uls.h"
 
-// Не работает с выводом в 1 строку
-// Не работает с файлом в агрументе
-// Нужно фильтровать аргументы исходя из флага
-
 void mx_print_tabs_between(int width) {
     int tabs = (width / 8 + (width % 8 != 0));
     for (int i = 0; i < tabs; i++) mx_printchar('\t');
@@ -47,8 +43,6 @@ int mx_get_table_params(char **names, int names_count, int *cols, int *rows) {
     return max_len;
 }
  
-// Надо сортировать выше
-#include <stdio.h>
 void mx_print_table_short(char *temp_string ,long_data_t **all_long_data, int size, all_flags_t *cur) {
     int cols = 0;
 	int rows = 0;

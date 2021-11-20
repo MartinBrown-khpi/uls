@@ -143,7 +143,9 @@ void mx_print_namefile(long_data_t *long_data, all_flags_t *usable_flags);
 
 //print -c flag
 int mx_get_cols(int file_count, int *cal_col, int *col_max_arr, int max_len);
+int mx_get_table_params(char **names, int names_count, int *cols, int *rows);
 void mx_print_table_short(char *temp_string ,long_data_t **all_long_data, int size, all_flags_t *cur);
+void mx_print_tabs_between(int width);
 
 // mx_argv func
 

@@ -64,10 +64,12 @@ char **parse_arguments(int argc, char const *argv[], int *arguments_count) {
     for (int i = 1, j = 0; i < argc && j < *arguments_count; i++) {
         if (argv[i][0] != '-' || i > first_file) {
             if (stat(argv[i], &buff) == -1) {
-                mx_printerr(argv[0]);
+                mx_printerr("uls");
                 mx_printerr(": ");
                 mx_printerr(argv[i]);
-                mx_printerr(": No such file or directory\n");
+                mx_printerr(": ");
+                mx_printerr(strerror(errno));
+                mx_printerr("\n");
                 *arguments_count = *arguments_count - 1;
             }
             else {
