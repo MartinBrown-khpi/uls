@@ -91,9 +91,9 @@ void mx_print_usage(char const FLAGS[]);
 // PARSE FLAGS 
 cur_flags_t *mx_get_flags(const int COUNT_FLAGS, char const FLAGS[] , int argc, char const *argv[]);
 
-bool is_valid_flag(const int COUNT_FLAGS, char const FLAGS[], char flag);
-bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
-void move_char_back(char *arr, int size, char ch);
+// bool is_valid_flag(const int COUNT_FLAGS, char const FLAGS[], char flag);
+// bool is_in_cur_flags(cur_flags_t *cur_flags, char flag);
+// void move_char_back(char *arr, int size, char ch);
 
 //LS -l
 long_data_t **mx_get_all_long_data(int size_dirp, char **names_arr, const char *namedir);
@@ -114,7 +114,7 @@ bool mx_time_access_cmp(long_data_t *first, long_data_t *sec);
 bool mx_time_status_cmp(long_data_t *first, long_data_t *sec);
 void reverse_array(long_data_t **arr, int size);
 // dir info
-char **get_inf_from_dir(const char *dir_name, int *size_dirp);
+char **mx_get_inf_from_dir(const char *dir_name, int *size_dirp);
 // print -1 flag
 void mx_print_list(long_data_t **all_long_data, int size_dirp, all_flags_t *usable_flags);
 // translate -h flag

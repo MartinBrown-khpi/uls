@@ -1,5 +1,35 @@
 #include "uls.h"
 
+static bool is_in_cur_flags(cur_flags_t *cur_flags, char flag) {
+    if (cur_flags->count == 0) {
+        return false;
+    }
+    for (int i = 0; i < cur_flags->count; i++) {
+        if (cur_flags->flags[i] == flag) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static bool is_valid_flag(const int COUNT_FLAGS, char const FLAGS[], char flag)  {
+    for (int i = 0; i < COUNT_FLAGS; i++) {
+        if (FLAGS[i] == flag) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static void move_char_back(char *arr, int size, char ch) {
+    int index = mx_get_char_index(arr, ch);
+    for (int i = index; i < size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    arr[size - 1] = ch;
+}
+
 cur_flags_t *mx_get_flags(const int COUNT_FLAGS, char const FLAGS[], int argc, char const *argv[]) {
     cur_flags_t *cur_flags = malloc(sizeof(cur_flags_t));
     cur_flags->flags = NULL;
@@ -35,34 +65,4 @@ cur_flags_t *mx_get_flags(const int COUNT_FLAGS, char const FLAGS[], int argc, c
         }    
     }
     return cur_flags;
-}
-
-bool is_in_cur_flags(cur_flags_t *cur_flags, char flag) {
-    if (cur_flags->count == 0) {
-        return false;
-    }
-    for (int i = 0; i < cur_flags->count; i++) {
-        if (cur_flags->flags[i] == flag) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool is_valid_flag(const int COUNT_FLAGS, char const FLAGS[], char flag)  {
-    for (int i = 0; i < COUNT_FLAGS; i++) {
-        if (FLAGS[i] == flag) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void move_char_back(char *arr, int size, char ch) {
-    int index = mx_get_char_index(arr, ch);
-    for (int i = index; i < size - 1; i++) {
-        arr[i] = arr[i + 1];
-    }
-    arr[size - 1] = ch;
 }

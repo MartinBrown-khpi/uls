@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-char **get_inf_from_dir(const char *dir_name, int *size_dirp) {
+char **mx_get_inf_from_dir(const char *dir_name, int *size_dirp) {
     DIR *dp;
     struct dirent *tmp;
 

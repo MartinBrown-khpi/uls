@@ -123,9 +123,6 @@ void mx_print_files(char *temp_string ,long_data_t **all_long_data, int size, al
     
     free(temp_string);
 
-    // for(int i = 0; i < file_count; i++) {
-    //     printf("%s\n", file_array[i]);
-    // }
 
     // int max_len = mx_strlen(file_array[0]);
     // for (int i = 1; i < file_count; i++) {

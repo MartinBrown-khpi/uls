@@ -32,7 +32,7 @@ char *agruments_filter(long_data_t **data, int size_dirp, all_flags_t *cur) {
     }
     return temp_string;
 }
-#include <stdio.h>
+
 int mx_get_rows_count(const char* str) {
     int rows_count = 0;
     for (int i = 0; str[i] != '\0'; i++) {
@@ -64,10 +64,10 @@ char **parse_arguments(int argc, char const *argv[], int *arguments_count) {
     for (int i = 1, j = 0; i < argc && j < *arguments_count; i++) {
         if (argv[i][0] != '-' || i > first_file) {
             if (stat(argv[i], &buff) == -1) {
-                mx_printstr(argv[0]);
-                mx_printstr(": ");
-                mx_printstr(argv[i]);
-                mx_printstr(": No such file or directory\n");
+                mx_printerr(argv[0]);
+                mx_printerr(": ");
+                mx_printerr(argv[i]);
+                mx_printerr(": No such file or directory\n");
                 *arguments_count = *arguments_count - 1;
             }
             else {

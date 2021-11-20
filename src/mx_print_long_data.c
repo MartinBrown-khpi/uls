@@ -192,7 +192,6 @@ void mx_print_date_time(long_data_t *long_data, all_flags_t *usable_flags) {
         mx_del_strarr(&splitarrtime);
     }
     else {
-
         mx_print_month(splitarrtime);
         mx_print_day(splitarrtime);
         mx_print_time(splitarrtime);    
@@ -221,7 +220,6 @@ int mx_get_max_int(int *arr, int size) {
             max = arr[i];
         }
     }
-
     return max;
 }
 

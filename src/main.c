@@ -63,7 +63,6 @@ int main(int argc, char const *argv[]) {
     usable_flags->is_A = false;
     usable_flags->is_a = false;
         
-
     usable_flags->is_reverse = false;
     usable_flags->is_common_sort = true;
     usable_flags->is_c_sort = false;
@@ -140,7 +139,7 @@ int main(int argc, char const *argv[]) {
             }
         }
 
-        /* Select a sort function. */
+    // Select a sort function 
     bool (*sort_func)(long_data_t *, long_data_t *)  = NULL;
     if (usable_flags->is_S_sort) {
         sort_func = mx_size_cmp;
@@ -243,7 +242,7 @@ int main(int argc, char const *argv[]) {
     for (int i = 0; i < arguments_count; i++) {
         size_dirp = 0;
         if (arguments[i] != NULL) {
-            names_arr = get_inf_from_dir(arguments[i], &size_dirp);
+            names_arr = mx_get_inf_from_dir(arguments[i], &size_dirp);
             if (names_arr == NULL) {
                 continue;
             }
